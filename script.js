@@ -1,6 +1,6 @@
 // Import Three.js, TrackballControls, and lil-gui from CDNs
 import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.153.0/build/three.module.js';
-///import { TrackballControls } from 'https://cdn.jsdelivr.net/npm/three@0.153.0/examples/jsm/controls/TrackballControls.js';
+import { TrackballControls } from 'https://unpkg.com/three@0.153.0/examples/jsm/controls/TrackballControls.js';
 
 // Set up the scene, camera, and renderer
 const scene = new THREE.Scene();
