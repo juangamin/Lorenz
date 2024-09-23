@@ -6,12 +6,8 @@
 
 
 import * as THREE from  src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js";
-import GUI from 'https://cdn.jsdelivr.net/npm/lil-gui@0.17.1/dist/lil-gui.esm.js';
-import { TrackballControls } from 'https://cdn.jsdelivr.net/npm/three@0.153.0/examples/jsm/controls/TrackballControls.js';
 
 
-//import { TrackballControls } from '../node_modules/three/examples/jsm/controls/TrackballControls.js';
-//import { GUI } from 'lil-gui'
 
 // Scene
 const scene = new THREE.Scene();
@@ -67,10 +63,7 @@ let history = [];
 
 let ro;
 
-//Trackball Controls for Camera
-const controls = new TrackballControls(camera, renderer.domElement);
-controls.rotateSpeed = 4;
-controls.dynamicDampingFactor = 0.15;
+
 // Axes Helper
  const axesHelper = new THREE.AxesHelper(5);
 //scene.add( axesHelper ); // X axis = red, Y axis = green, Z axis = blue
