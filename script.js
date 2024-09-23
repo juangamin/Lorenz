@@ -1,5 +1,5 @@
 // Import Three.js, TrackballControls, and lil-gui from CDNs
-import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.153.0/build/three.module.js';
+import * as THREE from 'https://threejsfundamentals.org/threejs/resources/threejs/r110/build/three.module.js';
 import { OrbitControls } from 'https://threejsfundamentals.org/threejs/resources/threejs/r110/examples/jsm/controls/OrbitControls.js';
 //import { GUI } from 'https://threejsfundamentals.org/3rdparty/dat.gui.module.js';
 
