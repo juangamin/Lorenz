@@ -1,6 +1,6 @@
 // Import Three.js, TrackballControls, and lil-gui from CDNs
 import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.153.0/build/three.module.js';
-import { TrackballControls } from 'https://cdn.jsdelivr.net/npm/three@0.153.0/examples/jsm/controls/TrackballControls.js';
+//import { TrackballControls } from 'https://cdn.jsdelivr.net/npm/three@0.153.0/examples/jsm/controls/TrackballControls.js';
 
 // Set up the scene, camera, and renderer
 const scene = new THREE.Scene();
@@ -19,10 +19,10 @@ scene.add(cube);
 camera.position.z = 5;
 
 // Add TrackballControls for rotating the camera around the scene
-const controls = new TrackballControls(camera, renderer.domElement);
-controls.rotateSpeed = 5.0;
-controls.zoomSpeed = 2.0;
-controls.panSpeed = 1.0;
+//const controls = new TrackballControls(camera, renderer.domElement);
+//controls.rotateSpeed = 5.0;
+//controls.zoomSpeed = 2.0;
+//controls.panSpeed = 1.0;
 
 // Animation loop
 function animate() {
@@ -33,7 +33,7 @@ function animate() {
   cube.rotation.y += 0.01;
 
   // Update the TrackballControls
-  controls.update();
+  //controls.update();
 
   renderer.render(scene, camera);
 }
