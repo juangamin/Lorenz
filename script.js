@@ -1,7 +1,6 @@
 // Import Three.js, TrackballControls, and lil-gui from CDNs
 import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.153.0/build/three.module.js';
 import { TrackballControls } from 'https://cdn.jsdelivr.net/npm/three@0.153.0/examples/jsm/controls/TrackballControls.js';
-import GUI from 'https://cdn.jsdelivr.net/npm/lil-gui@0.17.1/dist/lil-gui.esm.js';
 
 // Set up the scene, camera, and renderer
 const scene = new THREE.Scene();
@@ -50,16 +49,3 @@ window.addEventListener('resize', () => {
   camera.updateProjectionMatrix();
 });
 
-// Add lil-gui for controlling cube rotation and color
-const gui = new GUI();
-const cubeFolder = gui.addFolder('Cube Rotation');
-cubeFolder.add(cube.rotation, 'x', 0, Math.PI * 2).name('Rotate X');
-cubeFolder.add(cube.rotation, 'y', 0, Math.PI * 2).name('Rotate Y');
-cubeFolder.add(cube.rotation, 'z', 0, Math.PI * 2).name('Rotate Z');
-cubeFolder.open();
-
-// Add a GUI controller for cube color
-const cubeColor = { color: material.color.getHex() };
-gui.addColor(cubeColor, 'color').onChange((value) => {
-  material.color.setHex(value);
-});
