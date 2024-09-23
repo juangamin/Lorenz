@@ -1,15 +1,17 @@
-import * as THREE from '../node_modules/three/build/three.module.js';
+//import * as THREE from '../node_modules/three/build/three.module.js';
 //<script type="module"
 //src="https://cdn.jsdelivr.net/npm/lil-gui@0.17/dist/lil-gui.min.js">
 //</script>
 
 
 
-//import * as THREE from  src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js";
+import * as THREE from  src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js";
+import GUI from 'https://cdn.jsdelivr.net/npm/lil-gui@0.17.1/dist/lil-gui.esm.js';
+import { TrackballControls } from 'https://cdn.jsdelivr.net/npm/three@0.153.0/examples/jsm/controls/TrackballControls.js';
 
 
-import { TrackballControls } from '../node_modules/three/examples/jsm/controls/TrackballControls.js';
-import { GUI } from 'lil-gui'
+//import { TrackballControls } from '../node_modules/three/examples/jsm/controls/TrackballControls.js';
+//import { GUI } from 'lil-gui'
 
 // Scene
 const scene = new THREE.Scene();
