@@ -33,17 +33,7 @@ gui.add(params, 'sigma', 0.1, 100.0).name('sigma');
 gui.add(params, 'beta', 0.1, 100.0).name('beta');
 gui.add(params, 'tail', 51, 10000).name('tail');
 
-// Object to manage the binary button (toggle)
-const controlsGUI = {
-  rotationEnabled: rotationEnabled
-};
 
-// Add a binary button (toggle) to enable/disable rotation
-gui.add(controlsGUI, 'rotationEnabled').name('Enable Rotation').onChange(value => {
-  // Update the rotationEnabled variable when the toggle is clicked
-  rotationEnabled = value;
-  console.log("Rotation Enabled:", rotationEnabled);  // Log for debugging
-});
 
 // Position the camera
 //camera.position.z = 5;
@@ -207,14 +197,7 @@ renderer.deallocateMaterial(material);
 renderer.deallocateGeometry(geometry2);
 renderer.deallocateMaterial(material2);
 
-const actions = {
-  changeColor: function() {
-    // Change the color of the sphere when the button is clicked
-material.color.set(Math.random() * 0xffffff);
-  }
-};
 
-gui.add(actions, 'changeColor').name('Change Sphere Color');
 }
 
 rendering();
