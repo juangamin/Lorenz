@@ -215,6 +215,17 @@ const actions = {
 
 gui.add(actions, 'changeColor').name('Restart Orbit');
 
+// Object to manage the binary button (toggle)
+const controlsGUI = {
+  rotationEnabled: rotationEnabled
+};
+
+// Add a binary button (toggle) to enable/disable rotation
+gui.add(controlsGUI, 'rotationEnabled').name('Enable Rotation').onChange(value => {
+  // Update the rotationEnabled variable when the toggle is clicked
+  rotationEnabled = value;
+  console.log("Rotation Enabled:", rotationEnabled);  // Log for debugging
+});
 
 // Adjust the scene size when the window is resized
 window.addEventListener('resize', () => {
