@@ -170,7 +170,7 @@ const geometry = new THREE.BufferGeometry().setFromPoints( points );
         sphere.position.set(x, y, z);
         scene.add(sphere); // Add sphere to canvas
     
-            previousCurve = curve;
+        previousCurve = curve;
         previousCurve2 = curve2;
         previousSphere = sphere;
 
@@ -208,8 +208,8 @@ const actions = {
       x = 20*Math.random();
       y = 20*Math.random();
       z = 10 + 20*Math.random();
-      points.splice(0,1);
-      points2.splice(0,1);
+      points.splice(0,points.length);
+      points2.splice(0,points2.length);
   }
 };
 
