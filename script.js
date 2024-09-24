@@ -1,6 +1,6 @@
 // Import Three.js and other modules using CDN links
 import * as THREE from 'three';
-import { OrbitControls } from 'OrbitControls';
+import { TrackballControls } from 'TrackballControls';
 
 // Three.js Scene Setup
 const scene = new THREE.Scene();
