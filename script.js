@@ -205,15 +205,15 @@ const actions = {
   changeColor: function() {
     // Change the color of the sphere when the button is clicked
     //material.color.set(Math.random() * 0xffffff);
-      x = 20*Math.random();
-      y = 20*Math.random();
+      x = -10+20*Math.random();
+      y = -10+20*Math.random();
       z = 10 + 20*Math.random();
       points.splice(0,points.length);
       points2.splice(0,points2.length);
   }
 };
 
-gui.add(actions, 'changeColor').name('Change Sphere Color');
+gui.add(actions, 'changeColor').name('Restart Orbit');
 
 
 // Adjust the scene size when the window is resized
