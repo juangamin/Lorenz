@@ -59,23 +59,7 @@ let axespoints;
   var curve = new THREE.Line( geometry, material );
   var curve2 = new THREE.Line( geometry2, material2 );
 
-  for ( let i = -30; i < 32; i+=2 ){
-        for ( let i = -30; i < 32; i+=2 ){
-      axespoints = [];
-      axespoints.push( new THREE.Vector3( -30,i,0) );
-      axespoints.push( new THREE.Vector3( 30,i,0) );
-      const geometry3 = new THREE.BufferGeometry().setFromPoints( axespoints );
-      const material3 = new THREE.LineBasicMaterial({color: 0xFFFFFF});
-      const line3 = new THREE.Line( geometry3, material3 );
-      scene.add(line3);
-      axespoints = [];
-      axespoints.push( new THREE.Vector3( i,-30,0) );
-      axespoints.push( new THREE.Vector3( i,30,0) );
-      const geometry4 = new THREE.BufferGeometry().setFromPoints( axespoints );
-      const material4 = new THREE.LineBasicMaterial({color: 0xFFFFFF});
-      const line4 = new THREE.Line( geometry4, material4 );
-      scene.add( line4 );
-    }
+    for ( let i = -30; i < 32; i+=2 ){
       axespoints = [];
       axespoints.push( new THREE.Vector3( -30,i,0) );
       axespoints.push( new THREE.Vector3( 30,i,0) );
