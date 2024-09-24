@@ -33,7 +33,7 @@ function animate() {
   cube.rotation.y += 0.01;
   
   // Update the TrackballControls
-  controls.update();
+  //controls.update();
 
   renderer.render(scene, camera);
 }
