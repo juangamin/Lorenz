@@ -186,9 +186,9 @@ material.dispose();
 geometry2.dispose();
 material2.dispose();
 
-sphere.dispose();
-curve.dispose();
-curve2.dispose();
+//sphere.dispose();
+//curve.dispose();
+//curve2.dispose();
 
 renderer.deallocateObject(curve);
 renderer.deallocateObject(curve2);
