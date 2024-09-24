@@ -240,7 +240,6 @@ const geometry = new THREE.BufferGeometry().setFromPoints( points );
 
             previousCurves = curves;
         previousCurve2s = curve2s;
-        previousSpheres = spheres;
 
 renderer.render(scene, camera);
 
