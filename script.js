@@ -105,6 +105,8 @@ let dx1, dy1, dz1;
 let history = [];
 let ro;
 
+let rotationEnabled = false;  // Initial state is false (rotation off)
+
 let previousCurve, previousCurve2, previousSphere;
 
 // Animation loop
