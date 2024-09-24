@@ -35,6 +35,8 @@ gui.add(params, 'beta', 0.1, 100.0).name('beta');
 gui.add(params, 'tail', 51, 10000).name('tail');
 gui.add(params, 'grid', 0, 1).name('grid?');
 
+var obj = { add:function(){ console.log("clicked") }};
+gui.add(obj,'add');
 
 // Position the camera
 //camera.position.z = 5;
