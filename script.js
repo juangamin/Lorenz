@@ -119,7 +119,7 @@ const rendering = function() {
   renderer.render(scene, camera);
 }
 
-animate();
+rendering();
 
 // Adjust the scene size when the window is resized
 window.addEventListener('resize', () => {
@@ -128,5 +128,5 @@ window.addEventListener('resize', () => {
   renderer.setSize(width, height);
   camera.aspect = width / height;
   camera.updateProjectionMatrix();
-}
-rendering()
+})
+
