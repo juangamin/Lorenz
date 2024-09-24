@@ -1,6 +1,6 @@
 // Import Three.js and other modules using CDN links
 import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.153.0/build/three.module.js';
-import { OrbitControls } from 'https://threejsfundamentals.org/threejs/resources/threejs/r110/examples/jsm/controls/OrbitControls.js';
+import { TrackballControls } from 'three/examples/jsm/controls/TrackballControls.js';
 
 // Three.js Scene Setup
 const scene = new THREE.Scene();
@@ -18,10 +18,10 @@ scene.add(cube);
 // Position the camera
 camera.position.z = 5;
 
-const controls = new OrbitControls(camera, canvas);
-	controls.target.set(0, 0, 0);
-	controls.update();
-	controls.enableZoom = false;
+//Trackball Controls for Camera
+const controls = new TrackballControls(camera, renderer.domElement);
+controls.rotateSpeed = 4;
+controls.dynamicDampingFactor = 0.15;
 
 
 // Animation loop
