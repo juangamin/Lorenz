@@ -5,10 +5,15 @@ import GUI from 'GUI';
 
 // Three.js Scene Setup
 const scene = new THREE.Scene();
-const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
 const renderer = new THREE.WebGLRenderer();
 renderer.setSize(window.innerWidth, window.innerHeight);
 document.getElementById('scene-container').appendChild(renderer.domElement);
+
+// Camera
+const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.6, 1200);
+camera.position.x = 35; // Set camera position
+camera.position.y = 15; // Set camera position
+camera.position.z = 35; // Set camera position
 
 //Material
 const material = new THREE.LineBasicMaterial({color: 0xFF0000});
@@ -47,6 +52,16 @@ camera.position.z = 5;
 const controls = new TrackballControls(camera, renderer.domElement);
 controls.rotateSpeed = 4;
 controls.dynamicDampingFactor = 0.15;
+
+//scene.add( axesHelper ); // X axis = red, Y axis = green, Z axis = blue
+const axesHelper = new THREE.AxesHelper(5);
+const points = [];
+const points2 = [];
+
+  var geometry = new THREE.BufferGeometry().setFromPoints( points );
+  var geometry2 = new THREE.BufferGeometry().setFromPoints( points2 );
+  var curve = new THREE.Line( geometry, material );
+  var curve2 = new THREE.Line( geometry2, material2 );
 
 //Parameters
 let lastFrameTime = Date.now();
