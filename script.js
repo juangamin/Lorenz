@@ -205,9 +205,9 @@ const actions = {
   changeColor: function() {
     // Change the color of the sphere when the button is clicked
     material.color.set(Math.random() * 0xffffff);
-      x = 0;
-      y = 0;
-      z = 0;
+      x = 5;
+      y = 5;
+      z = 5;
   }
 };
 
