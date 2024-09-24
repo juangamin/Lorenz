@@ -206,6 +206,16 @@ const geometry = new THREE.BufferGeometry().setFromPoints( points );
                     points2.shift();
     }
 
+        pointss.push( new THREE.Vector3( xs,ys,zs) );
+    if (pointss.length > params.tail) {
+                    pointss.splice(0,pointss.length-params.tail);
+                }
+
+    points2s.push( new THREE.Vector3( xs,ys,zs) );
+    if (points2s.length > 50) {
+                    points2s.shift();
+    }
+
         const sphere = new THREE.Mesh(sphereGeometry, sphereMaterial); // Build sphere
         sphere.position.set(x, y, z);
         scene.add(sphere); // Add sphere to canvas
