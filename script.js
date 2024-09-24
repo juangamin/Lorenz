@@ -18,6 +18,10 @@ scene.add(cube);
 // Position the camera
 camera.position.z = 5;
 
+renderer.setClearColor("#000000"); // Set background colour
+renderer.setSize(window.innerWidth, window.innerHeight);
+document.body.appendChild(renderer.domElement); // Add renderer to HTML as a canvas element
+
 //Trackball Controls for Camera
 //const controls = new TrackballControls(camera, renderer.domElement);
 //controls.rotateSpeed = 4;
