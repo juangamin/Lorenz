@@ -188,13 +188,13 @@ material2.dispose();
 //curve.dispose();
 //curve2.dispose();
 
-renderer.deallocateObject(curve);
-renderer.deallocateObject(curve2);
-renderer.deallocateObject(sphere);
-renderer.deallocateGeometry(geometry);
-renderer.deallocateMaterial(material);
-renderer.deallocateGeometry(geometry2);
-renderer.deallocateMaterial(material2);
+//renderer.deallocateObject(curve);
+//renderer.deallocateObject(curve2);
+//renderer.deallocateObject(sphere);
+//renderer.deallocateGeometry(geometry);
+//renderer.deallocateMaterial(material);
+//renderer.deallocateGeometry(geometry2);
+//renderer.deallocateMaterial(material2);
 
 
 }
