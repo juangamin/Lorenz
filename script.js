@@ -50,12 +50,18 @@ controls.dynamicDampingFactor = 0.15;
 const axesHelper = new THREE.AxesHelper(5);
 const points = [];
 const points2 = [];
+const pointss = [];
+const points2s = [];
 let axespoints;
 
   var geometry = new THREE.BufferGeometry().setFromPoints( points );
   var geometry2 = new THREE.BufferGeometry().setFromPoints( points2 );
+  var geometrys = new THREE.BufferGeometry().setFromPoints( pointss );
+  var geometry2s = new THREE.BufferGeometry().setFromPoints( points2s );
   var curve = new THREE.Line( geometry, material );
   var curve2 = new THREE.Line( geometry2, material2 );
+  var curves = new THREE.Line( geometrys, material );
+  var curve2s = new THREE.Line( geometry2s, material2 );
 
     for ( let i = -30; i < 32; i+=2 ){
       axespoints = [];
@@ -95,12 +101,20 @@ let x = 5;
 let y = 5;
 let z = 10;
 
+let xs = 5 +10^-12;
+let ys = 5 +10^-12;
+let zs = 10 +10^-12;
+
 let t = 0;
 let dt = 0.005;
 
 let dx, dy, dz;
 let x1, y1, z1;
 let dx1, dy1, dz1;
+
+let dxs, dys, dzs;
+let x1s, y1s, z1s;
+let dx1s, dy1s, dz1s;
 
 let history = [];
 let ro;
@@ -132,7 +146,7 @@ const rendering = function() {
   // Update the TrackballControls
   controls.update();
 
-      dx1 = params.sigma * (y - x);
+    dx1 = params.sigma * (y - x);
     dy1 = x * (params.rho - z) - y;
     dz1 = x * y - params.beta * z;
 
@@ -148,6 +162,22 @@ const rendering = function() {
     y +=0.5*(dy1 + dy)*dt;
     z +=0.5*(dz1 + dz)*dt;
 
+    dx1s = params.sigma * (ys - xs);
+    dy1s = xs * (params.rho - zs) - ys;
+    dz1s = xs * ys - params.beta * zs;
+
+    x1s = xs + dx1s * dt;
+    y1s = ys + dy1s * dt;
+    z1s = zs + dz1s * dt;
+
+    dxs = params.sigma * (y1s - x1s);
+    dys = x1s * (params.rho - z1s) - y1s;
+    dzs = x1s * y1s - params.beta * z1s;
+
+    xs +=0.5*(dx1s + dxs)*dt;
+    ys +=0.5*(dy1s + dys)*dt;
+    zs +=0.5*(dz1s + dzs)*dt;
+
   renderer.render(scene, camera);
 
 const geometry = new THREE.BufferGeometry().setFromPoints( points );
@@ -157,6 +187,14 @@ const geometry = new THREE.BufferGeometry().setFromPoints( points );
     const geometry2 = new THREE.BufferGeometry().setFromPoints( points2 );
     const curve2 = new THREE.Line( geometry2, material2 );
     scene.add( curve2 );
+
+    const geometrys = new THREE.BufferGeometry().setFromPoints( pointss );
+    const curves = new THREE.Line( geometrys, material );
+    scene.add( curves );
+
+    const geometry2s = new THREE.BufferGeometry().setFromPoints( points2 );
+    const curve2s = new THREE.Line( geometry2s, material2 );
+    scene.add( curve2s );
 
     points.push( new THREE.Vector3( x,y,z) );
     if (points.length > params.tail) {
@@ -180,6 +218,10 @@ const geometry = new THREE.BufferGeometry().setFromPoints( points );
         previousCurve2 = curve2;
         previousSphere = sphere;
 
+            previousCurves = curves;
+        previousCurve2s = curve2s;
+        previousSpheres = spheres;
+
 renderer.render(scene, camera);
 
 scene.remove(sphere);
@@ -189,6 +231,12 @@ geometry.dispose();
 material.dispose();
 geometry2.dispose();
 material2.dispose();
+    
+
+scene.remove(curves);
+scene.remove(curve2s);
+geometrys.dispose();
+geometry2s.dispose();
 
 //sphere.dispose();
 //curve.dispose();
