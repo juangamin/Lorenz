@@ -1,6 +1,6 @@
 // Import Three.js and other modules using CDN links
 import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.153.0/build/three.module.js';
-import { TrackballControls } from 'https://threejsfundamentals.org/3rdparty/dat.gui.module.js';
+import { OrbitControls } from 'https://threejsfundamentals.org/threejs/resources/threejs/r110/examples/jsm/controls/OrbitControls.js';
 
 // Three.js Scene Setup
 const scene = new THREE.Scene();
