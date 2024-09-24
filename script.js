@@ -121,7 +121,7 @@ let ro;
 
 let rotationEnabled = false;  // Initial state is false (rotation off)
 
-let previousCurve, previousCurve2, previousSphere;
+let previousCurve, previousCurve2, previousSphere, previousCurves, previousCurve2s ;
 
 // Animation loop
 const rendering = function() {
@@ -142,6 +142,16 @@ const rendering = function() {
     previousSphere.material.dispose();
     scene.remove(previousSphere);
 }
+      if (previousCurves) {
+      previousCurves.geometrys.dispose();
+      previousCurves.material.dispose();
+      scene.remove(previousCurves);
+  }
+  if (previousCurve2s) {
+      previousCurve2s.geometrys.dispose();
+      previousCurve2s.material.dispose();
+      scene.remove(previousCurve2s);
+  }
   
   // Update the TrackballControls
   controls.update();
