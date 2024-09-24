@@ -76,7 +76,7 @@ let axespoints;
       const line4 = new THREE.Line( geometry4, material4 );
       scene.add( line4 );
     }
-
+      axespoints = [];
       axespoints.push( new THREE.Vector3( -30,i,0) );
       axespoints.push( new THREE.Vector3( 30,i,0) );
       const geometry3 = new THREE.BufferGeometry().setFromPoints( axespoints );
