@@ -16,6 +16,20 @@ const material2 = new THREE.LineBasicMaterial({color: 0xFFFF00});
 const sphereGeometry = new THREE.SphereGeometry(0.5, 32, 32); // Define geometry
 const sphereMaterial = new THREE.MeshBasicMaterial({color: 0xffff00 }); // Define material
 
+const gui = new GUI();
+const params = {
+    rho: 28,
+    sigma: 10,
+    beta: 8/3,
+    tail: 10000,
+    grid: 1
+};
+gui.add(params, 'rho', 0.1, 200.0).name('rho');
+gui.add(params, 'sigma', 0.1, 100.0).name('sigma');
+gui.add(params, 'beta', 0.1, 100.0).name('beta');
+gui.add(params, 'tail', 51, 10000).name('tail');
+gui.add(params, 'grid', 0, 1).name('grid?');
+
 // Create a Cube
 const geometry3 = new THREE.BoxGeometry();
 const material3 = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
