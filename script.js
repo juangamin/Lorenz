@@ -16,9 +16,9 @@ const sphereGeometry = new THREE.SphereGeometry(0.5, 32, 32); // Define geometry
 const sphereMaterial = new THREE.MeshBasicMaterial({color: 0xffff00 }); // Define material
 
 // Create a Cube
-const geometry = new THREE.BoxGeometry();
-const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
-const cube = new THREE.Mesh(geometry, material);
+const geometry3 = new THREE.BoxGeometry();
+const material3 = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
+const cube = new THREE.Mesh(geometry3, material3);
 scene.add(cube);
 
 // Position the camera
