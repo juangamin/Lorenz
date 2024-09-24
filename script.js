@@ -135,9 +135,6 @@ let ro;
 function animate() {
   requestAnimationFrame(animate);
   
-  // Rotate the cube for animation
-  cube.rotation.x += 0.01;
-  cube.rotation.y += 0.01;
   
   // Update the TrackballControls
   controls.update();
