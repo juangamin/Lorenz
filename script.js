@@ -57,6 +57,7 @@ controls.dynamicDampingFactor = 0.15;
 const axesHelper = new THREE.AxesHelper(5);
 const points = [];
 const points2 = [];
+const axespoints = [];
 
   var geometry = new THREE.BufferGeometry().setFromPoints( points );
   var geometry2 = new THREE.BufferGeometry().setFromPoints( points2 );
