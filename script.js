@@ -35,14 +35,9 @@ gui.add(params, 'beta', 0.1, 100.0).name('beta');
 gui.add(params, 'tail', 51, 10000).name('tail');
 gui.add(params, 'grid', 0, 1).name('grid?');
 
-// Create a Cube
-const geometry3 = new THREE.BoxGeometry();
-const material3 = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
-const cube = new THREE.Mesh(geometry3, material3);
-scene.add(cube);
 
 // Position the camera
-camera.position.z = 5;
+//camera.position.z = 5;
 
 
 //renderer.setClearColor("#000000"); // Set background colour
