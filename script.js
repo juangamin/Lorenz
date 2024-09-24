@@ -1,6 +1,6 @@
 // Import Three.js and other modules using CDN links
 import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.153.0/build/three.module.js';
-import TrackballControls from 'https://cdn.jsdelivr.net/npm/three-trackballcontrols@0.9.0/index.min.js'
+//import TrackballControls from 'https://cdn.jsdelivr.net/npm/three-trackballcontrols@0.9.0/index.min.js'
 
 // Three.js Scene Setup
 const scene = new THREE.Scene();
@@ -19,9 +19,9 @@ scene.add(cube);
 camera.position.z = 5;
 
 //Trackball Controls for Camera
-const controls = new TrackballControls(camera, renderer.domElement);
-controls.rotateSpeed = 4;
-controls.dynamicDampingFactor = 0.15;
+//const controls = new TrackballControls(camera, renderer.domElement);
+//controls.rotateSpeed = 4;
+//controls.dynamicDampingFactor = 0.15;
 
 
 // Animation loop
