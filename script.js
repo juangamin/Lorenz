@@ -205,11 +205,11 @@ const actions = {
   changeColor: function() {
     // Change the color of the sphere when the button is clicked
     //material.color.set(Math.random() * 0xffffff);
-      x = 5+ 5*Math.random();
-      y = 5+ 5*Math.random();
-      z = 10 + 5*Math.random();
-      points = [];
-      points2 = [];
+      x = 20*Math.random();
+      y = 20*Math.random();
+      z = 10 + 20*Math.random();
+      points.splice(0,1);
+      points2.splice(0,1);
   }
 };
 
