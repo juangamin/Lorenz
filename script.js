@@ -132,6 +132,22 @@ const rendering = function() {
   // Update the TrackballControls
   controls.update();
 
+      dx1 = params.sigma * (y - x);
+    dy1 = x * (params.rho - z) - y;
+    dz1 = x * y - params.beta * z;
+
+    x1 = x + dx1 * dt;
+    y1 = y + dy1 * dt;
+    z1 = z + dz1 * dt;
+
+    dx = params.sigma * (y1 - x1);
+    dy = x1 * (params.rho - z1) - y1;
+    dz = x1 * y1 - params.beta * z1;
+
+    x +=0.5*(dx1 + dx)*dt;
+    y +=0.5*(dy1 + dy)*dt;
+    z +=0.5*(dz1 + dz)*dt;
+
   renderer.render(scene, camera);
 
 const geometry = new THREE.BufferGeometry().setFromPoints( points );
