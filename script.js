@@ -9,6 +9,12 @@ const renderer = new THREE.WebGLRenderer();
 renderer.setSize(window.innerWidth, window.innerHeight);
 document.getElementById('scene-container').appendChild(renderer.domElement);
 
+//Material
+const material = new THREE.LineBasicMaterial({color: 0xFF0000});
+const material2 = new THREE.LineBasicMaterial({color: 0xFFFF00});
+const sphereGeometry = new THREE.SphereGeometry(0.5, 32, 32); // Define geometry
+const sphereMaterial = new THREE.MeshBasicMaterial({color: 0xffff00 }); // Define material
+
 // Create a Cube
 const geometry = new THREE.BoxGeometry();
 const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
@@ -26,6 +32,29 @@ camera.position.z = 5;
 const controls = new TrackballControls(camera, renderer.domElement);
 controls.rotateSpeed = 4;
 controls.dynamicDampingFactor = 0.15;
+
+//Parameters
+let lastFrameTime = Date.now();
+const fps = 10; // Target frame rate
+const interval = 1000 / fps;
+
+let sigma = params.sigma;
+let rho = params.rho;
+let beta = params.beta;
+
+let x = 5;
+let y = 5;
+let z = 10;
+
+let t = 0;
+let dt = 0.005;
+
+let dx, dy, dz;
+let x1, y1, z1;
+let dx1, dy1, dz1;
+
+let history = [];
+let ro;
 
 
 // Animation loop
