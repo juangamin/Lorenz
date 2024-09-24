@@ -203,6 +203,16 @@ renderer.deallocateMaterial(material2);
 
 rendering();
 
+const actions = {
+  changeColor: function() {
+    // Change the color of the sphere when the button is clicked
+    material.color.set(Math.random() * 0xffffff);
+  }
+};
+
+gui.add(actions, 'changeColor').name('Change Sphere Color');
+
+
 // Adjust the scene size when the window is resized
 window.addEventListener('resize', () => {
   const width = window.innerWidth;
