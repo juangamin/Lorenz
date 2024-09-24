@@ -107,16 +107,80 @@ let dx1, dy1, dz1;
 let history = [];
 let ro;
 
+let previousCurve, previousCurve2, previousSphere;
 
 // Animation loop
 const rendering = function() {
   requestAnimationFrame(rendering);
-  
+
+  if (previousCurve) {
+      previousCurve.geometry.dispose();
+      previousCurve.material.dispose();
+      scene.remove(previousCurve);
+  }
+  if (previousCurve2) {
+      previousCurve2.geometry.dispose();
+      previousCurve2.material.dispose();
+      scene.remove(previousCurve2);
+  }
+  if (previousSphere) {
+    previousSphere.geometry.dispose();
+    previousSphere.material.dispose();
+    scene.remove(previousSphere);
+}
   
   // Update the TrackballControls
   controls.update();
 
   renderer.render(scene, camera);
+
+const geometry = new THREE.BufferGeometry().setFromPoints( points );
+    const curve = new THREE.Line( geometry, material );
+    scene.add( curve );
+
+    const geometry2 = new THREE.BufferGeometry().setFromPoints( points2 );
+    const curve2 = new THREE.Line( geometry2, material2 );
+    scene.add( curve2 );
+
+    points.push( new THREE.Vector3( x,y,z) );
+    if (points.length > params.tail) {
+                    points.splice(0,points.length-params.tail);
+                }
+
+    points2.push( new THREE.Vector3( x,y,z) );
+    if (points2.length > 50) {
+                    points2.shift();
+    }
+
+        const sphere = new THREE.Mesh(sphereGeometry, sphereMaterial); // Build sphere
+        sphere.position.set(x, y, z);
+        scene.add(sphere); // Add sphere to canvas
+    
+            previousCurve = curve;
+        previousCurve2 = curve2;
+        previousSphere = sphere;
+
+renderer.render(scene, camera);
+
+scene.remove(sphere);
+scene.remove(curve);
+scene.remove(curve2);
+geometry.dispose();
+material.dispose();
+geometry2.dispose();
+material2.dispose();
+
+sphere.dispose();
+curve.dispose();
+curve2.dispose();
+
+renderer.deallocateObject(curve);
+renderer.deallocateObject(curve2);
+renderer.deallocateObject(sphere);
+renderer.deallocateGeometry(geometry);
+renderer.deallocateMaterial(material);
+renderer.deallocateGeometry(geometry2);
+renderer.deallocateMaterial(material2);
 }
 
 rendering();
