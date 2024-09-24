@@ -109,8 +109,8 @@ let ro;
 
 
 // Animation loop
-function animate() {
-  requestAnimationFrame(animate);
+const rendering = function() {
+  requestAnimationFrame(rendering);
   
   
   // Update the TrackballControls
@@ -128,4 +128,5 @@ window.addEventListener('resize', () => {
   renderer.setSize(width, height);
   camera.aspect = width / height;
   camera.updateProjectionMatrix();
-});
+}
+rendering()
