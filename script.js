@@ -33,16 +33,6 @@ gui.add(params, 'sigma', 0.1, 100.0).name('sigma');
 gui.add(params, 'beta', 0.1, 100.0).name('beta');
 gui.add(params, 'tail', 51, 10000).name('tail');
 
-const controlsGUI = {
-  rotationEnabled: rotationEnabled
-};
-
-// Add a binary button (toggle) to enable/disable rotation
-gui.add(controlsGUI, 'rotationEnabled').name('Enable Rotation').onChange(value => {
-  // Update the rotationEnabled variable when the toggle is clicked
-  rotationEnabled = value;
-  console.log("Rotation Enabled:", rotationEnabled);  // Log for debugging
-});
 
 // Position the camera
 //camera.position.z = 5;
