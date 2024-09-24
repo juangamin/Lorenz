@@ -18,11 +18,11 @@ scene.add(cube);
 // Position the camera
 camera.position.z = 5;
 
-// Add TrackballControls for rotating the camera around the scene
-const controls = new TrackballControls(camera, renderer.domElement);
-controls.rotateSpeed = 5.0;
-controls.zoomSpeed = 2.0;
-controls.panSpeed = 1.0;
+const controls = new OrbitControls(camera, canvas);
+	controls.target.set(0, 0, 0);
+	controls.update();
+	controls.enableZoom = false;
+
 
 // Animation loop
 function animate() {
