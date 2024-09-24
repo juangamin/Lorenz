@@ -26,15 +26,24 @@ const params = {
     rho: 28,
     sigma: 10,
     beta: 8/3,
-    tail: 10000,
-    grid: 1
+    tail: 50000,
 };
 gui.add(params, 'rho', 0.1, 200.0).name('rho');
 gui.add(params, 'sigma', 0.1, 100.0).name('sigma');
 gui.add(params, 'beta', 0.1, 100.0).name('beta');
 gui.add(params, 'tail', 51, 10000).name('tail');
-gui.add(params, 'grid', 0, 1).name('grid?');
 
+// Object to manage the binary button (toggle)
+const controlsGUI = {
+  rotationEnabled: rotationEnabled
+};
+
+// Add a binary button (toggle) to enable/disable rotation
+gui.add(controlsGUI, 'rotationEnabled').name('Enable Rotation').onChange(value => {
+  // Update the rotationEnabled variable when the toggle is clicked
+  rotationEnabled = value;
+  console.log("Rotation Enabled:", rotationEnabled);  // Log for debugging
+});
 
 // Position the camera
 //camera.position.z = 5;
