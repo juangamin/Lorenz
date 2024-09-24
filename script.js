@@ -197,6 +197,15 @@ renderer.deallocateGeometry(geometry);
 renderer.deallocateMaterial(material);
 renderer.deallocateGeometry(geometry2);
 renderer.deallocateMaterial(material2);
+
+const actions = {
+  changeColor: function() {
+    // Change the color of the sphere when the button is clicked
+material.color.set(Math.random() * 0xffffff);
+  }
+};
+
+gui.add(actions, 'changeColor').name('Change Sphere Color');
 }
 
 rendering();
