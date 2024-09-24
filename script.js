@@ -1,7 +1,7 @@
 // Import Three.js and other modules using CDN links
 import * as THREE from 'three';
 import { TrackballControls } from 'TrackballControls';
-import { GUI } from 'moe';
+import GUI from 'GUI';
 
 // Three.js Scene Setup
 const scene = new THREE.Scene();
