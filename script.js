@@ -23,9 +23,9 @@ camera.position.z = 5;
 //document.body.appendChild(renderer.domElement); // Add renderer to HTML as a canvas element
 
 //Trackball Controls for Camera
-//const controls = new TrackballControls(camera, renderer.domElement);
-//controls.rotateSpeed = 4;
-//controls.dynamicDampingFactor = 0.15;
+const controls = new TrackballControls(camera, renderer.domElement);
+controls.rotateSpeed = 4;
+controls.dynamicDampingFactor = 0.15;
 
 
 // Animation loop
@@ -37,7 +37,7 @@ function animate() {
   cube.rotation.y += 0.01;
   
   // Update the TrackballControls
-  //controls.update();
+  controls.update();
 
   renderer.render(scene, camera);
 }
