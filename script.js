@@ -209,7 +209,7 @@ const geometry = new THREE.BufferGeometry().setFromPoints( points );
 
     const geometry2s = new THREE.BufferGeometry().setFromPoints( points2s );
     const curve2s = new THREE.Line( geometry2s, material2 );
-    scene.add( curve2s );
+    
 
     points.push( new THREE.Vector3( x,y,z) );
     if (points.length > params.tail) {
@@ -237,11 +237,12 @@ const geometry = new THREE.BufferGeometry().setFromPoints( points );
 
         const spheret = new THREE.Mesh(sphereGeometry, sphereMaterial); // Build sphere
         spheret.position.set(xs, ys, zs);
-        scene.add(spheret); // Add sphere to canvas
 
   if (rotationEnabled) {
-    x = 0;
-  }
+      scene.add( curve2s );
+      scene.add(spheret); // Add sphere to canvas
+
+   }
     
         previousCurve = curve;
         previousCurve2 = curve2;
