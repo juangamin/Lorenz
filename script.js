@@ -287,9 +287,9 @@ const actions = {
       x = -10+20*Math.random();
       y = -10+20*Math.random();
       z = 10 + 20*Math.random();
-      xs = x + 0.1;
-      ys = y + 0.1;
-      zs = z + 0.1;
+      xs = x + 0.001;
+      ys = y + 0.001;
+      zs = z + 0.001;
       points.splice(0,points.length);
       points2.splice(0,points2.length);
       pointss.splice(0,pointss.length);
@@ -305,7 +305,7 @@ const controlsGUI = {
 };
 
 // Add a binary button (toggle) to enable/disable rotation
-gui.add(controlsGUI, 'rotationEnabled').name('Enable Rotation').onChange(value => {
+gui.add(controlsGUI, 'rotationEnabled').name('Show twin orbit').onChange(value => {
   // Update the rotationEnabled variable when the toggle is clicked
   rotationEnabled = value;
   console.log("Rotation Enabled:", rotationEnabled);  // Log for debugging
