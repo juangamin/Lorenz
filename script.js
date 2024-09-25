@@ -200,13 +200,16 @@ if (staticMode) {
 }
 
     else{
-    const geometry2 = new THREE.BufferGeometry().setFromPoints( points2 );
-    const curve2 = new THREE.Line( geometry2, material2 );
-    scene.add( curve2 );
 
     geometry = new THREE.BufferGeometry().setFromPoints( points );
     curve = new THREE.Line( geometry, material );
     scene.add( curve );
+        
+    const geometry2 = new THREE.BufferGeometry().setFromPoints( points2 );
+    const curve2 = new THREE.Line( geometry2, material2 );
+    scene.add( curve2 );
+
+
         
     const geometrys = new THREE.BufferGeometry().setFromPoints( pointss );
     const curves = new THREE.Line( geometrys, material );
