@@ -204,15 +204,17 @@ if (staticMode) {
     const curve2 = new THREE.Line( geometry2, material2 );
     scene.add( curve2 );
 
+    geometry = new THREE.BufferGeometry().setFromPoints( points );
+    curve = new THREE.Line( geometry, material );
+    scene.add( curve );
+        
     const geometrys = new THREE.BufferGeometry().setFromPoints( pointss );
     const curves = new THREE.Line( geometrys, material );
     
     const geometry2s = new THREE.BufferGeometry().setFromPoints( points2s );
     const curve2s = new THREE.Line( geometry2s, material2 );
 
-    geometry = new THREE.BufferGeometry().setFromPoints( points );
-    curve = new THREE.Line( geometry, material );
-    scene.add( curve );
+   
 
     points.push( new THREE.Vector3( x,y,z) );
     if (points.length > params.tail) {
