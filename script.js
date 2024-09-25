@@ -286,9 +286,9 @@ const actions = {
       x = -10+20*Math.random();
       y = -10+20*Math.random();
       z = 10 + 20*Math.random();
-      xs = x + 0.000001;
-      ys = y + 0.000001;
-      zs = z + 0.000001;
+      xs = x + 0.1;
+      ys = y + 0.1;
+      zs = z + 0.1;
       points.splice(0,points.length);
       points2.splice(0,points2.length);
       pointss.splice(0,pointss.length);
