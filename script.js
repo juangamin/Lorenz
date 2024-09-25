@@ -171,7 +171,7 @@ if (staticMode) {
 
         x1 = x + dx1 * dt;
         y1 = y + dy1 * dt;
-        z1 = z + dz1 * dt;
+        z1 = z + dz1 * dt; 
 
         dx = params.sigma * (y1 - x1);
         dy = x1 * (params.rho - z1) - y1;
@@ -187,9 +187,9 @@ if (staticMode) {
         geometry = new THREE.BufferGeometry().setFromPoints( points );
         curve = new THREE.Line( geometry, material );
         scene.add( curve );
-    }
+      }
     
-}
+    }
 }
 ro = params.rho;
     
