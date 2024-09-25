@@ -209,7 +209,10 @@ if (staticMode) {
     
     const geometry2s = new THREE.BufferGeometry().setFromPoints( points2s );
     const curve2s = new THREE.Line( geometry2s, material2 );
-    
+
+    geometry = new THREE.BufferGeometry().setFromPoints( points );
+    curve = new THREE.Line( geometry, material );
+    scene.add( curve );
 
     points.push( new THREE.Vector3( x,y,z) );
     if (points.length > params.tail) {
@@ -236,12 +239,12 @@ if (staticMode) {
 
 
 
-if(Twin){
-    scene.add(curves);
-    scene.add(curve2s);
-    scene.add(spheret);
-}
-    }
+      if(Twin){
+         scene.add(curves);
+         scene.add(curve2s);
+         scene.add(spheret);
+      }
+    }//end of else - Static mode
     
   // Update the TrackballControls
   controls.update();
