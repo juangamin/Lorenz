@@ -160,11 +160,9 @@ const rendering = function() {
   //}
 if (staticMode) {
 
-    if( Math.abs(params.rho -ro) < 0.01){
-      scene.remove(curve);
-    }
     if( Math.abs(params.rho -ro) > 0.01){ 
       points = [];
+      scene.remove(curve);
      
      for(var i = 0; i < 2000; i++ ) {
         dx1 = params.sigma * (y - x);
@@ -186,8 +184,8 @@ if (staticMode) {
         if(i > 200){
             points.push( new THREE.Vector3(x,y,z) );
         }
-        const geometry = new THREE.BufferGeometry().setFromPoints( points );
-        const curve = new THREE.Line( geometry, material );
+        geometry = new THREE.BufferGeometry().setFromPoints( points );
+        curve = new THREE.Line( geometry, material );
         scene.add( curve );
     }
     
