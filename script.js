@@ -121,7 +121,7 @@ let ro;
 
 let rotationEnabled = false;  // Initial state is false (rotation off)
 
-let previousCurve, previousCurve2, previousSphere, previousCurves, previousCurve2s ;
+let previousCurve, previousCurve2, previousSphere, previousSpheret, previousCurves, previousCurve2s ;
 
 // Animation loop
 const rendering = function() {
@@ -141,6 +141,11 @@ const rendering = function() {
     previousSphere.geometry.dispose();
     previousSphere.material.dispose();
     scene.remove(previousSphere);
+  }
+  if (previousSpheret) {
+    previousSpheret.geometry.dispose();
+    previousSpheret.material.dispose();
+    scene.remove(previousSpheret);
   }
   //if (previousCurves) {
     //  previousCurves.geometrys.dispose();
@@ -230,6 +235,10 @@ const geometry = new THREE.BufferGeometry().setFromPoints( points );
         sphere.position.set(x, y, z);
         scene.add(sphere); // Add sphere to canvas
 
+        const spheret = new THREE.Mesh(sphereGeometry, sphereMaterial); // Build sphere
+        spheret.position.set(xs, ys, zs);
+        scene.add(spheret); // Add sphere to canvas
+
   if (rotationEnabled) {
     x = 0;
   }
@@ -237,12 +246,14 @@ const geometry = new THREE.BufferGeometry().setFromPoints( points );
         previousCurve = curve;
         previousCurve2 = curve2;
         previousSphere = sphere;
+        previousSpheret = spheret;
         previousCurves = curves;
         previousCurve2s = curve2s;
 
 renderer.render(scene, camera);
 
 scene.remove(sphere);
+scene.remove(spheret);
 scene.remove(curve);
 scene.remove(curves);
 scene.remove(curve2);
@@ -261,13 +272,6 @@ geometry2s.dispose();
 //curve.dispose();
 //curve2.dispose();
 
-//renderer.deallocateObject(curve);
-//renderer.deallocateObject(curve2);
-//renderer.deallocateObject(sphere);
-//renderer.deallocateGeometry(geometry);
-//renderer.deallocateMaterial(material);
-//renderer.deallocateGeometry(geometry2);
-//renderer.deallocateMaterial(material2);
 
 
 }
