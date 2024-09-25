@@ -286,6 +286,8 @@ const actions = {
       zs = z + 0.000001;
       points.splice(0,points.length);
       points2.splice(0,points2.length);
+      pointss.splice(0,pointss.length);
+      points2s.splice(0,points2s.length);
   }
 };
 
