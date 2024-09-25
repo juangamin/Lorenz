@@ -159,8 +159,8 @@ const rendering = function() {
   //    scene.remove(previousCurve2s);
   //}
 
-    var geometry = new THREE.BufferGeometry().setFromPoints( points );
-    const curve = new THREE.Line( geometry, material );
+    geometry = new THREE.BufferGeometry().setFromPoints( points );
+    curve = new THREE.Line( geometry, material );
     scene.add( curve );
     
 if (staticMode) {
