@@ -141,12 +141,12 @@ const rendering = function() {
     previousSphere.geometry.dispose();
     previousSphere.material.dispose();
     scene.remove(previousSphere);
-}
-      if (previousCurves) {
-      previousCurves.geometrys.dispose();
-      previousCurves.material.dispose();
-      scene.remove(previousCurves);
   }
+  //if (previousCurves) {
+    //  previousCurves.geometrys.dispose();
+     // previousCurves.material.dispose();
+     // scene.remove(previousCurves);
+  //}
   if (previousCurve2s) {
       previousCurve2s.geometrys.dispose();
       previousCurve2s.material.dispose();
