@@ -119,7 +119,7 @@ let dx1s, dy1s, dz1s;
 let history = [];
 let ro;
 
-let rotationEnabled = false;  // Initial state is false (rotation off)
+let Twin = false;  // Initial state is false (rotation off)
 let staticMode = false; 
 
 let previousCurve, previousCurve2, previousSphere, previousSpheret, previousCurves, previousCurve2s ;
@@ -283,7 +283,7 @@ const geometry = new THREE.BufferGeometry().setFromPoints( points );
         const spheret = new THREE.Mesh(sphereGeometry, sphereMaterial); // Build sphere
         spheret.position.set(xs, ys, zs);
 
-if(rotationEnabled){
+if(Twin){
     scene.add(curves);
     scene.add(curve2s);
     scene.add(spheret);
@@ -345,13 +345,13 @@ gui.add(actions, 'changeColor').name('Restart Orbit');
 
 // Object to manage the binary button (toggle)
 const controlsGUI = {
-  rotationEnabled: rotationEnabled
+  Twin: Twin
 };
 // Add a binary button (toggle) to enable/disable rotation
-gui.add(controlsGUI, 'rotationEnabled').name('Show twin orbit').onChange(value => {
-  // Update the rotationEnabled variable when the toggle is clicked
-  rotationEnabled = value;
-  console.log("Rotation Enabled:", rotationEnabled);  // Log for debugging
+gui.add(controlsGUI, 'Twin').name('Show twin orbit').onChange(value => {
+  // Update the Twin variable when the toggle is clicked
+  Twin = value;
+  console.log("Rotation Enabled:", Twin);  // Log for debugging
 });
 
 // Object to manage the binary button (toggle)
@@ -360,7 +360,7 @@ const controlsGUI_static = {
 };
 // Add a binary button (toggle) to enable/disable rotation
 gui.add(controlsGUI_static, 'staticMode').name('Show whole attractor').onChange(value => {
-  // Update the rotationEnabled variable when the toggle is clicked
+  // Update the Twin variable when the toggle is clicked
   staticMode = value;
   console.log("Static Mode:", staticMode);  // Log for debugging
 });
