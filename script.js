@@ -159,10 +159,10 @@ const rendering = function() {
   //}
 if (rotationEnabled) {
 
-    if( Math.abs(params.rho -ro) > 0.01){
+    if( Math.abs(params.rho -ro) < 0.01){
       scene.remove(curve);
     }
-}
+
 
  if( Math.abs(params.rho -ro) > 0.01)
  { 
