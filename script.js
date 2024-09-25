@@ -161,7 +161,7 @@ const rendering = function() {
 if (staticMode) {
 
     if( Math.abs(params.rho -ro) > 0.01){ 
-      points = [];
+      points.splice(0,points.length);
       scene.remove(curve);
      
      for(var i = 0; i < 2000; i++ ) {
