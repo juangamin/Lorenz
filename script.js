@@ -157,7 +157,15 @@ const rendering = function() {
   //    previousCurve2s.material.dispose();
   //    scene.remove(previousCurve2s);
   //}
-  
+
+ if( Math.abs(params.rho -ro) > 0.01)
+{
+  const sphere2 = new THREE.Mesh(sphereGeometry, sphereMaterial); // Build sphere
+  sphere2.position.set(x+1,y+1,z+1);
+  scene.add(sphere2); // Add sphere to canvas
+}
+ro = params.rho;
+    
   // Update the TrackballControls
   controls.update();
 
