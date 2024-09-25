@@ -351,11 +351,11 @@ gui.add(controlsGUI, 'rotationEnabled').name('Show twin orbit').onChange(value =
 });
 
 // Object to manage the binary button (toggle)
-const controlsGUI = {
+const controlsGUI_static = {
   staticMode: staticMode
 };
 // Add a binary button (toggle) to enable/disable rotation
-gui.add(controlsGUI, 'staticMode').name('Show whole attractor').onChange(value => {
+gui.add(controlsGUI_static, 'staticMode').name('Show whole attractor').onChange(value => {
   // Update the rotationEnabled variable when the toggle is clicked
   staticMode = value;
   console.log("Static Mode:", staticMode);  // Log for debugging
