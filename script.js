@@ -101,9 +101,9 @@ let x = 5;
 let y = 5;
 let z = 10;
 
-let xs = 5 +10^-12;
-let ys = 5 +10^-12;
-let zs = 10 +10^-12;
+let xs = 5.00001;
+let ys = 5.000001;
+let zs = 10.000001;
 
 let t = 0;
 let dt = 0.005;
@@ -202,7 +202,7 @@ const geometry = new THREE.BufferGeometry().setFromPoints( points );
     const curves = new THREE.Line( geometrys, material );
     scene.add( curves );
 
-    const geometry2s = new THREE.BufferGeometry().setFromPoints( points2 );
+    const geometry2s = new THREE.BufferGeometry().setFromPoints( points2s );
     const curve2s = new THREE.Line( geometry2s, material2 );
     scene.add( curve2s );
 
