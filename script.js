@@ -157,10 +157,14 @@ const rendering = function() {
   //    previousCurve2s.material.dispose();
   //    scene.remove(previousCurve2s);
   //}
+if (rotationEnabled) {
+
+    if( Math.abs(params.rho -ro) > 0.01){
+      scene.remove(curve);
+    }
 
  if( Math.abs(params.rho -ro) > 0.01)
-{
-    //scene.remove(curve); 
+ { 
 
     for ( var i = 0; i < 2000; i ++ ) {
     dx1 = params.sigma * (y - x);
@@ -187,6 +191,8 @@ const rendering = function() {
     const curve = new THREE.Line( geometry, material );
     scene.add( curve );
     }
+    
+}
 }
 ro = params.rho;
     
@@ -270,12 +276,7 @@ const geometry = new THREE.BufferGeometry().setFromPoints( points );
         const spheret = new THREE.Mesh(sphereGeometry, sphereMaterial); // Build sphere
         spheret.position.set(xs, ys, zs);
 
-  if (rotationEnabled) {
-      scene.add( curves );
-      scene.add( curve2s );
-      scene.add(spheret); // Add sphere to canvas
 
-   }
     
         previousCurve = curve;
         previousCurve2 = curve2;
