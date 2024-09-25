@@ -120,6 +120,7 @@ let history = [];
 let ro;
 
 let rotationEnabled = false;  // Initial state is false (rotation off)
+let staticMode = false; 
 
 let previousCurve, previousCurve2, previousSphere, previousSpheret, previousCurves, previousCurve2s ;
 
@@ -157,7 +158,7 @@ const rendering = function() {
   //    previousCurve2s.material.dispose();
   //    scene.remove(previousCurve2s);
   //}
-if (rotationEnabled) {
+if (staticMode) {
 
     if( Math.abs(params.rho -ro) < 0.01){
       scene.remove(curve);
@@ -342,12 +343,22 @@ gui.add(actions, 'changeColor').name('Restart Orbit');
 const controlsGUI = {
   rotationEnabled: rotationEnabled
 };
-
 // Add a binary button (toggle) to enable/disable rotation
 gui.add(controlsGUI, 'rotationEnabled').name('Show twin orbit').onChange(value => {
   // Update the rotationEnabled variable when the toggle is clicked
   rotationEnabled = value;
   console.log("Rotation Enabled:", rotationEnabled);  // Log for debugging
+});
+
+// Object to manage the binary button (toggle)
+const controlsGUI = {
+  staticMode: staticMode
+};
+// Add a binary button (toggle) to enable/disable rotation
+gui.add(controlsGUI, 'staticMode').name('Show whole attractor').onChange(value => {
+  // Update the rotationEnabled variable when the toggle is clicked
+  staticMode = value;
+  console.log("Static Mode:", staticMode);  // Log for debugging
 });
 
 // Adjust the scene size when the window is resized
