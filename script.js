@@ -159,9 +159,7 @@ const rendering = function() {
   //    scene.remove(previousCurve2s);
   //}
 
-    geometry = new THREE.BufferGeometry().setFromPoints( points );
-    curve = new THREE.Line( geometry, material );
-    scene.add( curve );
+ ro = params.rho;
     
 if (staticMode) {
 
@@ -189,14 +187,59 @@ if (staticMode) {
         if(i > 200){
             points.push( new THREE.Vector3(x,y,z) );
         }
-        geometry = new THREE.BufferGeometry().setFromPoints( points );
-        curve = new THREE.Line( geometry, material );
-        scene.add( curve );
+            geometry = new THREE.BufferGeometry().setFromPoints( points );
+            curve = new THREE.Line( geometry, material );
+            scene.add( curve );
       }
     
     }
 }
-ro = params.rho;
+
+    else{
+    const geometry2 = new THREE.BufferGeometry().setFromPoints( points2 );
+    const curve2 = new THREE.Line( geometry2, material2 );
+    scene.add( curve2 );
+
+    const geometrys = new THREE.BufferGeometry().setFromPoints( pointss );
+    const curves = new THREE.Line( geometrys, material );
+    
+    const geometry2s = new THREE.BufferGeometry().setFromPoints( points2s );
+    const curve2s = new THREE.Line( geometry2s, material2 );
+    
+
+    points.push( new THREE.Vector3( x,y,z) );
+    if (points.length > params.tail) {
+                    points.splice(0,points.length-params.tail);
+                }
+
+    points2.push( new THREE.Vector3( x,y,z) );
+    if (points2.length > 50) {
+                    points2.shift();
+    }
+
+        pointss.push( new THREE.Vector3( xs,ys,zs) );
+    if (pointss.length > params.tail) {
+                    pointss.splice(0,pointss.length-params.tail);
+                }
+
+    points2s.push( new THREE.Vector3( xs,ys,zs) );
+    if (points2s.length > 50) {
+                    points2s.shift();
+    }
+
+        const sphere = new THREE.Mesh(sphereGeometry, sphereMaterial); // Build sphere
+        sphere.position.set(x, y, z);
+        scene.add(sphere); // Add sphere to canvas
+
+        const spheret = new THREE.Mesh(sphereGeometry, sphereMaterial); // Build sphere
+        spheret.position.set(xs, ys, zs);
+
+if(Twin){
+    scene.add(curves);
+    scene.add(curve2s);
+    scene.add(spheret);
+}
+    }
     
   // Update the TrackballControls
   controls.update();
@@ -237,50 +280,7 @@ ro = params.rho;
 
 
 
-    const geometry2 = new THREE.BufferGeometry().setFromPoints( points2 );
-    const curve2 = new THREE.Line( geometry2, material2 );
-    scene.add( curve2 );
 
-    const geometrys = new THREE.BufferGeometry().setFromPoints( pointss );
-    const curves = new THREE.Line( geometrys, material );
-    
-
-    const geometry2s = new THREE.BufferGeometry().setFromPoints( points2s );
-    const curve2s = new THREE.Line( geometry2s, material2 );
-    
-
-    points.push( new THREE.Vector3( x,y,z) );
-    if (points.length > params.tail) {
-                    points.splice(0,points.length-params.tail);
-                }
-
-    points2.push( new THREE.Vector3( x,y,z) );
-    if (points2.length > 50) {
-                    points2.shift();
-    }
-
-        pointss.push( new THREE.Vector3( xs,ys,zs) );
-    if (pointss.length > params.tail) {
-                    pointss.splice(0,pointss.length-params.tail);
-                }
-
-    points2s.push( new THREE.Vector3( xs,ys,zs) );
-    if (points2s.length > 50) {
-                    points2s.shift();
-    }
-
-        const sphere = new THREE.Mesh(sphereGeometry, sphereMaterial); // Build sphere
-        sphere.position.set(x, y, z);
-        scene.add(sphere); // Add sphere to canvas
-
-        const spheret = new THREE.Mesh(sphereGeometry, sphereMaterial); // Build sphere
-        spheret.position.set(xs, ys, zs);
-
-if(Twin){
-    scene.add(curves);
-    scene.add(curve2s);
-    scene.add(spheret);
-}
     
         previousCurve = curve;
         previousCurve2 = curve2;
