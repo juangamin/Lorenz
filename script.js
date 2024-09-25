@@ -237,14 +237,14 @@ const geometry = new THREE.BufferGeometry().setFromPoints( points );
         previousCurve = curve;
         previousCurve2 = curve2;
         previousSphere = sphere;
-
-            previousCurves = curves;
+        previousCurves = curves;
         previousCurve2s = curve2s;
 
 renderer.render(scene, camera);
 
 scene.remove(sphere);
 scene.remove(curve);
+scene.remove(curves);
 scene.remove(curve2);
 geometry.dispose();
 material.dispose();
