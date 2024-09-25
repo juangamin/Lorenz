@@ -160,6 +160,10 @@ const rendering = function() {
   //}
 
  ro = params.rho;
+ const sphere = new THREE.Mesh(sphereGeometry, sphereMaterial); // Build sphere
+ sphere.position.set(x, y, z);
+ const spheret = new THREE.Mesh(sphereGeometry, sphereMaterial); // Build sphere
+ spheret.position.set(xs, ys, zs);
     
 if (staticMode) {
 
@@ -227,12 +231,10 @@ if (staticMode) {
                     points2s.shift();
     }
 
-        const sphere = new THREE.Mesh(sphereGeometry, sphereMaterial); // Build sphere
-        sphere.position.set(x, y, z);
+
         scene.add(sphere); // Add sphere to canvas
 
-        const spheret = new THREE.Mesh(sphereGeometry, sphereMaterial); // Build sphere
-        spheret.position.set(xs, ys, zs);
+
 
 if(Twin){
     scene.add(curves);
