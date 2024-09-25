@@ -163,6 +163,31 @@ const rendering = function() {
   const sphere2 = new THREE.Mesh(sphereGeometry, sphereMaterial); // Build sphere
   sphere2.position.set(x+1,y+1,z+1);
   scene.add(sphere2); // Add sphere to canvas
+    for ( var i = 0; i < 200; i ++ ) {
+    dx1 = params.sigma * (y - x);
+    dy1 = x * (params.rho - z) - y;
+    dz1 = x * y - params.beta * z;
+
+    x1 = x + dx1 * dt;
+    y1 = y + dy1 * dt;
+    z1 = z + dz1 * dt;
+
+    dx = params.sigma * (y1 - x1);
+    dy = x1 * (params.rho - z1) - y1;
+    dz = x1 * y1 - params.beta * z1;
+
+    x +=0.5*(dx1 + dx)*dt;
+    y +=0.5*(dy1 + dy)*dt;
+    z +=0.5*(dz1 + dz)*dt;
+
+    points.push( new THREE.Vector3( x,y,z) );
+    if (points.length > params.tail) {
+        points.splice(0,points.length-params.tail);
+     }
+    const geometry = new THREE.BufferGeometry().setFromPoints( points );
+    const curve = new THREE.Line( geometry, material );
+    scene.add( curve );
+    }
 }
 ro = params.rho;
     
