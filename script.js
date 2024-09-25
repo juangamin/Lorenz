@@ -147,11 +147,11 @@ const rendering = function() {
      // previousCurves.material.dispose();
      // scene.remove(previousCurves);
   //}
-  if (previousCurve2s) {
-      previousCurve2s.geometrys.dispose();
-      previousCurve2s.material.dispose();
-      scene.remove(previousCurve2s);
-  }
+  //if (previousCurve2s) {
+  //    previousCurve2s.geometrys.dispose();
+  //    previousCurve2s.material.dispose();
+  //    scene.remove(previousCurve2s);
+  //}
   
   // Update the TrackballControls
   controls.update();
