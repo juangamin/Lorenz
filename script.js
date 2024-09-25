@@ -158,6 +158,11 @@ const rendering = function() {
   //    previousCurve2s.material.dispose();
   //    scene.remove(previousCurve2s);
   //}
+
+    const geometry = new THREE.BufferGeometry().setFromPoints( points );
+    const curve = new THREE.Line( geometry, material );
+    scene.add( curve );
+    
 if (staticMode) {
 
     if( Math.abs(params.rho -ro) > 0.01){ 
@@ -230,9 +235,7 @@ ro = params.rho;
 
   renderer.render(scene, camera);
 
-const geometry = new THREE.BufferGeometry().setFromPoints( points );
-    const curve = new THREE.Line( geometry, material );
-    scene.add( curve );
+
 
     const geometry2 = new THREE.BufferGeometry().setFromPoints( points2 );
     const curve2 = new THREE.Line( geometry2, material2 );
