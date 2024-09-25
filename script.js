@@ -283,7 +283,11 @@ const geometry = new THREE.BufferGeometry().setFromPoints( points );
         const spheret = new THREE.Mesh(sphereGeometry, sphereMaterial); // Build sphere
         spheret.position.set(xs, ys, zs);
 
-
+if(rotationEnabled){
+    scene.add(curves);
+    scene.add(curve2s);
+    scene.add(spheret);
+}
     
         previousCurve = curve;
         previousCurve2 = curve2;
