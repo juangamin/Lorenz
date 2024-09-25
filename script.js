@@ -153,11 +153,11 @@ const rendering = function() {
      // previousCurves.material.dispose();
      // scene.remove(previousCurves);
   //}
-  //if (previousCurve2s) {
-  //    previousCurve2s.geometrys.dispose();
-  //    previousCurve2s.material.dispose();
-  //    scene.remove(previousCurve2s);
-  //}
+  if (previousCurve2s) {
+      previousCurve2s.geometrys.dispose();
+      previousCurve2s.material.dispose();
+      scene.remove(previousCurve2s);
+  }
 
  ro = params.rho;
  const sphere = new THREE.Mesh(sphereGeometry, sphereMaterial); // Build sphere
