@@ -160,7 +160,7 @@ const rendering = function() {
 
  if( Math.abs(params.rho -ro) > 0.01)
 {
-    scene.remove(curve);
+    //scene.remove(curve); 
 
     for ( var i = 0; i < 2000; i ++ ) {
     dx1 = params.sigma * (y - x);
