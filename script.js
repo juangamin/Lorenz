@@ -166,7 +166,7 @@ if (staticMode) {
     if( Math.abs(params.rho -ro) > 0.01){ 
       points = [];
      
-     for ( var i = 0; i < 2000; i ++ ) {
+     for(var i = 0; i < 2000; i++ ) {
         dx1 = params.sigma * (y - x);
         dy1 = x * (params.rho - z) - y;
         dz1 = x * y - params.beta * z;
@@ -183,11 +183,8 @@ if (staticMode) {
         y +=0.5*(dy1 + dy)*dt;
         z +=0.5*(dz1 + dz)*dt;
      
-        if(var > 200){
-            points.push( new THREE.Vector3( x,y,z) );
-            if (points.length > params.tail) {
-                 points.splice(0,points.length-params.tail);
-            }
+        if(i > 200){
+            points.push( new THREE.Vector3(x,y,z) );
         }
         const geometry = new THREE.BufferGeometry().setFromPoints( points );
         const curve = new THREE.Line( geometry, material );
