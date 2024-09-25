@@ -281,6 +281,9 @@ const actions = {
       x = -10+20*Math.random();
       y = -10+20*Math.random();
       z = 10 + 20*Math.random();
+      xs = x + 0.000001;
+      ys = y + 0.000001;
+      zs = z + 0.000001;
       points.splice(0,points.length);
       points2.splice(0,points2.length);
   }
