@@ -205,7 +205,7 @@ const geometry = new THREE.BufferGeometry().setFromPoints( points );
 
     const geometrys = new THREE.BufferGeometry().setFromPoints( pointss );
     const curves = new THREE.Line( geometrys, material );
-    scene.add( curves );
+    
 
     const geometry2s = new THREE.BufferGeometry().setFromPoints( points2s );
     const curve2s = new THREE.Line( geometry2s, material2 );
@@ -239,6 +239,7 @@ const geometry = new THREE.BufferGeometry().setFromPoints( points );
         spheret.position.set(xs, ys, zs);
 
   if (rotationEnabled) {
+      scene.add( curves );
       scene.add( curve2s );
       scene.add(spheret); // Add sphere to canvas
 
