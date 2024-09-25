@@ -165,8 +165,13 @@ if (rotationEnabled) {
 
  if( Math.abs(params.rho -ro) > 0.01)
  { 
-
-    for ( var i = 0; i < 2000; i ++ ) {
+ 
+      points.splice(0,points.length);
+      points2.splice(0,points2.length);
+      pointss.splice(0,pointss.length);
+      points2s.splice(0,points2s.length);
+     
+     for ( var i = 0; i < 2000; i ++ ) {
     dx1 = params.sigma * (y - x);
     dy1 = x * (params.rho - z) - y;
     dz1 = x * y - params.beta * z;
