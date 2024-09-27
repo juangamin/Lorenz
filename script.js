@@ -194,9 +194,7 @@ const rendering = function() {
     ys +=0.5*(dy1s + dys)*dt;
     zs +=0.5*(dz1s + dzs)*dt;
 
-  renderer.render(scene, camera);
-
-const geometry = new THREE.BufferGeometry().setFromPoints( points );
+    const geometry = new THREE.BufferGeometry().setFromPoints( points );
     const curve = new THREE.Line( geometry, material );
     scene.add( curve );
 
