@@ -135,6 +135,7 @@ if(staticMode){
   const geometry = new THREE.BufferGeometry().setFromPoints( points );
   const curve = new THREE.Line( geometry, material );
   scene.add( curve );
+  previousCurve = curve;
 }
 else{
     
