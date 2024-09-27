@@ -303,12 +303,22 @@ gui.add(actions, 'changeColor').name('Restart Orbit');
 const controlsGUI = {
   rotationEnabled: rotationEnabled
 };
-
 // Add a binary button (toggle) to enable/disable rotation
 gui.add(controlsGUI, 'rotationEnabled').name('Show twin orbit').onChange(value => {
   // Update the rotationEnabled variable when the toggle is clicked
   rotationEnabled = value;
   console.log("Rotation Enabled:", rotationEnabled);  // Log for debugging
+});
+
+// Object to manage the binary button (toggle)
+const controlsGUI = {
+  staticMode: staticMode
+};
+// Add a binary button (toggle) to enable/disable rotation
+gui.add(controlsGUI, 'staticMode').name('Static Mode').onChange(value => {
+  // Update the rotationEnabled variable when the toggle is clicked
+  rotationEnabled = value;
+  console.log("Static Mode:", staticMode);  // Log for debugging
 });
 
 // Adjust the scene size when the window is resized
