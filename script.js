@@ -136,6 +136,7 @@ if(staticMode){
   const curve = new THREE.Line( geometry, material );
   scene.add( curve );
   previousCurve = curve;
+  scene.remove(curve);
 }
 else{
     
