@@ -119,8 +119,7 @@ let dx1s, dy1s, dz1s;
 let history = [];
 let ro;
 
-let Twin = false;  // Initial state is false (rotation off)
-let staticMode = false; 
+let rotationEnabled = false;  // Initial state is false (rotation off)
 
 let previousCurve, previousCurve2, previousSphere, previousSpheret, previousCurves, previousCurve2s ;
 
@@ -153,104 +152,12 @@ const rendering = function() {
      // previousCurves.material.dispose();
      // scene.remove(previousCurves);
   //}
-  if (previousCurve2s) {
-      previousCurve2s.geometrys.dispose();
-      previousCurve2s.material.dispose();
-      scene.remove(previousCurve2s);
-  }
-
- ro = params.rho;
- const sphere = new THREE.Mesh(sphereGeometry, sphereMaterial); // Build sphere
- sphere.position.set(x, y, z);
- const spheret = new THREE.Mesh(sphereGeometry, sphereMaterial); // Build sphere
- spheret.position.set(xs, ys, zs);
-    
-if (staticMode) {
-
-    if( Math.abs(params.rho -ro) > 0.01){ 
-      points.splice(0,points.length);
-      scene.remove(curve);
-     
-     for(var i = 0; i < 2000; i++ ) {
-        dx1 = params.sigma * (y - x);
-        dy1 = x * (params.rho - z) - y;
-        dz1 = x * y - params.beta * z;
-
-        x1 = x + dx1 * dt;
-        y1 = y + dy1 * dt;
-        z1 = z + dz1 * dt; 
-
-        dx = params.sigma * (y1 - x1);
-        dy = x1 * (params.rho - z1) - y1;
-        dz = x1 * y1 - params.beta * z1;
-
-        x +=0.5*(dx1 + dx)*dt;
-        y +=0.5*(dy1 + dy)*dt;
-        z +=0.5*(dz1 + dz)*dt;
-     
-        if(i > 200){
-            points.push( new THREE.Vector3(x,y,z) );
-        }
-            geometry = new THREE.BufferGeometry().setFromPoints( points );
-            curve = new THREE.Line( geometry, material );
-            scene.add( curve );
-      }
-    
-    }
-}
-
-    else{
-
-    geometry = new THREE.BufferGeometry().setFromPoints( points );
-    curve = new THREE.Line( geometry, material );
-    scene.add( curve );
-        
-    const geometry2 = new THREE.BufferGeometry().setFromPoints( points2 );
-    const curve2 = new THREE.Line( geometry2, material2 );
-    scene.add( curve2 );
-
-
-        
-    const geometrys = new THREE.BufferGeometry().setFromPoints( pointss );
-    const curves = new THREE.Line( geometrys, material );
-    
-    const geometry2s = new THREE.BufferGeometry().setFromPoints( points2s );
-    const curve2s = new THREE.Line( geometry2s, material2 );
-
-   
-
-    points.push( new THREE.Vector3( x,y,z) );
-    if (points.length > params.tail) {
-                    points.splice(0,points.length-params.tail);
-                }
-
-    points2.push( new THREE.Vector3( x,y,z) );
-    if (points2.length > 50) {
-                    points2.shift();
-    }
-
-        pointss.push( new THREE.Vector3( xs,ys,zs) );
-    if (pointss.length > params.tail) {
-                    pointss.splice(0,pointss.length-params.tail);
-                }
-
-    points2s.push( new THREE.Vector3( xs,ys,zs) );
-    if (points2s.length > 50) {
-                    points2s.shift();
-    }
-
-
-        scene.add(sphere); // Add sphere to canvas
-
-
-
-      if(Twin){
-         scene.add(curves);
-         scene.add(curve2s);
-         scene.add(spheret);
-      }
-    }//end of else - Static mode
-    
+  //if (previousCurve2s) {
+  //    previousCurve2s.geometrys.dispose();
+  //    previousCurve2s.material.dispose();
+  //    scene.remove(previousCurve2s);
+  //}
+  
   // Update the TrackballControls
   controls.update();
 
@@ -288,9 +195,55 @@ if (staticMode) {
 
   renderer.render(scene, camera);
 
+const geometry = new THREE.BufferGeometry().setFromPoints( points );
+    const curve = new THREE.Line( geometry, material );
+    scene.add( curve );
 
+    const geometry2 = new THREE.BufferGeometry().setFromPoints( points2 );
+    const curve2 = new THREE.Line( geometry2, material2 );
+    scene.add( curve2 );
 
+    const geometrys = new THREE.BufferGeometry().setFromPoints( pointss );
+    const curves = new THREE.Line( geometrys, material );
+    
 
+    const geometry2s = new THREE.BufferGeometry().setFromPoints( points2s );
+    const curve2s = new THREE.Line( geometry2s, material2 );
+    
+
+    points.push( new THREE.Vector3( x,y,z) );
+    if (points.length > params.tail) {
+                    points.splice(0,points.length-params.tail);
+                }
+
+    points2.push( new THREE.Vector3( x,y,z) );
+    if (points2.length > 50) {
+                    points2.shift();
+    }
+
+        pointss.push( new THREE.Vector3( xs,ys,zs) );
+    if (pointss.length > params.tail) {
+                    pointss.splice(0,pointss.length-params.tail);
+                }
+
+    points2s.push( new THREE.Vector3( xs,ys,zs) );
+    if (points2s.length > 50) {
+                    points2s.shift();
+    }
+
+        const sphere = new THREE.Mesh(sphereGeometry, sphereMaterial); // Build sphere
+        sphere.position.set(x, y, z);
+        scene.add(sphere); // Add sphere to canvas
+
+        const spheret = new THREE.Mesh(sphereGeometry, sphereMaterial); // Build sphere
+        spheret.position.set(xs, ys, zs);
+
+  if (rotationEnabled) {
+      scene.add( curves );
+      scene.add( curve2s );
+      scene.add(spheret); // Add sphere to canvas
+
+   }
     
         previousCurve = curve;
         previousCurve2 = curve2;
@@ -334,9 +287,9 @@ const actions = {
       x = -10+20*Math.random();
       y = -10+20*Math.random();
       z = 10 + 20*Math.random();
-      xs = x + 0.1;
-      ys = y + 0.1;
-      zs = z + 0.1;
+      xs = x + 0.001;
+      ys = y + 0.001;
+      zs = z + 0.001;
       points.splice(0,points.length);
       points2.splice(0,points2.length);
       pointss.splice(0,pointss.length);
@@ -348,24 +301,14 @@ gui.add(actions, 'changeColor').name('Restart Orbit');
 
 // Object to manage the binary button (toggle)
 const controlsGUI = {
-  Twin: Twin
+  rotationEnabled: rotationEnabled
 };
-// Add a binary button (toggle) to enable/disable rotation
-gui.add(controlsGUI, 'Twin').name('Show twin orbit').onChange(value => {
-  // Update the Twin variable when the toggle is clicked
-  Twin = value;
-  console.log("Rotation Enabled:", Twin);  // Log for debugging
-});
 
-// Object to manage the binary button (toggle)
-const controlsGUI_static = {
-  staticMode: staticMode
-};
 // Add a binary button (toggle) to enable/disable rotation
-gui.add(controlsGUI_static, 'staticMode').name('Show whole attractor').onChange(value => {
-  // Update the Twin variable when the toggle is clicked
-  staticMode = value;
-  console.log("Static Mode:", staticMode);  // Log for debugging
+gui.add(controlsGUI, 'rotationEnabled').name('Show twin orbit').onChange(value => {
+  // Update the rotationEnabled variable when the toggle is clicked
+  rotationEnabled = value;
+  console.log("Rotation Enabled:", rotationEnabled);  // Log for debugging
 });
 
 // Adjust the scene size when the window is resized
