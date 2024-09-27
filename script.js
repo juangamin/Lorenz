@@ -128,6 +128,16 @@ let previousCurve, previousCurve2, previousSphere, previousSpheret, previousCurv
 const rendering = function() {
   requestAnimationFrame(rendering);
 
+if(staticMode){
+  // Update the TrackballControls
+  controls.update();
+  renderer.render(scene, camera);
+  const geometry = new THREE.BufferGeometry().setFromPoints( points );
+  const curve = new THREE.Line( geometry, material );
+  scene.add( curve );
+}
+else{
+    
   if (previousCurve) {
       previousCurve.geometry.dispose();
       previousCurve.material.dispose();
@@ -272,7 +282,7 @@ geometry2s.dispose();
 //sphere.dispose();
 //curve.dispose();
 //curve2.dispose();
-
+}
 
 
 }
