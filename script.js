@@ -119,6 +119,7 @@ let dx1s, dy1s, dz1s;
 let history = [];
 let ro;
 
+let staticMode  = false; 
 let rotationEnabled = false;  // Initial state is false (rotation off)
 
 let previousCurve, previousCurve2, previousSphere, previousSpheret, previousCurves, previousCurve2s ;
