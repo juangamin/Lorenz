@@ -132,11 +132,11 @@ if(staticMode){
   // Update the TrackballControls
   controls.update();
   renderer.render(scene, camera);
+  scene.remove(curve);
   const geometry = new THREE.BufferGeometry().setFromPoints( points );
   const curve = new THREE.Line( geometry, material );
   scene.add( curve );
   previousCurve = curve;
-  scene.remove(curve);
 }
 else{
     
