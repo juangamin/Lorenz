@@ -10,7 +10,7 @@ renderer.setSize(window.innerWidth, window.innerHeight);
 document.getElementById('scene-container').appendChild(renderer.domElement);
 
 // Camera
-const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.6, 1200);
+const camera = new THREE.PerspectiveCamera(125, window.innerWidth / window.innerHeight, 0.6, 1200);
 camera.position.x = 35; // Set camera position
 camera.position.y = 15; // Set camera position
 camera.position.z = 35; // Set camera position
