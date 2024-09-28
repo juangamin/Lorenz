@@ -126,8 +126,6 @@ let rotationEnabled = false;  // Initial state is false (rotation off)
 
 let previousCurve, previousCurve2, previousSphere, previousSpheret, previousCurves, previousCurve2s ;
 
-const curveSteady = new THREE.Line( geometry, material );
-
 // Animation loop
 const rendering = function() {
   requestAnimationFrame(rendering);
