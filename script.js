@@ -12,8 +12,8 @@ document.getElementById('scene-container').appendChild(renderer.domElement);
 // Camera
 const camera = new THREE.PerspectiveCamera(125, window.innerWidth / window.innerHeight, 0.6, 1200);
 camera.position.x = 35; // Set camera position
-camera.position.y = 15; // Set camera position
-camera.position.z = 35; // Set camera position
+camera.position.y = 35; // Set camera position
+camera.position.z = 55; // Set camera position
 camera.up.set(0, 0, 1); // Set the up direction of the camera
 
 //Material
