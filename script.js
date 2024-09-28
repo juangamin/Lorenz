@@ -62,6 +62,7 @@ let axespoints;
   var curve2 = new THREE.Line( geometry2, material2 );
   var curves = new THREE.Line( geometrys, material );
   var curve2s = new THREE.Line( geometry2s, material2 );
+  var curveSteady = new THREE.Line( geometry, material );
 
     for ( let i = -30; i < 32; i+=2 ){
       axespoints = [];
@@ -134,12 +135,16 @@ if(staticMode){
   renderer.render(scene, camera);
   scene.remove(curve);
   const geometry = new THREE.BufferGeometry().setFromPoints( points );
-  const curve = new THREE.Line( geometry, material );
-  scene.add( curve );
-  previousCurve = curve;
+  const curveSteady = new THREE.Line( geometry, material );
+  scene.add( curveSteady );
 }
 else{
-    
+
+  if (curveSteady) {
+      curveSteady.geometry.dispose();
+      curveSteady.material.dispose();
+      scene.remove(curveSteady);
+  }
   if (previousCurve) {
       previousCurve.geometry.dispose();
       previousCurve.material.dispose();
