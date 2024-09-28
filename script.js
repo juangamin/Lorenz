@@ -14,7 +14,7 @@ const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerH
 camera.position.x = 35; // Set camera position
 camera.position.y = 15; // Set camera position
 camera.position.z = 35; // Set camera position
-camera.up.set(0, 1, 0); // Set the up direction of the camera
+camera.up.set(0, 0, 1); // Set the up direction of the camera
 
 //Material
 const material = new THREE.LineBasicMaterial({color: 0xFF0000});
@@ -140,7 +140,7 @@ if(staticMode){
   scene.add( curveSteady );
 }
 else{
-
+   scene.remove(curveSteady);
   if (curveSteady) {
       curveSteady.geometry.dispose();
       curveSteady.material.dispose();
