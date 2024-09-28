@@ -12,7 +12,7 @@ document.getElementById('scene-container').appendChild(renderer.domElement);
 // Camera
 const camera = new THREE.PerspectiveCamera(125, window.innerWidth / window.innerHeight, 0.6, 1200);
 camera.position.x = 35; // Set camera position
-camera.position.y = 35; // Set camera position
+camera.position.y = -35; // Set camera position
 camera.position.z = 55; // Set camera position
 camera.up.set(0, 0, 1); // Set the up direction of the camera
 
@@ -126,11 +126,12 @@ let rotationEnabled = false;  // Initial state is false (rotation off)
 
 let previousCurve, previousCurve2, previousSphere, previousSpheret, previousCurves, previousCurve2s ;
 
+const curveSteady = new THREE.Line( geometry, material );
+
 // Animation loop
 const rendering = function() {
   requestAnimationFrame(rendering);
 
-const curveSteady = new THREE.Line( geometry, material );
     
 if(staticMode){
   // Update the TrackballControls
