@@ -269,7 +269,7 @@ else{
         previousSpheret = spheret;
         previousCurves = curves;
         previousCurve2s = curve2s;
-
+    renderer.render(scene, camera);
 
 scene.remove(sphere);
 scene.remove(spheret);
@@ -297,7 +297,7 @@ geometry2s.dispose();
 
     // Update the TrackballControls
     controls.update();
-    renderer.render(scene, camera);
+
 
 
 }
