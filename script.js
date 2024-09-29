@@ -130,13 +130,13 @@ let previousCurve, previousCurve2, previousSphere, previousSpheret, previousCurv
 const rendering = function() {
   requestAnimationFrame(rendering);
 
+  const geometry = new THREE.BufferGeometry().setFromPoints( points );
+  curveSteady = new THREE.Line( geometry, material );
     
 if(staticMode){
   // Update the TrackballControls
   controls.update();
   scene.remove(curve);
-  const geometry = new THREE.BufferGeometry().setFromPoints( points );
-  curveSteady = new THREE.Line( geometry, material );
   scene.add(curveSteady);
   renderer.render(scene, camera);
 
