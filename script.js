@@ -177,9 +177,7 @@ else{
   //    previousCurve2s.material.dispose();
   //    scene.remove(previousCurve2s);
   //}
-  
-  // Update the TrackballControls
-  controls.update();
+
 
     dx1 = params.sigma * (y - x);
     dy1 = x * (params.rho - z) - y;
@@ -270,7 +268,6 @@ else{
         previousCurves = curves;
         previousCurve2s = curve2s;
 
-renderer.render(scene, camera);
 
 scene.remove(sphere);
 scene.remove(spheret);
@@ -291,7 +288,12 @@ geometry2s.dispose();
 //sphere.dispose();
 //curve.dispose();
 //curve2.dispose();
-}
+}// end else loop
+
+
+    // Update the TrackballControls
+    controls.update();
+    renderer.render(scene, camera);
 
 
 }
