@@ -134,13 +134,15 @@ const rendering = function() {
 if(staticMode){
   // Update the TrackballControls
   controls.update();
-  renderer.render(scene, camera);
   scene.remove(curve);
   const geometry = new THREE.BufferGeometry().setFromPoints( points );
   curveSteady = new THREE.Line( geometry, material );
   scene.add(curveSteady);
+  renderer.render(scene, camera);
+
 }
 else{
+
    scene.remove(curveSteady);
   if (curveSteady) {
       curveSteady.geometry.dispose();
@@ -288,12 +290,14 @@ geometry2s.dispose();
 //sphere.dispose();
 //curve.dispose();
 //curve2.dispose();
+
+renderer.render(scene, camera);
+
 }// end else loop
 
 
     // Update the TrackballControls
     controls.update();
-    renderer.render(scene, camera);
 
 
 }
