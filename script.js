@@ -291,13 +291,13 @@ geometry2s.dispose();
 //curve.dispose();
 //curve2.dispose();
 
-renderer.render(scene, camera);
 
 }// end else loop
 
 
     // Update the TrackballControls
     controls.update();
+    renderer.render(scene, camera);
 
 
 }
