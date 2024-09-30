@@ -145,6 +145,10 @@ if(staticMode){
 else{
 
    scene.remove(curveSteady);
+   curveSteady.geometry.dispose();
+   curveSteady.material.dispose();
+   curveSteady = null;
+    
   if (curveSteady) {
       curveSteady.geometry.dispose();
       curveSteady.material.dispose();
