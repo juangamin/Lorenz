@@ -63,7 +63,8 @@ let axespoints;
   var curve2 = new THREE.Line( geometry2, material2 );
   var curves = new THREE.Line( geometrys, material );
   var curve2s = new THREE.Line( geometry2s, material2 );
-  var curveSteady = new THREE.Line( geometry, material );
+  //var curveSteady = new THREE.Line( geometry, material );
+  let curveSteady;
 
     for ( let i = -30; i < 32; i+=2 ){
       axespoints = [];
