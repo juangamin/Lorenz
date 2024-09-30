@@ -55,6 +55,7 @@ const pointss = [];
 const points2s = [];
 let axespoints;
 
+let geometry;
   //var geometry = new THREE.BufferGeometry().setFromPoints( points );
   var geometry2 = new THREE.BufferGeometry().setFromPoints( points2 );
   var geometrys = new THREE.BufferGeometry().setFromPoints( pointss );
@@ -126,7 +127,7 @@ let staticMode  = false;
 let rotationEnabled = false;  // Initial state is false (rotation off)
 
 let previousCurve, previousCurve2, previousSphere, previousSpheret, previousCurves, previousCurve2s ;
-let geometry;
+
 
 // Animation loop
 const rendering = function() {
