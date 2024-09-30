@@ -150,7 +150,7 @@ else{
    scene.remove(curveSteady);
    curveSteady.geometry.dispose();
    curveSteady.material.dispose();
-   curveSteady = null;
+   //curveSteady = null;
     
   if (curveSteady) {
       curveSteady.geometry.dispose();
