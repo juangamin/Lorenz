@@ -131,7 +131,7 @@ let previousCurve, previousCurve2, previousSphere, previousSpheret, previousCurv
 const rendering = function() {
   requestAnimationFrame(rendering);
 
-  const geometry = new THREE.BufferGeometry().setFromPoints( points );
+//const geometry = new THREE.BufferGeometry().setFromPoints( points );
   curveSteady = new THREE.Line( geometry, material );
     
 if(staticMode){
