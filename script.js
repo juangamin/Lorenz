@@ -139,7 +139,7 @@ if(staticMode){
   // Update the TrackballControls
   controls.update();
   scene.remove(curve);
-    points = [];
+    points.splice(0,points.length);
     for(i=1;i<200;i++){
     dx1 = params.sigma * (y - x);
     dy1 = x * (params.rho - z) - y;
