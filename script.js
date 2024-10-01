@@ -19,7 +19,7 @@ camera.up.set(0, 0, 1); // Set the up direction of the camera
 //Material
 const material = new THREE.LineBasicMaterial({color: 0xFF0000});
 const material2 = new THREE.LineBasicMaterial({color: 0xFFFF00});
-const materiallog = new THREE.LineBasicMaterial({color: #ADD8E6});
+const materiallog = new THREE.LineBasicMaterial({color: 0xADD8E6});
 const sphereGeometry = new THREE.SphereGeometry(0.5, 32, 32); // Define geometry
 const sphereMaterial = new THREE.MeshBasicMaterial({color: 0xffff00 }); // Define material
 
