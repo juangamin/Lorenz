@@ -134,7 +134,6 @@ window.addEventListener('keydown', (event) => {
   // Check if the pressed key is "ArrowUp"
   if (event.key === 'ArrowUp') {
     x += 1;
-    console.log(`x increased: ${rotationSpeed}`);
   }
 });
 
