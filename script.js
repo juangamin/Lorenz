@@ -106,9 +106,9 @@ let x = 5;
 let y = 5;
 let z = 10;
 
-let xs = 5.00001;
-let ys = 5.00001;
-let zs = 10.00001;
+let xs = 5.00000001;
+let ys = 5.00000001;
+let zs = 10.00000001;
 
 let t = 0;
 let dt = 0.005;
@@ -365,9 +365,9 @@ const actions = {
       x = -10+20*Math.random();
       y = -10+20*Math.random();
       z = 10 + 20*Math.random();
-      xs = x + 0.00001;
-      ys = y + 0.00001;
-      zs = z + 0.00001;
+      xs = x + 0.00000001;
+      ys = y + 0.00000001;
+      zs = z + 0.00000001;
       points.splice(0,points.length);
       points2.splice(0,points2.length);
       pointss.splice(0,pointss.length);
