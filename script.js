@@ -146,7 +146,7 @@ window.addEventListener('keydown', (event) => {
 const rendering = function() {
   requestAnimationFrame(rendering);
 
-const geometry = new THREE.BufferGeometry().setFromPoints( points );
+//const geometry = new THREE.BufferGeometry().setFromPoints( points );
     
 if(staticMode){
   controls.update();
