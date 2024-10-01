@@ -303,7 +303,6 @@ if (previousCurveSteady) {
         spheret.position.set(xs, ys, zs);
 
   if (rotationEnabled) {
-      scene.remove(curvelog);
       scene.add( curves );
       scene.add( curve2s );
       scene.add(spheret); // Add sphere to canvas
