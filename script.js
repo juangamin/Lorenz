@@ -140,7 +140,7 @@ if(staticMode){
   controls.update();
   scene.remove(curve);
     points.splice(0,points.length);
-    for(var i=1;i<1000;i++){
+    for(var i=1;i<4000;i++){
     dx1 = params.sigma * (y - x);
     dy1 = x * (params.rho - z) - y;
     dz1 = x * y - params.beta * z;
