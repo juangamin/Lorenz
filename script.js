@@ -132,8 +132,8 @@ let previousCurveSteady, previousCurvelog;
 
 window.addEventListener('keydown', (event) => {
   // Check if the pressed key is "ArrowUp"
-  if (event.key === 'ArrowUp') {
-    x += 1;
+  if (event.key === 'r') {
+    params.rho += 0.01;
   }
 });
 
