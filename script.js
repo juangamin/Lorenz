@@ -143,7 +143,7 @@ if(staticMode){
   curveSteady = new THREE.Line( geometry, material );
   scene.add(curveSteady);
   renderer.render(scene, camera);
-
+  previousCurveSteady = curveSteady;
 }
 else{
 scene.remove(curveSteady);
@@ -273,7 +273,7 @@ if (previousCurveSteady) {
         previousSpheret = spheret;
         previousCurves = curves;
         previousCurve2s = curve2s;
-        previousCurveSteady = curveSteady;
+
     renderer.render(scene, camera);
 
 scene.remove(sphere);
