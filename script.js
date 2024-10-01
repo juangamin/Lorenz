@@ -314,6 +314,7 @@ if (previousCurveSteady) {
         previousSpheret = spheret;
         previousCurves = curves;
         previousCurve2s = curve2s;
+        previousCurvelog = curvelog;
 
     renderer.render(scene, camera);
 
@@ -322,11 +323,13 @@ scene.remove(spheret);
 scene.remove(curve);
 scene.remove(curves);
 scene.remove(curve2);
+scene.remove(curvelog);
 geometry.dispose();
 material.dispose();
 geometry2.dispose();
 material2.dispose();
-    
+geometrylog.dispose();
+materiallog.dispose();    
 
 scene.remove(curves);
 scene.remove(curve2s);
