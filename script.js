@@ -144,6 +144,8 @@ if(staticMode){
   controls.update();
   scene.remove(curve);
   scene.remove(curves);
+  scene.remove(curvelog);
+  logdiffs.splice(0,logdiffs.length);
     if(Math.abs(ro-params.rho)>0.01 || Math.abs(sig-params.sigma)>0.01 || Math.abs(bet-params.beta)>0.01){
     points.splice(0,points.length);
     for(var i=1;i<15000;i++){
@@ -253,7 +255,7 @@ if (previousCurveSteady) {
 
     t = t + dt;
 
-    logdiffs.push( new THREE.Vector3( Math.log((x-xs)*(x-xs) + (y-ys)*(y-ys)+(z-zs)*(z-zs))/2.0,-30+t,0));
+    logdiffs.push( new THREE.Vector3( Math.log((x-xs)*(x-xs) + (y-ys)*(y-ys)+(z-zs)*(z-zs))/2.0-20,-30+t,0));
     //times.push( new THREE.Vector3( Math.log((x-xs)*(x-xs) + (y-ys)*(y-ys)+(z-zs)*(z-zs))/2.0 );
     if (logdiffs.length > 100){
         logdiffs.splice(0,logdiffs.length - 100);
