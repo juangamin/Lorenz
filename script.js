@@ -127,7 +127,7 @@ let staticMode  = false;
 let rotationEnabled = false;  // Initial state is false (rotation off)
 
 let previousCurve, previousCurve2, previousSphere, previousSpheret, previousCurves, previousCurve2s ;
-
+let previousCurveSteady;
 
 // Animation loop
 const rendering = function() {
