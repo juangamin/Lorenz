@@ -139,6 +139,7 @@ if(staticMode){
   // Update the TrackballControls
   controls.update();
   scene.remove(curve);
+    if(Math.abs(ro-params.rho)>0.01){
     points.splice(0,points.length);
     for(var i=1;i<15000;i++){
     dx1 = params.sigma * (y - x);
@@ -160,6 +161,7 @@ if(staticMode){
         if(i>500){
             points.push( new THREE.Vector3( x,y,z) );
         }
+    }
     }
   const geometry = new THREE.BufferGeometry().setFromPoints( points );
   curveSteady = new THREE.Line( geometry, material );
@@ -325,7 +327,7 @@ geometry2s.dispose();
 
     // Update the TrackballControls
     controls.update();
-
+ro = params.rho;
 
 
 }
