@@ -152,8 +152,6 @@ if(staticMode){
   controls.update();
   scene.remove(curve);
   scene.remove(curves);
-  curvelog.visible = false;
-  logdiffs.splice(0,logdiffs.length);
     if(Math.abs(ro-params.rho)>0.01 || Math.abs(sig-params.sigma)>0.01 || Math.abs(bet-params.beta)>0.01){
     points.splice(0,points.length);
     for(var i=1;i<15000;i++){
@@ -184,6 +182,8 @@ if(staticMode){
   renderer.render(scene, camera);
   previousCurveSteady = curveSteady;
   scene.remove(curveSteady);
+  curveSteady.geometry.dispose();
+  curveSteady.material.dispose();
 }
 else{
 scene.remove(curveSteady);
