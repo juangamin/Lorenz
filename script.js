@@ -94,7 +94,7 @@ let axespoints;
 
 //Parameters
 let lastFrameTime = Date.now();
-const fps = 10; // Target frame rate
+const fps = 20; // Target frame rate
 const interval = 1000 / fps;
 
 let sigma = params.sigma;
