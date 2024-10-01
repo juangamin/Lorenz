@@ -105,9 +105,9 @@ let x = 5;
 let y = 5;
 let z = 10;
 
-let xs = 5.00001;
-let ys = 5.000001;
-let zs = 10.000001;
+let xs = 5.0001;
+let ys = 5.0001;
+let zs = 10.0001;
 
 let t = 0;
 let dt = 0.005;
@@ -140,7 +140,7 @@ if(staticMode){
   controls.update();
   scene.remove(curve);
     points.splice(0,points.length);
-    for(var i=1;i<4000;i++){
+    for(var i=1;i<15000;i++){
     dx1 = params.sigma * (y - x);
     dy1 = x * (params.rho - z) - y;
     dz1 = x * y - params.beta * z;
@@ -157,7 +157,7 @@ if(staticMode){
     y +=0.5*(dy1 + dy)*dt;
     z +=0.5*(dz1 + dz)*dt;
         
-        if(i>200){
+        if(i>500){
             points.push( new THREE.Vector3( x,y,z) );
         }
     }
