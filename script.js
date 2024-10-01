@@ -144,7 +144,9 @@ if(staticMode){
   controls.update();
   scene.remove(curve);
   scene.remove(curves);
-  scene.remove(curvelog);
+   previousCurvelog.geometry.dispose();
+   previousCurvelog.material.dispose();
+   scene.remove(previousCurvelog);
   logdiffs.splice(0,logdiffs.length);
     if(Math.abs(ro-params.rho)>0.01 || Math.abs(sig-params.sigma)>0.01 || Math.abs(bet-params.beta)>0.01){
     points.splice(0,points.length);
