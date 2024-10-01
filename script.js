@@ -140,7 +140,7 @@ if(staticMode){
   controls.update();
   scene.remove(curve);
     points.splice(0,points.length);
-    for(var i=1;i<200;i++){
+    for(var i=1;i<1000;i++){
     dx1 = params.sigma * (y - x);
     dy1 = x * (params.rho - z) - y;
     dz1 = x * y - params.beta * z;
@@ -156,8 +156,10 @@ if(staticMode){
     x +=0.5*(dx1 + dx)*dt;
     y +=0.5*(dy1 + dy)*dt;
     z +=0.5*(dz1 + dz)*dt;
-
-        points.push( new THREE.Vector3( x,y,z) );
+        
+        if(i>200){
+            points.push( new THREE.Vector3( x,y,z) );
+        }
     }
   const geometry = new THREE.BufferGeometry().setFromPoints( points );
   curveSteady = new THREE.Line( geometry, material );
