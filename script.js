@@ -32,7 +32,7 @@ const params = {
 gui.add(params, 'rho', 0.1, 200.0).name('rho');
 gui.add(params, 'sigma', 0.1, 100.0).name('sigma');
 gui.add(params, 'beta', 0.1, 100.0).name('beta');
-gui.add(params, 'tail', 51, 10000).name('tail');
+gui.add(params, 'tail', 51, 10000).name('Red tail length');
 
 
 // Position the camera
