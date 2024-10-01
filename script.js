@@ -244,7 +244,7 @@ if (previousCurveSteady) {
     ys +=0.5*(dy1s + dys)*dt;
     zs +=0.5*(dz1s + dzs)*dt;
 
-    logdiffs.push( new THREE.Vector3( Math.log((x-xs)*(x-xs) + (y-ys)*(y-ys)+(z-zs)*(z-zs))/2.0,0,0);
+    logdiffs.push( new THREE.Vector3( Math.log((x-xs)*(x-xs) + (y-ys)*(y-ys)+(z-zs)*(z-zs))/2.0,0,0));
     //times.push( new THREE.Vector3( Math.log((x-xs)*(x-xs) + (y-ys)*(y-ys)+(z-zs)*(z-zs))/2.0 );
 
     const geometry = new THREE.BufferGeometry().setFromPoints( points );
