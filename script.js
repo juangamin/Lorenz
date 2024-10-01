@@ -3,7 +3,7 @@ import * as THREE from 'three';
 import { TrackballControls } from 'TrackballControls';
 import GUI from 'GUI';
 
-// Three.js Scene Setup
+// Three.js Scene Setup 
 const scene = new THREE.Scene();
 const renderer = new THREE.WebGLRenderer();
 renderer.setSize(window.innerWidth, window.innerHeight);
