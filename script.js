@@ -133,7 +133,7 @@ let previousCurve, previousCurve2, previousSphere, previousSpheret, previousCurv
 const rendering = function() {
   requestAnimationFrame(rendering);
 
-//const geometry = new THREE.BufferGeometry().setFromPoints( points );
+const geometry = new THREE.BufferGeometry().setFromPoints( points );
     
 if(staticMode){
   // Update the TrackballControls
@@ -147,10 +147,9 @@ if(staticMode){
 }
 else{
 
-   scene.remove(curveSteady);
-   curveSteady.geometry.dispose();
-   curveSteady.material.dispose();
-   //curveSteady = null;
+   scene.remove(previousCurveSteady);
+   previousCurveSteady.geometry.dispose();
+   previousCurveSteady.material.dispose();
     
   if (curveSteady) {
       curveSteady.geometry.dispose();
@@ -277,6 +276,7 @@ else{
         previousSpheret = spheret;
         previousCurves = curves;
         previousCurve2s = curve2s;
+        previousCurveSteady = curveSteady;
     renderer.render(scene, camera);
 
 scene.remove(sphere);
