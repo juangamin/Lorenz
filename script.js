@@ -312,7 +312,7 @@ if (previousCurveSteady) {
       const geometrylog = new THREE.BufferGeometry().setFromPoints( logdiffs );
       const curvelog = new THREE.Line( geometrylog, materiallog );
       scene.add( curvelog );
-      curvelog.visible = true;
+      cube.visible = !cube.visible;
    }
     
         previousCurve = curve;
