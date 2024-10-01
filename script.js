@@ -212,12 +212,12 @@ if (previousCurveSteady) {
     scene.remove(previousSpheret);
   }
   if (previousCurves) {
-    previousCurves.geometrys.dispose();
+    previousCurves.geometry.dispose();
     previousCurves.material.dispose();
     scene.remove(previousCurves);
   }
   if (previousCurve2s) {
-      previousCurve2s.geometrys.dispose();
+      previousCurve2s.geometry.dispose();
       previousCurve2s.material.dispose();
       scene.remove(previousCurve2s);
   }
