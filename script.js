@@ -153,11 +153,6 @@ if (previousCurveSteady) {
    scene.remove(previousCurveSteady);
 }
     
-  if (curveSteady) {
-      curveSteady.geometry.dispose();
-      curveSteady.material.dispose();
-      scene.remove(curveSteady);
-  }
   if (previousCurve) {
       previousCurve.geometry.dispose();
       previousCurve.material.dispose();
