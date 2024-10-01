@@ -133,7 +133,7 @@ let staticMode  = false;
 let rotationEnabled = false;  // Initial state is false (rotation off)
 
 let previousCurve, previousCurve2, previousSphere, previousSpheret, previousCurves, previousCurve2s ;
-let previousCurveSteady;
+let previousCurveSteady, previousCurvelog;
 
 // Animation loop
 const rendering = function() {
@@ -183,7 +183,11 @@ if (previousCurveSteady) {
    previousCurveSteady.material.dispose();
    scene.remove(previousCurveSteady);
 }
-    
+  if (previousCurvelog) {
+      previousCurvelog.geometrylog.dispose();
+      previousCurvelog.materiallog.dispose();
+      scene.remove(previousCurvelog);
+  }
   if (previousCurve) {
       previousCurve.geometry.dispose();
       previousCurve.material.dispose();
@@ -298,6 +302,9 @@ if (previousCurveSteady) {
       scene.add( curves );
       scene.add( curve2s );
       scene.add(spheret); // Add sphere to canvas
+      const geometrylog = new THREE.BufferGeometry().setFromPoints( logdiffs );
+      const curvelog = new THREE.Line( geometrylog, materiallog );
+      scene.add( curvelog );
 
    }
     
