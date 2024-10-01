@@ -55,8 +55,8 @@ const pointss = [];
 const points2s = [];
 let axespoints;
 
-let geometry;
-  //var geometry = new THREE.BufferGeometry().setFromPoints( points );
+let geometry; 
+  var geometry = new THREE.BufferGeometry().setFromPoints( points );
   var geometry2 = new THREE.BufferGeometry().setFromPoints( points2 );
   var geometrys = new THREE.BufferGeometry().setFromPoints( pointss );
   var geometry2s = new THREE.BufferGeometry().setFromPoints( points2s );
