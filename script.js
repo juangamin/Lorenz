@@ -163,6 +163,8 @@ if(staticMode){
     x +=0.5*(dx1 + dx)*dt;
     y +=0.5*(dy1 + dy)*dt;
     z +=0.5*(dz1 + dz)*dt;
+
+    t = t + dt;
         
         if(i>500){
             points.push( new THREE.Vector3( x,y,z) );
@@ -252,7 +254,7 @@ if (previousCurveSteady) {
     ys +=0.5*(dy1s + dys)*dt;
     zs +=0.5*(dz1s + dzs)*dt;
 
-    logdiffs.push( new THREE.Vector3( Math.log((x-xs)*(x-xs) + (y-ys)*(y-ys)+(z-zs)*(z-zs))/2.0,0,0));
+    logdiffs.push( new THREE.Vector3( Math.log((x-xs)*(x-xs) + (y-ys)*(y-ys)+(z-zs)*(z-zs))/2.0,-20 + t,0));
     //times.push( new THREE.Vector3( Math.log((x-xs)*(x-xs) + (y-ys)*(y-ys)+(z-zs)*(z-zs))/2.0 );
 
     const geometry = new THREE.BufferGeometry().setFromPoints( points );
