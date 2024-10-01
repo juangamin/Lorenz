@@ -146,7 +146,7 @@ if(staticMode){
 
 }
 else{
-
+scene.remove(curveSteady);
 if (previousCurveSteady) {  
    previousCurveSteady.geometry.dispose();
    previousCurveSteady.material.dispose();
