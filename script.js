@@ -19,7 +19,7 @@ camera.up.set(0, 0, 1); // Set the up direction of the camera
 //Material/////////////////////////////////////////////////////////////////////////////////////////
 const material = new THREE.LineBasicMaterial({color: 0xFF0000});
 const material2 = new THREE.LineBasicMaterial({color: 0xFFFF00});
-const materiallog = new THREE.LineBasicMaterial({color: 0xADD8E6});   //0xADD8E6
+const materiallog = new THREE.LineBasicMaterial({color: 0x00FF00});   //0xADD8E6
 const sphereGeometry = new THREE.SphereGeometry(0.5, 32, 32); // Define geometry
 const sphereMaterial = new THREE.MeshBasicMaterial({color: 0xffff00 }); // Define material
 
@@ -106,9 +106,9 @@ let x = 5;
 let y = 5;
 let z = 10;
 
-let xs = 5.0001;
-let ys = 5.0001;
-let zs = 10.0001;
+let xs = 5.00001;
+let ys = 5.00001;
+let zs = 10.00001;
 
 let t = 0;
 let dt = 0.005;
@@ -365,9 +365,9 @@ const actions = {
       x = -10+20*Math.random();
       y = -10+20*Math.random();
       z = 10 + 20*Math.random();
-      xs = x + 0.001;
-      ys = y + 0.001;
-      zs = z + 0.001;
+      xs = x + 0.00001;
+      ys = y + 0.00001;
+      zs = z + 0.00001;
       points.splice(0,points.length);
       points2.splice(0,points2.length);
       pointss.splice(0,pointss.length);
