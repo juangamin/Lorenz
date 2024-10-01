@@ -144,6 +144,7 @@ if(staticMode){
   scene.add(curveSteady);
   renderer.render(scene, camera);
   previousCurveSteady = curveSteady;
+  scene.remove(curveSteady);
 }
 else{
 scene.remove(curveSteady);
