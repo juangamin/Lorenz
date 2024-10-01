@@ -3,26 +3,27 @@ import * as THREE from 'three';
 import { TrackballControls } from 'TrackballControls';
 import GUI from 'GUI';
 
-// Three.js Scene Setup 
+// Three.js Scene Setup //////////////////////////////////////////////////////////////////////////
 const scene = new THREE.Scene();
 const renderer = new THREE.WebGLRenderer();
 renderer.setSize(window.innerWidth, window.innerHeight);
 document.getElementById('scene-container').appendChild(renderer.domElement);
 
-// Camera
+// Camera/////////////////////////////////////////////////////////////////////////////////////////
 const camera = new THREE.PerspectiveCamera(125, window.innerWidth / window.innerHeight, 0.6, 1200);
 camera.position.x = 35; // Set camera position
 camera.position.y = -35; // Set camera position
 camera.position.z = 55; // Set camera position
 camera.up.set(0, 0, 1); // Set the up direction of the camera
 
-//Material
+//Material/////////////////////////////////////////////////////////////////////////////////////////
 const material = new THREE.LineBasicMaterial({color: 0xFF0000});
 const material2 = new THREE.LineBasicMaterial({color: 0xFFFF00});
-const materiallog = new THREE.LineBasicMaterial({color: 0xADD8E6});
+const materiallog = new THREE.LineBasicMaterial({color: 0xFFFF000});   //0xADD8E6
 const sphereGeometry = new THREE.SphereGeometry(0.5, 32, 32); // Define geometry
 const sphereMaterial = new THREE.MeshBasicMaterial({color: 0xffff00 }); // Define material
 
+//GUI/////////////////////////////////////////////////////////////////////////////////////////
 const gui = new GUI();
 const params = {
     rho: 28,
@@ -35,15 +36,7 @@ gui.add(params, 'sigma', 0.1, 100.0).name('sigma');
 gui.add(params, 'beta', 0.1, 100.0).name('beta');
 gui.add(params, 'tail', 51, 10000).name('Red tail length');
 
-
-// Position the camera
-//camera.position.z = 5;
-
-
-//renderer.setClearColor("#000000"); // Set background colour
-//document.body.appendChild(renderer.domElement); // Add renderer to HTML as a canvas element
-
-//Trackball Controls for Camera
+//Trackball Controls for Camera /////////////////////////////////////////////////////////////////////
 const controls = new TrackballControls(camera, renderer.domElement);
 controls.rotateSpeed = 4;
 controls.dynamicDampingFactor = 0.15;
@@ -59,7 +52,7 @@ let logdiffs = [];
 let times = [];
 let axespoints;
 
-  //let geometry;
+  //let geometry; /////////////////////////////////////////////////////////////////////
   var geometry = new THREE.BufferGeometry().setFromPoints( points );
   var geometry2 = new THREE.BufferGeometry().setFromPoints( points2 );
   var geometrys = new THREE.BufferGeometry().setFromPoints( pointss );
@@ -72,6 +65,8 @@ let axespoints;
   var curvelog = new THREE.Line( geometrylog, materiallog );
   //var curveSteady = new THREE.Line( geometry, material );
   let curveSteady;
+
+// Axes /////////////////////////////////////////////////////////////////////
 
     for ( let i = -30; i < 32; i+=2 ){
       axespoints = [];
@@ -98,7 +93,7 @@ let axespoints;
     scene.add( line5 );
 
 
-//Parameters
+//Parameters /////////////////////////////////////////////////////////////////////
 let lastFrameTime = Date.now();
 const fps = 20; // Target frame rate
 const interval = 1000 / fps;
@@ -135,14 +130,17 @@ let rotationEnabled = false;  // Initial state is false (rotation off)
 let previousCurve, previousCurve2, previousSphere, previousSpheret, previousCurves, previousCurve2s ;
 let previousCurveSteady, previousCurvelog;
 
-// Animation loop
+// Animation loop /////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////
+
 const rendering = function() {
   requestAnimationFrame(rendering);
 
 const geometry = new THREE.BufferGeometry().setFromPoints( points );
     
 if(staticMode){
-  // Update the TrackballControls
   controls.update();
   scene.remove(curve);
   scene.remove(curves);
@@ -349,6 +347,8 @@ geometry2s.dispose();
     // Update the TrackballControls
     controls.update();
 ro = params.rho;
+sig = params.sigma;
+bet = params.beta;
 
 
 }
