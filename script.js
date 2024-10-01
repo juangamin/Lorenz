@@ -210,16 +210,16 @@ if (previousCurveSteady) {
     previousSpheret.material.dispose();
     scene.remove(previousSpheret);
   }
-  //if (previousCurves) {
-    //  previousCurves.geometrys.dispose();
-     // previousCurves.material.dispose();
-     // scene.remove(previousCurves);
-  //}
-  //if (previousCurve2s) {
-  //    previousCurve2s.geometrys.dispose();
-  //    previousCurve2s.material.dispose();
-  //    scene.remove(previousCurve2s);
-  //}
+  if (previousCurves) {
+    previousCurves.geometrys.dispose();
+    previousCurves.material.dispose();
+    scene.remove(previousCurves);
+  }
+  if (previousCurve2s) {
+      previousCurve2s.geometrys.dispose();
+      previousCurve2s.material.dispose();
+      scene.remove(previousCurve2s);
+  }
 
 
     dx1 = params.sigma * (y - x);
@@ -308,7 +308,6 @@ if (previousCurveSteady) {
       const geometrylog = new THREE.BufferGeometry().setFromPoints( logdiffs );
       const curvelog = new THREE.Line( geometrylog, materiallog );
       scene.add( curvelog );
-
    }
     
         previousCurve = curve;
@@ -334,7 +333,6 @@ material2.dispose();
 geometrylog.dispose();
 materiallog.dispose();    
 
-scene.remove(curves);
 scene.remove(curve2s);
 geometrys.dispose();
 geometry2s.dispose();
