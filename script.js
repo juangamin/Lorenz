@@ -134,6 +134,7 @@ window.addEventListener('keydown', (event) => {
   // Check if the pressed key is "ArrowUp"
   if (event.key === 'r') {
     params.rho += 0.01;
+    speedController.updateDisplay();
   }
 });
 
