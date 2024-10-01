@@ -130,6 +130,14 @@ let rotationEnabled = false;  // Initial state is false (rotation off)
 let previousCurve, previousCurve2, previousSphere, previousSpheret, previousCurves, previousCurve2s ;
 let previousCurveSteady, previousCurvelog;
 
+window.addEventListener('keydown', (event) => {
+  // Check if the pressed key is "ArrowUp"
+  if (event.key === 'ArrowUp') {
+    x += 1;
+    console.log(`x increased: ${rotationSpeed}`);
+  }
+});
+
 // Animation loop /////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////
