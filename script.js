@@ -31,7 +31,7 @@ const params = {
     beta: 8/3,
     tail: 50000,
 };
-gui.add(params, 'rho', 0.1, 200.0).name('rho');
+const rhoController = gui.add(params, 'rho', 0.1, 200.0).name('rho');
 gui.add(params, 'sigma', 0.1, 100.0).name('sigma');
 gui.add(params, 'beta', 0.1, 100.0).name('beta');
 gui.add(params, 'tail', 51, 10000).name('Red tail length');
@@ -134,7 +134,7 @@ window.addEventListener('keydown', (event) => {
   // Check if the pressed key is "ArrowUp"
   if (event.key === 'r') {
     params.rho += 0.01;
-    speedController.updateDisplay();
+    rhoController.updateDisplay();
   }
 });
 
