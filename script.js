@@ -184,8 +184,8 @@ if (previousCurveSteady) {
    scene.remove(previousCurveSteady);
 }
   if (previousCurvelog) {
-      previousCurvelog.geometrylog.dispose();
-      previousCurvelog.materiallog.dispose();
+      previousCurvelog.geometry.dispose();
+      previousCurvelog.material.dispose();
       scene.remove(previousCurvelog);
   }
   if (previousCurve) {
