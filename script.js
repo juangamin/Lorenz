@@ -19,6 +19,7 @@ camera.up.set(0, 0, 1); // Set the up direction of the camera
 //Material
 const material = new THREE.LineBasicMaterial({color: 0xFF0000});
 const material2 = new THREE.LineBasicMaterial({color: 0xFFFF00});
+const materiallog = new THREE.LineBasicMaterial({color: 0x0000FF});
 const sphereGeometry = new THREE.SphereGeometry(0.5, 32, 32); // Define geometry
 const sphereMaterial = new THREE.MeshBasicMaterial({color: 0xffff00 }); // Define material
 
@@ -53,6 +54,9 @@ const points = [];
 const points2 = [];
 const pointss = [];
 const points2s = [];
+let history = [];
+let logdiffs = [];
+let times = [];
 let axespoints;
 
   //let geometry;
@@ -60,10 +64,12 @@ let axespoints;
   var geometry2 = new THREE.BufferGeometry().setFromPoints( points2 );
   var geometrys = new THREE.BufferGeometry().setFromPoints( pointss );
   var geometry2s = new THREE.BufferGeometry().setFromPoints( points2s );
+  var geometrylog = new THREE.BufferGeometry().setFromPoints( logdiffs );
   var curve = new THREE.Line( geometry, material );
   var curve2 = new THREE.Line( geometry2, material2 );
   var curves = new THREE.Line( geometrys, material );
   var curve2s = new THREE.Line( geometry2s, material2 );
+  var curvelog = new THREE.Line( geometrylog, materiallog );
   //var curveSteady = new THREE.Line( geometry, material );
   let curveSteady;
 
@@ -120,9 +126,7 @@ let dxs, dys, dzs;
 let x1s, y1s, z1s;
 let dx1s, dy1s, dz1s;
 
-let history = [];
-let logdiffs = [];
-let times = [];
+
 let ro, sig, bet;
 
 let staticMode  = false; 
