@@ -44,7 +44,7 @@ const actions = {
 };
 
 // Add the action button to the GUI
-gui.add(actions, 'changeColor').name('Change Sphere Color');
+gui.add(actions, 'changeColor').name('Change Color');
 
 //Trackball Controls for Camera /////////////////////////////////////////////////////////////////////
 const controls = new TrackballControls(camera, renderer.domElement);
@@ -416,9 +416,7 @@ bet = params.beta;
 rendering();
 
 const actions = {
-  changeColor: function() {
-    // Change the color of the sphere when the button is clicked
-    //material.color.set(Math.random() * 0xffffff);
+  restartOrbit: function() {
       x = -10+20*Math.random();
       y = -10+20*Math.random();
       z = 10 + 20*Math.random();
@@ -432,7 +430,7 @@ const actions = {
   }
 };
 
-gui.add(actions, 'changeColor').name('Restart Orbit');
+gui.add(actions, 'restartOrbit').name('Restart Orbit');
 
 // Object to manage the binary button (toggle)
 const controlsGUI = {
