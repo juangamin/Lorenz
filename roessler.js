@@ -132,7 +132,7 @@ let x1s, y1s, z1s;
 let dx1s, dy1s, dz1s;
 
 
-let ro, sig, bet;
+let aa, bb, cc;
 
 let staticMode  = false; 
 let rotationEnabled = false;  // Initial state is false (rotation off)
@@ -197,7 +197,7 @@ if(staticMode){
   controls.update();
   scene.remove(curve);
   scene.remove(curves);
-    if(Math.abs(ro-params.rho)>0.01 || Math.abs(sig-params.sigma)>0.01 || Math.abs(bet-params.beta)>0.01){
+    if(Math.abs(aa-params.a)>0.01 || Math.abs(bb-params.b)>0.01 || Math.abs(cc-params.c)>0.01){
     points.splice(0,points.length);
     for(var i=1;i<15000;i++){
     dx1 = -y -z;
