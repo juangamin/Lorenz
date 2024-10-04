@@ -32,8 +32,8 @@ const params = {
     tail: 50000,
 };
 const rhoController = gui.add(params, 'rho', 0.1, 200.0).name('rho');
-gui.add(params, 'sigma', 0.1, 100.0).name('sigma');
-gui.add(params, 'beta', 0.1, 100.0).name('beta');
+const sigmaController = gui.add(params, 'sigma', 0.1, 100.0).name('sigma');
+const betaController = gui.add(params, 'beta', 0.1, 100.0).name('beta');
 gui.add(params, 'tail', 51, 10000).name('Red tail length');
 
 //Trackball Controls for Camera /////////////////////////////////////////////////////////////////////
@@ -134,6 +134,41 @@ window.addEventListener('keydown', (event) => {
   // Check if the pressed key is "ArrowUp"
   if (event.key === 'r') {
     params.rho += 0.01;
+    rhoController.updateDisplay();
+  }
+});
+window.addEventListener('keydown', (event) => {
+  // Check if the pressed key is "ArrowUp"
+  if (event.key === 'e') {
+    params.rho -= 0.01;
+    rhoController.updateDisplay();
+  }
+});
+window.addEventListener('keydown', (event) => {
+  // Check if the pressed key is "ArrowUp"
+  if (event.key === 'b') {
+    params.beta += 0.01;
+    betaController.updateDisplay();
+  }
+});
+window.addEventListener('keydown', (event) => {
+  // Check if the pressed key is "ArrowUp"
+  if (event.key === 'v') {
+    params.beta -= 0.01;
+    betaController.updateDisplay();
+  }
+});
+window.addEventListener('keydown', (event) => {
+  // Check if the pressed key is "ArrowUp"
+  if (event.key === 's') {
+    params.sigma += 0.01;
+    rhoController.updateDisplay();
+  }
+});
+window.addEventListener('keydown', (event) => {
+  // Check if the pressed key is "ArrowUp"
+  if (event.key === 'a') {
+    params.sigma -= 0.01;
     rhoController.updateDisplay();
   }
 });
