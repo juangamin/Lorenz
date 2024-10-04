@@ -162,14 +162,14 @@ window.addEventListener('keydown', (event) => {
   // Check if the pressed key is "ArrowUp"
   if (event.key === 's') {
     params.sigma += 0.01;
-    rhoController.updateDisplay();
+    sigmaController.updateDisplay();
   }
 });
 window.addEventListener('keydown', (event) => {
   // Check if the pressed key is "ArrowUp"
   if (event.key === 'a') {
     params.sigma -= 0.01;
-    rhoController.updateDisplay();
+    sigmaController.updateDisplay();
   }
 });
 
