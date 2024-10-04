@@ -112,13 +112,13 @@ let sigma = params.sigma;
 let rho = params.rho;
 let beta = params.beta;
 
-let x = 1;
-let y = 1;
-let z = 1;
+let x = 2;
+let y = 2;
+let z = 2;
 
-let xs = 5.00000001;
-let ys = 5.00000001;
-let zs = 10.00000001;
+let xs = 2.00000001;
+let ys = 2.00000001;
+let zs = 2.00000001;
 
 let t = 0;
 let dt = 0.005;
