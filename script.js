@@ -10,7 +10,7 @@ renderer.setSize(window.innerWidth, window.innerHeight);
 document.getElementById('scene-container').appendChild(renderer.domElement);
 
 // Camera/////////////////////////////////////////////////////////////////////////////////////////
-const camera = new THREE.PerspectiveCamera(125, window.innerWidth / window.innerHeight, 0.6, 1200);
+const camera = new THREE.PerspectiveCamera(100, window.innerWidth / window.innerHeight, 0.6, 1200);
 camera.position.x = 35; // Set camera position
 camera.position.y = -35; // Set camera position
 camera.position.z = 55; // Set camera position
@@ -86,7 +86,7 @@ let axespoints;
     }
     axespoints = [];
     axespoints.push( new THREE.Vector3( 0,0,0) );
-    axespoints.push( new THREE.Vector3( 0,0,60) );
+    axespoints.push( new THREE.Vector3( 0,0,40) );
     const geometry5 = new THREE.BufferGeometry().setFromPoints( axespoints );
     const material5 = new THREE.LineBasicMaterial({color: 0xFFFFFF});
     const line5 = new THREE.Line( geometry5, material5 );
