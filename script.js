@@ -310,6 +310,9 @@ if (previousCurveSteady) {
 
         const spheret = new THREE.Mesh(sphereGeometry, sphereMaterial); // Build sphere
         spheret.position.set(xs, ys, zs);
+        
+        const geometrylog = new THREE.BufferGeometry().setFromPoints( logdiffs );
+        const curvelog = new THREE.Line( geometrylog, materiallog );
 
     //curvelog.visible = false;
     
@@ -317,11 +320,7 @@ if (previousCurveSteady) {
       scene.add( curves );
       scene.add( curve2s );
       scene.add(spheret); // Add sphere to canvas
-      const geometrylog = new THREE.BufferGeometry().setFromPoints( logdiffs );
-      const curvelog = new THREE.Line( geometrylog, materiallog );
       scene.add( curvelog );
-      //curvelog.visible = !curvelog.visible;
-      previousCurvelog = curvelog;
    }
     
         previousCurve = curve;
@@ -330,6 +329,7 @@ if (previousCurveSteady) {
         previousSpheret = spheret;
         previousCurves = curves;
         previousCurve2s = curve2s;
+        previousCurvelog = curvelog;
         
 
     renderer.render(scene, camera);
