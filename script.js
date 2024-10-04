@@ -440,7 +440,7 @@ const staticmodeGUI = {
   staticMode: staticMode
 };
 // Add a binary button (toggle) to enable/disable rotation
-gui.add(staticmodeGUI, 'staticMode').name('Static Mode').onChange(value => {
+gui.add(staticmodeGUI, 'staticMode').name('Static Mode (change parameters)').onChange(value => {
   // Update the rotationEnabled variable when the toggle is clicked
    staticMode = value;
   console.log("Static Mode:", staticMode);  // Log for debugging
