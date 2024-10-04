@@ -36,7 +36,7 @@ const sigmaController = gui.add(params, 'sigma', 0.1, 100.0).name('sigma (press 
 const betaController = gui.add(params, 'beta', 0.1, 100.0).name('beta (press b or v)');
 gui.add(params, 'tail', 51, 10000).name('Red tail length');
 
-const actions = {
+const actions2 = {
   changeColor: function() {
     // Change the color of the sphere when the button is clicked
     material.color.set(Math.random() * 0xffffff);
@@ -44,7 +44,7 @@ const actions = {
 };
 
 // Add the action button to the GUI
-gui.add(actions, 'changeColor').name('Change Color');
+gui.add(actions2, 'changeColor').name('Change Color');
 
 //Trackball Controls for Camera /////////////////////////////////////////////////////////////////////
 const controls = new TrackballControls(camera, renderer.domElement);
