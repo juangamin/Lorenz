@@ -31,9 +31,9 @@ const params = {
     beta: 8/3,
     tail: 50000,
 };
-const rhoController = gui.add(params, 'rho', 0.1, 200.0).name('rho');
-const sigmaController = gui.add(params, 'sigma', 0.1, 100.0).name('sigma');
-const betaController = gui.add(params, 'beta', 0.1, 100.0).name('beta');
+const rhoController = gui.add(params, 'rho', 0.1, 200.0).name('rho (press r or e)');
+const sigmaController = gui.add(params, 'sigma', 0.1, 100.0).name('sigma (press s or a)');
+const betaController = gui.add(params, 'beta', 0.1, 100.0).name('beta (press b or v)');
 gui.add(params, 'tail', 51, 10000).name('Red tail length');
 
 //Trackball Controls for Camera /////////////////////////////////////////////////////////////////////
