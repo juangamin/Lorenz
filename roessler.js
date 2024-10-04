@@ -274,7 +274,7 @@ if (previousCurveSteady) {
   }
 
 
-       dx1 = -y -z;
+    dx1 = -y -z;
     dy1 = x + params.a*y;
     dz1 = params.b + z*(x - params.c);
 
@@ -413,9 +413,9 @@ rendering();
 
 const actions = {
   restartOrbit: function() {
-      x = -10+20*Math.random();
-      y = -10+20*Math.random();
-      z = 10 + 20*Math.random();
+      x = -1+2*Math.random();
+      y = -1+2*Math.random();
+      z =  Math.random();
       xs = x + 0.00000001;
       ys = y + 0.00000001;
       zs = z + 0.00000001;
