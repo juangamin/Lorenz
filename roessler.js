@@ -290,6 +290,10 @@ if (previousCurveSteady) {
     dy1s = xs + params.a*ys;
     dz1s = params.b + zs*(xs - params.c);
 
+    x +=0.5*(dx1 + dx)*dt;
+    y +=0.5*(dy1 + dy)*dt;
+    z +=0.5*(dz1 + dz)*dt;
+    
     x1s = xs + dx1s * dt;
     y1s = ys + dy1s * dt;
     z1s = zs + dz1s * dt; 
