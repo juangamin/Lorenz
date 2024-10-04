@@ -44,7 +44,7 @@ const actions2 = {
 };
 
 // Add the action button to the GUI
-gui.add(actions2, 'changeColor').name('Change Color');
+gui.add(actions2, 'changeColor').name('Change to random color');
 
 //Trackball Controls for Camera /////////////////////////////////////////////////////////////////////
 const controls = new TrackballControls(camera, renderer.domElement);
@@ -448,7 +448,7 @@ const staticmodeGUI = {
   staticMode: staticMode
 };
 // Add a binary button (toggle) to enable/disable rotation
-gui.add(staticmodeGUI, 'staticMode').name('Static Mode (change parameters)').onChange(value => {
+gui.add(staticmodeGUI, 'staticMode').name('Static mode (change parameters)').onChange(value => {
   // Update the rotationEnabled variable when the toggle is clicked
    staticMode = value;
   console.log("Static Mode:", staticMode);  // Log for debugging
