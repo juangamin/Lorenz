@@ -321,6 +321,7 @@ if (previousCurveSteady) {
       const curvelog = new THREE.Line( geometrylog, materiallog );
       scene.add( curvelog );
       //curvelog.visible = !curvelog.visible;
+      previousCurvelog = curvelog;
    }
     
         previousCurve = curve;
@@ -329,7 +330,7 @@ if (previousCurveSteady) {
         previousSpheret = spheret;
         previousCurves = curves;
         previousCurve2s = curve2s;
-        previousCurvelog = curvelog;
+        
 
     renderer.render(scene, camera);
 
