@@ -26,14 +26,14 @@ const sphereMaterial = new THREE.MeshBasicMaterial({color: 0xffff00 }); // Defin
 //GUI/////////////////////////////////////////////////////////////////////////////////////////
 const gui = new GUI();
 const params = {
-    rho: 28,
-    sigma: 10,
-    beta: 8/3,
+    a: 0.2,
+    b: 0.2,
+    c: 5.7,
     tail: 50000,
 };
-const rhoController = gui.add(params, 'rho', 0.1, 200.0).name('rho (press r or e)');
-const sigmaController = gui.add(params, 'sigma', 0.1, 100.0).name('sigma (press s or a)');
-const betaController = gui.add(params, 'beta', 0.1, 100.0).name('beta (press b or v)');
+const rhoController = gui.add(params, 'a', 0.1, 200.0).name('rho (press r or e)');
+const sigmaController = gui.add(params, 'b', 0.1, 100.0).name('sigma (press s or a)');
+const betaController = gui.add(params, 'c', 0.1, 100.0).name('beta (press b or v)');
 gui.add(params, 'tail', 51, 10000).name('Red tail length');
 
 const actions2 = {
@@ -112,9 +112,9 @@ let sigma = params.sigma;
 let rho = params.rho;
 let beta = params.beta;
 
-let x = 5;
-let y = 5;
-let z = 10;
+let x = 1;
+let y = 1;
+let z = 1;
 
 let xs = 5.00000001;
 let ys = 5.00000001;
@@ -143,42 +143,42 @@ let previousCurveSteady, previousCurvelog;
 window.addEventListener('keydown', (event) => {
   // Check if the pressed key is "ArrowUp"
   if (event.key === 'r') {
-    params.rho += 0.01;
+    params.a += 0.01;
     rhoController.updateDisplay();
   }
 });
 window.addEventListener('keydown', (event) => {
   // Check if the pressed key is "ArrowUp"
   if (event.key === 'e') {
-    params.rho -= 0.01;
+    params.a -= 0.01;
     rhoController.updateDisplay();
   }
 });
 window.addEventListener('keydown', (event) => {
   // Check if the pressed key is "ArrowUp"
   if (event.key === 'b') {
-    params.beta += 0.01;
+    params.b += 0.01;
     betaController.updateDisplay();
   }
 });
 window.addEventListener('keydown', (event) => {
   // Check if the pressed key is "ArrowUp"
   if (event.key === 'v') {
-    params.beta -= 0.01;
+    params.b -= 0.01;
     betaController.updateDisplay();
   }
 });
 window.addEventListener('keydown', (event) => {
   // Check if the pressed key is "ArrowUp"
   if (event.key === 's') {
-    params.sigma += 0.01;
+    params.c += 0.01;
     sigmaController.updateDisplay();
   }
 });
 window.addEventListener('keydown', (event) => {
   // Check if the pressed key is "ArrowUp"
   if (event.key === 'a') {
-    params.sigma -= 0.01;
+    params.c -= 0.01;
     sigmaController.updateDisplay();
   }
 });
@@ -200,17 +200,17 @@ if(staticMode){
     if(Math.abs(ro-params.rho)>0.01 || Math.abs(sig-params.sigma)>0.01 || Math.abs(bet-params.beta)>0.01){
     points.splice(0,points.length);
     for(var i=1;i<15000;i++){
-    dx1 = params.sigma * (y - x);
-    dy1 = x * (params.rho - z) - y;
-    dz1 = x * y - params.beta * z;
+    dx1 = -y -z;
+    dy1 = x + params.a*y;
+    dz1 = params.b + z*(x - params.c);
 
     x1 = x + dx1 * dt;
     y1 = y + dy1 * dt;
-    z1 = z + dz1 * dt;
+    z1 = z + dz1 * dt; 
 
-    dx = params.sigma * (y1 - x1);
-    dy = x1 * (params.rho - z1) - y1;
-    dz = x1 * y1 - params.beta * z1;
+    dx = -y1 -z1;
+    dy = x1 + params.a*y1;
+    dz = params.b + z1*(x1 - params.c);
 
     x +=0.5*(dx1 + dx)*dt;
     y +=0.5*(dy1 + dy)*dt;
@@ -274,33 +274,29 @@ if (previousCurveSteady) {
   }
 
 
-    dx1 = params.sigma * (y - x);
-    dy1 = x * (params.rho - z) - y;
-    dz1 = x * y - params.beta * z;
+       dx1 = -y -z;
+    dy1 = x + params.a*y;
+    dz1 = params.b + z*(x - params.c);
 
     x1 = x + dx1 * dt;
     y1 = y + dy1 * dt;
-    z1 = z + dz1 * dt;
+    z1 = z + dz1 * dt; 
 
-    dx = params.sigma * (y1 - x1);
-    dy = x1 * (params.rho - z1) - y1;
-    dz = x1 * y1 - params.beta * z1;
+    dx = -y1 -z1;
+    dy = x1 + params.a*y1;
+    dz = params.b + z1*(x1 - params.c);
 
-    x +=0.5*(dx1 + dx)*dt;
-    y +=0.5*(dy1 + dy)*dt;
-    z +=0.5*(dz1 + dz)*dt;
-
-    dx1s = params.sigma * (ys - xs);
-    dy1s = xs * (params.rho - zs) - ys;
-    dz1s = xs * ys - params.beta * zs;
+    dx1s = -ys -zs;
+    dy1s = xs + params.a*ys;
+    dz1s = params.b + zs*(xs - params.c);
 
     x1s = xs + dx1s * dt;
     y1s = ys + dy1s * dt;
-    z1s = zs + dz1s * dt;
+    z1s = zs + dz1s * dt; 
 
-    dxs = params.sigma * (y1s - x1s);
-    dys = x1s * (params.rho - z1s) - y1s;
-    dzs = x1s * y1s - params.beta * z1s;
+    dxs = -y1s -z1s;
+    dys = x1s + params.a*y1s;
+    dzs = params.b + z1s*(x1s - params.c);
 
     xs +=0.5*(dx1s + dxs)*dt;
     ys +=0.5*(dy1s + dys)*dt;
@@ -406,9 +402,9 @@ geometry2s.dispose();
 
     // Update the TrackballControls
     controls.update();
-ro = params.rho;
-sig = params.sigma;
-bet = params.beta;
+aa = params.a;
+bb = params.b;
+cc = params.c;
 
 
 }
