@@ -31,9 +31,9 @@ const params = {
     c: 5.7,
     tail: 50000,
 };
-const rhoController = gui.add(params, 'a', 0.1, 200.0).name('rho (press r or e)');
-const sigmaController = gui.add(params, 'b', 0.1, 100.0).name('sigma (press s or a)');
-const betaController = gui.add(params, 'c', 0.1, 100.0).name('beta (press b or v)');
+const rhoController = gui.add(params, 'a', 0.05, 0.4).name('rho (press r or e)');
+const sigmaController = gui.add(params, 'b', 0.05, 0.4).name('sigma (press s or a)');
+const betaController = gui.add(params, 'c', 0.1, 10.0).name('beta (press b or v)');
 gui.add(params, 'tail', 51, 10000).name('Red tail length');
 
 const actions2 = {
@@ -112,16 +112,16 @@ let sigma = params.sigma;
 let rho = params.rho;
 let beta = params.beta;
 
-let x = 2;
-let y = 2;
-let z = 2;
+let x = 1;
+let y = 1;
+let z = 0.2;
 
-let xs = 2.00000001;
-let ys = 2.00000001;
-let zs = 2.00000001;
+let xs = 1.00000001;
+let ys = 1.00000001;
+let zs = 0.20000001;
 
 let t = 0;
-let dt = 0.02;
+let dt = 0.04;
 
 let dx, dy, dz;
 let x1, y1, z1;
