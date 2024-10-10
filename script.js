@@ -189,7 +189,11 @@ window.addEventListener('keydown', (event) => {
 //////////////////////////////////////////////////////////////////////////////////////
 
 const rendering = function() {
-  requestAnimationFrame(rendering);
+    
+    setTimeout( function() {
+        requestAnimationFrame( rendering );
+    }, 1000 / 30 );
+  //requestAnimationFrame(rendering);
 
 const geometry = new THREE.BufferGeometry().setFromPoints( points );
     
