@@ -192,7 +192,7 @@ const rendering = function() {
     
     setTimeout( function() {
         requestAnimationFrame( rendering );
-    }, 1000 / 30 );
+    }, 1000 / 60 );
   //requestAnimationFrame(rendering);
 
 const geometry = new THREE.BufferGeometry().setFromPoints( points );
