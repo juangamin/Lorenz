@@ -121,7 +121,7 @@ let ys = 5.00000001;
 let zs = 10.00000001;
 
 let t = 0;
-let dt = 0.015;
+let dt = 0.005;
 
 let dx, dy, dz;
 let x1, y1, z1;
