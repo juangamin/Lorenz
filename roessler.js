@@ -116,8 +116,8 @@ let x = 8;
 let y = 0;
 let z = 0.2;
 
-let xs = 1.00000001;
-let ys = 1.00000001;
+let xs = 8.00000001;
+let ys = 0.00000001;
 let zs = 0.20000001;
 
 let t = 0;
