@@ -112,8 +112,8 @@ let sigma = params.sigma;
 let rho = params.rho;
 let beta = params.beta;
 
-let x = 1;
-let y = 1;
+let x = 8;
+let y = 0;
 let z = 0.2;
 
 let xs = 1.00000001;
