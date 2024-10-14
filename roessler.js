@@ -308,7 +308,7 @@ if (previousCurveSteady) {
 
     t = t + dt;
 
-    logdiffs.push( new THREE.Vector3( -Math.log10((x-xs)*(x-xs) + (y-ys)*(y-ys)+(z-zs)*(z-zs))/2.0+20,-30+0.5*t,0));
+    logdiffs.push( new THREE.Vector3( -Math.log10((x-xs)*(x-xs) + (y-ys)*(y-ys)+(z-zs)*(z-zs))/2.0+20,-30+0.05*t,0));
     if (logdiffs.length > 10000){
         logdiffs.splice(0,logdiffs.length - 10000);
     }
