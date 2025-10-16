@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>e^x Calculator</title>
+  <title>f(x, y, z) Calculator</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -24,13 +24,14 @@
     input {
       padding: 0.5rem;
       font-size: 1rem;
-      width: 100px;
-      margin-right: 10px;
+      width: 80px;
+      margin: 5px;
     }
     button {
       padding: 0.5rem 1rem;
       font-size: 1rem;
       cursor: pointer;
+      margin-top: 10px;
     }
     p {
       font-size: 1.2rem;
@@ -40,23 +41,34 @@
 </head>
 <body>
   <div class="container">
-    <h2>Compute e<sup>x</sup></h2>
-    <input type="number" id="inputX" placeholder="Enter x" step="any">
-    <button onclick="computeExp()">Compute</button>
+    <h2>Compute f(x, y, z)</h2>
+    <div>
+      <input type="number" id="inputX" placeholder="x" step="any">
+      <input type="number" id="inputY" placeholder="y" step="any">
+      <input type="number" id="inputZ" placeholder="z" step="any">
+    </div>
+    <button onclick="computeFunction()">Compute</button>
     <p id="result"></p>
   </div>
 
   <script>
-    function computeExp() {
+    // Example function: f(x, y, z) = e^(x + y*z)
+    function f(x, y, z) {
+      return Math.exp(x + y * z);
+    }
+
+    function computeFunction() {
       const x = parseFloat(document.getElementById('inputX').value);
-      if (isNaN(x)) {
-        document.getElementById('result').innerText = 'Please enter a valid number.';
+      const y = parseFloat(document.getElementById('inputY').value);
+      const z = parseFloat(document.getElementById('inputZ').value);
+
+      if ([x, y, z].some(isNaN)) {
+        document.getElementById('result').innerText = 'Please enter valid numbers for x, y, and z.';
       } else {
-        const y = Math.exp(x);
-        document.getElementById('result').innerText = `e^${x} = ${y.toFixed(5)}`;
+        const value = f(x, y, z);
+        document.getElementById('result').innerText = `f(${x}, ${y}, ${z}) = ${value.toFixed(5)}`;
       }
     }
   </script>
 </body>
 </html>
-
