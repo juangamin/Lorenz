@@ -43,7 +43,7 @@
   <div class="container">
     <h2>Compute change in ELO</h2>
     <div>
-      <input type="number" id="inputX" placeholder="ELO difference" step="20">
+      <input type="number" id="inputX" placeholder="ELO difference (yours minus theirs)" step="20">
       <input type="number" id="inputY" placeholder="Matches won" step="any">
       <input type="number" id="inputZ" placeholder="Matches lost" step="any">
     </div>
@@ -67,7 +67,7 @@
         document.getElementById('result').innerText = 'Please enter valid numbers for x, y, and z.';
       } else {
         const value = f(x, y, z);
-        document.getElementById('result').innerText = `Change in ELO =  ${value.toFixed(0)}`;
+        document.getElementById('result').innerText = `Your change in ELO =  ${value.toFixed(0)}`;
       }
     }
   </script>
