@@ -1,0 +1,4456 @@
+Player 1,Games won,Player 2,Games won
+Amanda,3,Jesse,0
+Garrett,2,Matthew,1
+Amanda,2,Andrew,1
+Brett,1,Chris O,2
+Jeff,2,Matthew,1
+Brett,1,Casey,2
+Chris O,2,Garrett,1
+Josh K,0,Matthew,3
+Bart,2,Chris G,1
+Andrew,2,Joe,1
+Chris G,3,Mike,0
+Jason,1,Juan,2
+Bart,2,Josh B,1
+Jeff,3,Juan,0
+Casey,1,Jason,2
+Kyle,3,Mike,0
+Jesse,0,Terry,3
+Kyle,1,Steve,2
+Joe,3,Vincent,0
+Josh B,2,Terry,1
+Steve,0,Tom,3
+Josh K,2,Vincent,1
+Tom,3,Vincent,0
+Amanda,2,Bart,1
+Andrew,1,Matthew,2
+Amanda,1,Brett,2
+Andrew,1,Brett,2
+Casey,0,Chris O,3
+Chris O,3,Jason,0
+Casey,2,Garrett,1
+Allan,2,Brian,1
+Gytis,0,Jason,3
+Gytis,0,Joe,3
+Chris G,0,Matthew,3
+Bart,2,Brian,1
+Jeff,3,Josh K,0
+Garrett,1,Jeff,2
+Joe,2,Josh B,1
+Steve,0,Terry,3
+Josh B,1,Josh K,2
+Allan,3,Tom,0
+Terry,3,Tom,0
+Mike,0,Steve,3
+Brian,0,Chris G,3
+Mike,0,Tom,3
+Vincent,0,Garrett,3
+Vincent,1,Bart,2
+Amanda,2,Chris G,1
+Andrew,3,Tom,0
+Allan,0,Amanda,3
+Andrew,2,Casey,1
+Allan,2,Bart,1
+Chris O,3,Terry,0
+Garrett,1,Juan,2
+Bart,2,Gytis,1
+Brett,3,Josh B,0
+Brian,1,Gytis,2
+Chris O,3,Joe,0
+Casey,1,Juan,2
+Brett,2,Casey,1
+Joe,1,Terry,2
+Jesse,3,Kyle,0
+Josh B,1,Kyle,2
+Jesse,3,Tom,0
+Garrett,3,Tom,0
+Amanda,2,Chris O,1
+Allan,1,Jesse,2
+Amanda,1,Terry,2
+Allan,0,Andrew,3
+Chris O,2,Matthew,1
+Garrett,2,Terry,1
+Casey,3,Steve,0
+Gytis,3,Steve,0
+Andrew,3,Chris G,0
+Chris G,0,Gytis,3
+Brett,2,Garrett,1
+Matthew,3,Joe,0
+Casey,3,Josh B,0
+Brett,3,Joe,0
+Brian,3,Steve,0
+Josh B,1,Juan,2
+Allan,3,Mike,0
+Jesse,2,Vincent,1
+Brian,3,Mike,0
+Juan,3,Vincent,0
+Amanda,3,Casey,0
+Andrew,0,Chris o,3
+Amanda,2,Garrett,1
+Andrew,1,Jason,2
+Chris G,0,Joe,3
+Casey,0,Jeff,3
+Jason,3,Terry,0
+Juan,2,Terry,1
+Bart,1,Jesse,2
+Brett,1,Matthew,2
+Casey,0,Matthew,3
+Bart,0,Garrett,3
+Brett,1,Juan,2
+Joe,1,Josh K,2
+Josh B,2,Vincent,1
+Chris O,1,Jeff,2
+Allan,0,Gytis,3
+Josh K,2,Kyle,1
+Brian,3,Kyle,0
+Gytis,3,Jesse,0
+Allan,3,Brian,0
+Mike,1,Vincent,2
+Chris G,1,Josh B,2
+Amanda,1,Matthew,2
+Andrew,2,Terry,1
+Amanda,2,Andrew,1
+Casey,2,Joe,1
+Chris O,1,Juan,2
+Juan,1,Matthew,2
+Allan,2,Joe,1
+Brett,1,Chris O,2
+Allan,2,Garrett,1
+Brett,3,Terry,0
+Chris G,1,Tom,2
+Josh B,3,Steve,0
+Josh B,3,Tom,0
+Kyle,1,Steve,2
+Brian,1,Jesse,2
+Kyle,0,Vincent,3
+Casey,3,Jesse,0
+Brian,1,Garrett,2
+Chris G,3,Vincent,0
+Amanda,0,Chris O,3
+Andrew,0,Garrett,3
+Brian,0,Josh K,3
+Amanda,0,Jason,3
+Chris O,3,Gytis,0
+Brett,3,Gytis,0
+Chris O,2,Garrett,1
+Chris G,1,Terry,2
+Chris G,0,Matthew,3
+Matthew,3,Terry,0
+Bart,0,Joe,3
+Andrew,1,Juan,2
+Brian,0,Joe,3
+Bart,1,Casey,2
+Allan,1,Casey,2
+Josh B,3,Vincent,0
+Kyle,2,Mike,1
+Mike,0,Tom,3
+Josh B,3,Kyle,0
+Allan,2,Josh K,1
+Tom,3,Vincent,0
+Jason,0,Juan,3
+Jason,1,Brett,2
+Amanda,3,Gytis,0
+Andrew,2,Josh K,1
+Garrett,2,Gytis,1
+Andrew,2,Joe,1
+Garrett,2,Juan,1
+Casey,2,Josh B,1
+Brett,3,Jeff,0
+Chris O,3,Jason,0
+Gytis,1,Jason,2
+Amanda,3,Josh K,0
+Tom,1,Casey,2
+Chris O,1,Jeff,2
+Steve,0,Tom,3
+Brett,3,Juan,0
+Chris G,3,Kyle,0
+Bart,3,Kyle,0
+Jesse,0,Joe,3
+Bart,3,Vincent,0
+Chris G,2,Steve,1
+Steve,0,Vincent,3
+Jesse,1,Josh B,2
+Amanda,0,Jeff,3
+Andrew,1,Gytis,2
+Andrew,2,Casey,1
+Amanda,1,Juan,2
+Bart,0,Jason,3
+Jeff,3,Joe,0
+Casey,2,Chris O,1
+Chris O,3,Juan,0
+Gytis,3,Tom,0
+Brett,3,Garrett,0
+Bart,1,Josh K,2
+Joe,3,Tom,0
+Brett,2,Juan,1
+Casey,2,Garrett,1
+Jason,1,Brett,2
+Kyle,2,Steve,0
+Mike,0,Steve,3
+Josh B,1,Josh K,2
+Chris G,3,Mike,0
+Brian,1,Josh B,2
+Chris G,2,Vincent,1
+Brian,3,Vincent,0
+Brett,3,Matthew,0
+Garrett,2,Juan,1
+Andrew,1,Matthew,2
+Amanda,3,Bart,0
+Andrew,3,Jason,0
+Chris G,0,Josh K,3
+Casey,3,Joe,0
+Casey,1,Jason,2
+Jeff,3,Juan,0
+Chris O,3,Garrett,0
+Amanda,1,Brett,2
+Chris O,0,Jeff,3
+Chris G,2,Tom,1
+Joe,3,Vincent,0
+Steve,1,Vincent,2
+Josh K,3,Steve,0
+Joe,3,Steve,0
+Kyle,0,Tom,3
+Kyle,0,Terry,3
+Terry,3,Bart,0
+Brian,0,Terry,3
+Brian,3,Tom,0
+Allan,2,Josh B,1
+Bart,1,Matthew,2
+Andrew,1,Garrett,2
+Amanda,0,Brett,3
+Andrew,2,Casey,1
+Casey,0,Juan,3
+Chris O,1,Sam,2
+Boyle,0,Chris O,3
+Amanda,3,Boyle,0
+Bart,3,Vincent,0
+Josh B,1,Josh K,2
+Brett,2,Jason,1
+Garrett,1,Jeff,2
+Jason,0,Jeff,3
+Matthew,3,Terry,0
+Chris G,0,Josh B,3
+Chris G,3,Richard,0
+Allan,3,Richard,0
+Josh K,0,Terry,3
+Steve,1,Vincent,2
+Richard,3,Steve,0
+Juan,0,Sam,3
+Amanda,0,Chris O,3
+Garrett,1,Matthew,2
+Andrew,2,Joe,1
+Jason,1,Matthew,2
+Brett,2,Chris O,1
+Casey,2,Terry,1
+Brett,3,Juan,0
+Jason,0,Sam,3
+Jeff,3,Joe,0
+Brian,1,Chris G,2
+Amanda,1,Garrett,2
+Andrew,2,Josh K,1
+Jeff,1,Sam,2
+Casey,3,Josh K,0
+Jeff,3,Juan,0
+Steve,0,Terry,3
+Bart,3,Boyle,0
+Kyle,0,Bart,3
+Chris G,3,Kyle,0
+Vincent,3,Boyle,0
+Bart,3,Brian,0
+Chris G,2,Hendrix,1
+Josh K,3,Vincent,0
+Steve,3,Hendrix,0
+Brett,2,Jason,1
+Brett,0,Sam,3
+Andrew,0,Brett,3
+Casey,0,Chris O,3
+Juan,3,Terry,0
+Chris G,0,Juan,3
+Chris G,3,Vincent,0
+Allan,2,Bart,1
+Andrew,2,Jason,1
+Allan,3,Boyle,0
+Bart,2,Josh K,1
+Chris O,1,Sam,2
+Casey,2,Josh K,1
+Terry,3,Vincent,0
+Boyle,0,Josh B,3
+Richard,3,Hendrix,0
+Boyle,0,Richard,3
+Josh B,2,Hendrix,1
+Richard,0,Allan,3
+Richard,0,Vincent,3
+Aditi,3,Amanda,0
+Brett,2,Garrett,1
+Aditi,1,Matthew,2
+Casey,0,Sam,3
+Brett,1,Jeff,2
+Jason,3,Juan,0
+Hendrix,2,Vincent,1
+Chris O,3,Jason,0
+Allan,3,Joe,0
+Garrett,0,Sam,3
+Amanda,1,Casey,2
+Jeff,2,Matthew,1
+Josh K,0,Terry,3
+Chris O,1,Juan,2
+Bart,3,Chris G,0
+Allan,2,Terry,1
+Boyle,0,Steve,3
+Josh B,0,Josh K,3
+Bart,1,Joe,2
+Josh K,3,Steve,0
+Josh B,2,Vincent,1
+Boyle,2,Hendrix,1
+Andrew,0,Terry,3
+Andrew,2,Bart,1
+Chris O,0,Garrett,3
+Casey,1,Garrett,2
+Amanda,1,Josh K,2
+Chris O,3,Terry,0
+Bart,0,Juan,3
+Casey,1,Jason,2
+Allan,0,Matthew,3
+Amanda,3,Joe,0
+Matthew,2,Sam,1
+Josh B,1,Joe,2
+Allan,1,Brett,2
+Garrett,1,Jason,2
+Brett,1,Sam,2
+Josh K,0,Juan,3
+Boyle,2,Steve,1
+Josh B,2,Richard,1
+Boyle,0,Vincent,3
+Josh B,3,Steve,0
+Richard,3,Steve,0
+Amanda,3,Vincent,0
+Aditi,0,Allan,3
+Andrew,2,Matthew,1
+Aditi,1,Brett,2
+Andrew,2,Chris O,1
+Allan,0,Jason,3
+Chris O,2,Matthew,1
+Garrett,1,Juan,2
+Casey,2,Joe,1
+Amanda,0,Sam,3
+Jason,1,Jeff,2
+Amanda,2,Bart,1
+Jeff,2,Sam,1
+Bart,2,Terry,1
+Brett,2,Casey,1
+Garrett,1,Terry,2
+Joe,1,Juan,2
+Boyle,1,Bob,2
+Bob,0,Vincent,3
+Boyle,1,Pete,2
+Chris G,0,Vincent,3
+Josh B,3,Pete,0
+Pete,0,Steve,3
+Steve,1,Vincent,2
+Josh B,0,Garrett,3
+Aditi,3,Bart,0
+Allan,1,Andrew,2
+Aditi,2,Andrew,1
+Jason,1,Sam,2
+Chris G,2,Richard,1
+Allan,1,Juan,2
+Allan,1,Chris O,2
+Bart,1,Allan,2
+Brett,2,Jason,1
+Joe,2,Josh K,1
+Casey,1,Chris O,2
+Brett,3,Joe,0
+Juan,0,Sam,3
+Vincent,0,Richard,3
+Josh K,1,Vincent,2
+Bart,3,Hendrix,0
+Vincent,3,Hendrix,0
+Casey,2,Vincent,1
+Chris O,2,Juan,1
+Brett,0,Matthew,3
+Andrew,1,Brett,2
+Andrew,0,Jeff,3
+Garrett,3,Joe,0
+Bart,1,Casey,2
+Brett,1,Chris O,2
+Joe,0,Matthew,3
+Aditi,1,Juan,2
+Allan,2,Bart,1
+Chris O,2,Terry,1
+Garrett,0,Sam,3
+Aditi,0,Jeff,3
+Allan,1,Garrett,2
+Casey,3,Josh B,0
+Chris G,0,Josh B,3
+Chris G,0,Richard,3
+Pete,1,Hendrix,2
+Bob,3,Pete,0
+Boyle,3,Pete,0
+Richard,2,Vincent,1
+Boyle,0,Josh B,3
+Vincent,2,Hendrix,1
+Boye,1,Vincent,2
+Allan,2,Amanda,1
+Andrew,2,Juan,1
+Bart,0,Garrett,3
+Amanda,1,Andrew,2
+Chris O,1,Sam,2
+Joe,0,Sam,3
+Casey,0,Jason,3
+Juan,1,Matthew,2
+Aditi,1,Chris O,2
+Brett,2,Matthew,1
+Brett,3,Terry,0
+Aditi,3,Garrett,0
+Jason,0,Joe,3
+Allan,1,Casey,2
+Chris G,0,Terry,3
+Bart,1,Josh B,2
+Josh B,2,Richard,1
+Josh K,3,Boyle,0
+Steve,2,Hendrix,1
+Chris G,0,Josh K,3
+Hendrix,0,Richard,3
+Steve,0,Josh K,3
+Boyle,3,Steve,0
+Juan,3,Joe,0
+Juan,1,Matthew,2
+Chris O,1,Juan,2
+Juan,2,Jason,1
+Joe,0,Terry,3
+Aditi,2,Casey,1
+Aditi,2,Jason,1
+Chris O,1,Matthew,2
+Brett,1,Jeff,2
+Andrew,2,Garrett,1
+Brett,2,Garrett,1
+Aditi,0,Sam,3
+Casey,2,Terry,1
+Jeff,1,Sam,2
+Josh B,3,Hendrix,0
+Hendrix,3,Steve,0
+Josh B,3,Vincent,0
+Chris G,3,Steve,0
+Hendrix,2,Vincent,1
+Jason,1,Matthew,2
+Brett,2,Juan,1
+Jeff,1,Matthew,2
+Juan,0,Sam,3
+Allan,0,Brett,3
+Jason,3,Terry,0
+Casey,1,Sam,2
+Amanda,0,Chris O,3
+Andrew,2,Joe,1
+Amanda,1,Garrett,2
+Andrew,1,Casey,2
+Allan,1,Chris O,2
+Joe,3,Josh K,0
+Garrett,0,Jeff,3
+Josh K,1,Terry,2
+Boyle,0,Richard,3
+Chris G,0,Richard,3
+Richard,3,Steve,0
+Boyle,0,Vincent,3
+Bart,1,Jason,2
+Chris G,1,Vincent,2
+Bart,3,Steve,0
+Aditi,1,Juan,2
+Juan,0,Sam,3
+Aditi,1,Andrew,2
+Allan,2,Casey,1
+Brett,2,Jeff,1
+Jason,3,Joe,0
+Bart,1,Griff,2
+Joe,1,Terry,2
+Leor,0,Robert,3
+Raelynn,0,Richard,3
+Matthew,2,Sam,1
+Brett,1,Matthew,2
+Andrew,1,Garrett,2
+Jason,0,Jeff,3
+Bart,0,Josh K,3
+Allan,1,Garrett,2
+Josh K,0,Terry,3
+Casey,2,Griff,1
+Hendrix,2,Nick,1
+Amita,3,Eva,0
+Hendrix,2,Raelynn,1
+Leor,0,Vincent,3
+Nico,0,Tom,3
+Chris G,3,Nico,0
+Josh B,2,Tom,1
+Chris G,3,Steve,0
+David C,0,Nathan,3
+Josh B,1,Richard,2
+David B,1,Nathan,2
+Amita,0,David C,3
+Gavin,0,Robert,3
+David B,2,Eva,1
+Gavin,1,Vincent,2
+Nick,2,Steve,1
+Juan,1,Matthew,2
+Leor,0,Mitch,3
+Garrett,1,Matthew,2
+Allan,0,Griff,3
+Aditi,3,Robert,0
+Chris O,2,Jeff,1
+Jeff,1,Sam,2
+Aditi,3,Terry,0
+Chris O,0,Sam,3
+Garrett,2,Griff,1
+Josh K,2,Nathan,1
+Nathan,3,Nick,0
+Eva,3,Raelynn,0
+Amanda,2,Casey,1
+Casey,2,Josh B,1
+Andrew,0,Juan,3
+Amanda,2,Andrew,1
+Joe,2,Mitch,1
+Jason,3,Tom,0
+Bart,2,Vincent,1
+Jason,,Robert,0
+David B,3,Steve,0
+Allan,1,Vincent,2
+David B,3,Tom,0
+David C,1,Steve,2
+Hendrix,0,Josh B,3
+Nico,0,Richard,3
+Bart,1,Richard,2
+Leor,2,Nico,1
+Amita,1,Hendrix,2
+Raelynn,0,Corri,3
+Amita,0,Nick,3
+Garrett,2,Joe,1
+Chris G,0,Josh K,3
+Corri,0,Mitch,3
+Chris G,3,Terry,0
+David C,3,Eva,0
+Josh K,0,Matthew,3
+Garrett,0,Sam,3
+Casey,2,Juan,1
+Jason,1,Matthew,2
+Aditi,3,Amanda,0
+Aditi,2,Brett,1
+Brett,3,Casey,0
+Chris O,2,Garrett,1
+Chris O,3,Mitch,0
+Jason,3,Richard,0
+David C,0,Joe,3
+Amanda,3,Vincent,0
+Richard,0,Sam,3
+Jeff,2,Juan,1
+Greg,2,Josh K,1
+Greg,1,Terry,2
+Eric,0,Tom,3
+Sam,2,Jeff,1
+David C,1,Leor,2
+Nico,3,Raelynn,0
+Amita,0,Leor,3
+Terry,3,Vincent,0
+Leor,2,Nico,1
+Amita,3,Raelynn,0
+Andrew,1,Mitch,2
+Andrew,3,Joe,0
+Tom,2,Robert,1
+Bart,3,Robert,0
+Bart,3,Eric,0
+Allan,0,Chris O,3
+Amanda,3,Nathan,0
+Aditi,1,Chris O,2
+Joe,0,Matthew,3
+Brett,1,Garrett,2
+Brett,1,Jason,2
+Aditi,2,Garrett,1
+David B,0,Juan,3
+Eva,1,Gavin,2
+David B,0,Sam,3
+Joe,0,Josh K,3
+Nick,0,Terry,3
+Juan,3,Casey,0
+Amanda,2,Richard,1
+Andrew,3,David C,0
+Andrew,2,Nathan,1
+Matthew,2,Sam,1
+Bart,1,Josh B,2
+Casey,2,Terry,1
+Bart,2,Mitch,1
+Chris G,0,Griff,3
+Amita,0,Tom,3
+Chris G,0,Mitch,3
+Josh K,3,Steve,0
+Jason,3,Griff,0
+David C,1,Vincent,2
+Eva,1,Leor,2
+Gavin,1,Leor,2
+Richard,1,Vincent,2
+Eric,1,Josh B,2
+Allan,3,Steve,0
+Amita,0,Robert,3
+Eric,2,Terry,1
+Corri,1,Nick,2
+Corri,0,Tom,3
+Raelynn,0,Robert,3
+Raelynn,0,Nick,3
+Brett,3,Greg,0
+Amanda,2,Brett,1
+Chris O,3,Juan,0
+Andrew,2,David B,1
+Juan,1,Matthew,2
+Amanda,3,Bart,0
+Josh K,1,Josh B,2
+Garrett,0,Jason,3
+Chris O,0,Sam,3
+Jeff,3,Terry,0
+Garrett,1,Sam,2
+Aditi,0,Jeff,3
+Aditi,2,Jason,1
+Andrew,3,Richard,0
+Bart,3,David C,0
+Matthew,3,Nathan,0
+Chris G,0,Greg,3
+Garrett,1,Josh K,2
+Casey,3,Joe,0
+Chris G,0,Joe,3
+Casey,3,Robert,0
+Josh B,2,Vincent,1
+Josh B,3,Gavin,0
+Amita,0,Mitch,3
+Amita,2,Corri,1
+David B,3,Leor,0
+David C,0,Richard,3
+Leor,0,Nico,3
+Nico,3,Raelynn,0
+Nathan,2,Tom,1
+Raelynn,0,Vincent,3
+Mitch,1,Tom,2
+Corri,0,Robert,3
+Hendrix,1,Griff,2
+Gavin,2,Hendrix,1
+Griff,3,Terry,0
+Bart,3,Nick,0
+Andrew,0,Josh B,3
+Andrew,3,Tom,0
+Bart,3,Tom,0
+Jeff,3,Griff,0
+Casey,3,David B,0
+Casey,2,Vincent,1
+Chris O,2,Jason,1
+Jason,0,Sam,3
+Matthew,1,Sam,2
+Joe,2,Griff,1
+Garrett,1,Joe,2
+Chris G,3,Leor,0
+Juan,3,Nathan,0
+Chris O,0,Jeff,3
+Juan,3,Nick,0
+Chris G,3,Gavin,0
+Brett,3,Mitch,0
+Brett,3,Allan,0
+Aditi,1,Matthew,2
+Allan,1,Terry,2
+Garrett,3,Josh B,0
+David C,3,Nico,0
+David C,3,Leor,0
+Eva,2,Nico,1
+Eva,0,Nathan,3
+Aditi,3,Mitch,0
+Amita,0,Gavin,3
+Gavin,3,Hendrix,0
+Amita,2,Corri,1
+Corri,0,Terry,3
+David B,1,Vincent,2
+Brett,3,Garrett,0
+Bart,1,Greg,2
+Brett,3,Jason,0
+Casey,2,Mitch,1
+Hendrix,0,Jason,3
+Hendrix,0,Joe,3
+Mitch,1,Nathan,2
+Joe,3,Tom,0
+Amanda,3,Greg,0
+Andrew,2,Griff,1
+Andrew,1,Casey,2
+Amanda,2,Garrett,1
+Chris O,2,Griff,1
+Mitch,0,Terry,3
+Chris O,3,Josh K,0
+Gavin,0,Nathan,3
+Gavin,1,Steve,2
+David C,1,Nick,2
+Bart,1,David B,2
+David B,1,Josh K,2
+David C,1,Tom,2
+Richard,0,Terry,3
+Richard,2,Tom,1
+Eva,1,Steve,2
+Amanda,0,Matthew,3
+Casey,2,Greg,1
+Andrew,0,Juan,3
+Jeff,1,Matthew,2
+Nico,1,Tom,2
+Garrett,2,Richard,1
+Joe,1,Josh B,2
+Joe,2,Terry,1
+Josh K,1,Josh B,2
+Nick,1,Vincent,2
+Brett,0,Chris O,3
+Brett,3,Jeff,0
+Allan,0,Greg,3
+Amanda,2,Jeff,1
+Andrew,2,Terry,1
+Amita,0,Hendrix,3
+Allan,2,Bart,1
+Casey,1,Jason,2
+Chris O,2,Garrett,1
+Chris O,2,Jason,1
+Bart,3,Nathan,0
+Amita,2,Leor,1
+Leor,0,Tom,3
+Josh K,2,Nathan,1
+Juan,3,Richard,0
+Nick,1,Nico,2
+David C,1,Eva,2
+David C,1,Hendrix,2
+Eva,0,Mitch,3
+Corri,2,Mitch,1
+Corri,1,Vincent,2
+Garrett,2,Greg,1
+Chris O,1,Matthew,2
+Greg,2,Tom,1
+Matthew,3,Terry,0
+Andrew,2,Vincent,1
+Joe,0,Juan,3
+Casey,2,Garrett,1
+Josh K,3,Robert,0
+Griff,3,Josh K,0
+Joe,3,Robert,0
+Griff,3,Nick,0
+Amanda,3,Josh B,0
+Andrew,2,Bart,1
+Amanda,3,Jason,0
+Eva,2,Leor,1
+Chris O,2,Juan,1
+Casey,3,Josh B,0
+Bart,1,Terry,2
+Jason,1,Jeff,2
+Nick,3,Raelynn,0
+Amita,2,Gavin,1
+Jeff,3,Vincent,0
+Corri,1,Gavin,2
+David C,0,Richard,3
+Leor,1,Nico,2
+David C,0,Robert,3
+Bart,1,Richard,2
+Nico,3,Raelynn,0
+Amita,0,Nico,3
+Chris G,3,Tom,0
+Amita,2,Eva,1
+Chris G,0,David B,3
+David B,2,Hendrix,1
+Corri,2,Hendrix,1
+Amanda,1,Juan,2
+Amanda,2,Matthew,1
+Richard,3,Tom,0
+Brett,2,Juan,1
+Corri,0,David C,3
+Amanda,1,Chris O,2
+Mitch,2,Nick,1
+Casey,2,Griff,1
+Joe,1,Vincent,2
+Casey,0,Chris O,3
+Brett,1,Matthew,2
+Greg,2,Nathan,1
+Greg,3,Terry,0
+David B,0,Garrett,3
+Robert,0,Greg,3
+David B,1,Joe,2
+Bart,1,Griff,2
+Bart,1,Josh K,2
+Nathan,1,Terry,2
+Garrett,3,Josh K,0
+Mitch,2,Nico,1
+Corri,2,Leor,1
+Leor,3,Raelynn,0
+Chris G,3,Nico,0
+Richard,2,Vincent,1
+Amita,2,David C,1
+Corri,1,Nick,2
+Chris G,2,Robert,1
+Amita,0,Tom,3
+Eva,3,Raelynn,0
+Eva,3,Amita,0
+Amanda,0,Matt M,3
+Andrew,1,Joe,2
+Chris O,2,Matt M,1
+Andrew,3,Juan,0
+Aditi,3,Amanda,0
+Bart,1,Joe,2
+Aditi,0,Chris O,3
+Brett,0,Casey,3
+Garrett,2,Jason,1
+Brett,0,Sam,3
+Kevin,0,Terry,3
+Casey,1,Sam,2
+Bart,2,Josh B,1
+Amita,0,David,3
+Gavin,3,Raelynn,0
+Josh B,0,Juan,3
+Eva,0,Tom,3
+Ed,0,Josh K,3
+Eva,3,Lauren,0
+Garrett,3,Josh K,0
+Griff,1,Terry,2
+Mitch,2,Paul,1
+Jason,3,Griff,0
+Richard,3,Amita,0
+Gavin,2,Hendrix,1
+Nico,0,Richard,3
+Nico,1,Robert,2
+David,0,Robert,3
+Kevin,0,Tom,3
+Hendrix,2,Raelynn,1
+Jordan,0,Mitch,3
+Ed,1,Nick,2
+Eric,3,Lauren,0
+Jordan,0,Paul,3
+Eric,3,Nick,0
+Chris O,2,Juan,1
+Bart,2,Nathan,1
+Andrew,2,Greg,1
+Bart,3,Robert,0
+Andrew,1,Chris O,2
+Nathan,3,Nick,0
+Casey,2,Jason,1
+Garrett,3,Griff,0
+Jeff,1,Sam,2
+Garrett,3,Terry,0
+Josh K,1,Griff,2
+Corri,2,Matt C,1
+Raelynn,1,Lauren,2
+Corri,0,Mitch,3
+Greg,3,Joe,0
+Amita,1,Gavin,2
+Joe,2,Juan,1
+Amita,1,Hendrix,2
+Matt M,1,Sam,2
+Brett,1,Matt M,2
+Aditi,2,Brett,1
+Jason,1,Jeff,2
+Aditi,2,Casey,1
+Chris G,3,Matt C,0
+Lauren,0,Paul,3
+Chris G,3,Mitch,0
+Josh K,1,Terry,2
+Robert,2,Vincent,1
+Kevin,1,Leor,2
+Kevin,0,Richard,3
+David,1,Leor,2
+Gavin,0,Richard,3
+David,0,Richard,3
+Hendrix,3,Lauren,0
+Ed,0,Tom,3
+Eric,3,Jordan,0
+Eric,2,Tom,1
+Ed,2,Jordan,1
+Eva,3,Raelynn,0
+Nick,1,Vincent,2
+Eva,0,Paul,3
+Amanda,2,Greg,1
+Andrew,2,Richard,1
+Amanda,2,Andrew,1
+Garrett,3,Richard,0
+Aditi,3,Greg,0
+Chris G,0,Joe,3
+Aditi,0,Garrett,3
+Joe,0,Jeff,3
+Casey,0,Jeff,3
+Gavin,3,Jordan,0
+Casey,2,Garrett,1
+Joe,1,Josh B,2
+Hendrix,0,Tom,3
+Amita,1,Nico,2
+Bart,1,Paul,2
+Brett,3,Juan,0
+Chris O,3,Sam,0
+Bart,1,Terry,2
+Brett,0,Chris O,3
+Juan,1,Sam,2
+Josh B,3,Paul,0
+Gavin,3,Lauren,0
+Amita,3,Raelynn,0
+David,3,Nico,0
+Matt C,3,Lauren,0
+Hendrix,2,Matt C,1
+Nathan,0,Terry,3
+Chris G,1,Robert,2
+Kevin,2,Jordan,1
+Ed,0,Robert,3
+Kevin,0,Mitch,3
+Ed,0,Mitch,3
+Amanda,3,Chris O,0
+Amanda,1,Joe,2
+Andrew,2,Josh B,1
+Andrew,0,Matt M,3
+Joe,3,Nathan,0
+Aditi,2,Jason,1
+Aditi,2,Jeff,1
+Casey,3,Joe,0
+Matt C,0,Mitch,3
+Matt C,0,Nick,3
+Ed,1,Eva,2
+Ed,3,Lauren,0
+Paul,2,Terry,1
+Bart,2,Greg,1
+Garrett,2,Greg,1
+Chris O,1,Matt M,2
+Bart,1,Richard,2
+Garrett,1,Sam,2
+Juan,3,Robert,0
+Griff,0,Sam,3
+Brett,2,Jason,1
+Brett,1,Jeff,2
+Casey,3,Terry,0
+Chris G,0,Griff,3
+Chris G,1,Paul,2
+Juan,0,Jason,3
+David,2,Kevin,1
+David,2,Vincent,1
+Hendrix,2,Kevin,1
+Hendrix,1,Robert,2
+Josh B,2,Richard,1
+Nathan,2,Vincent,1
+Jordan,1,Leor,2
+Lauren,0,Leor,3
+Jordan,3,Raelynn,0
+Mitch,3,Raelynn,0
+Corri,0,Eva,3
+Chris O,3,Greg,0
+Joe,2,Nathan,1
+Joe,2,Aditi,1
+Andrew,0,Brett,3
+Lauren,2,Raelynn,1
+Brett,0,Sam,3
+Jason,3,Paul,0
+Jeff,1,Sam,2
+Griff,1,Paul,2
+Casey,2,Juan,1
+Andrew,2,Bart,1
+Bart,3,Vincent,0
+Greg,3,Vincent,0
+Chris O,3,Jason,0
+Matt M,2,Jeff,1
+Aditi,0,Matt M,3
+Ed,0,Nathan,3
+Ed,1,Gavin,2
+Casey,3,Mitch,0
+Josh K,0,Juan,3
+Terry,3,Tom,0
+Kevin,3,Raelynn,0
+David,3,Jordan,0
+David,3,Lauren,0
+Jordan,1,Kevin,2
+Josh B,3,Josh K,0
+Josh B,2,Griff,1
+Hendrix,0,Mitch,3
+Matt C,0,Terry,3
+Matt C,0,Tom,3
+Andrew,1,Chris O,2
+Andrew,1,Greg,2
+Brett,2,Richard,1
+Jordan,0,Tom,3
+Jason,2,Richard,1
+Chris O,0,Sam,3
+Josh K,1,Paul,2
+Chris G,0,Eric,3
+Josh K,2,Mitch,1
+Casey,0,Sam,3
+Aditi,3,Griff,0
+Jeff,1,Juan,2
+Bart,1,Joe,2
+Bart,2,Robert,1
+Brett,3,Greg,0
+Josh B,0,Joe,3
+Jason,2,Josh B,1
+Lauren,0,Robert,3
+Jordan,1,Lauren,2
+Chris G,0,Terry,3
+Casey,1,Jeff,2
+Eric,0,Griff,3
+Aditi,1,Juan,2
+Josh K,1,Vincent,2
+Amita,3,Leor,0
+Leor,1,Nick,2
+David,0,Tom,3
+Amita,2,Nick,1
+David,3,Raelynn,0
+Ed,3,Raelynn,0
+Gavin,1,Matt C,2
+Ed,2,Matt C,1
+Gavin,0,Mitch,3
+Mitch,1,Vincent,2
+Paul,1,Terry,2
+Amanda,3,Nathan,0
+Nathan,1,Joe,2
+Amanda,3,Richard,0
+Bart,0,Chris O,3
+Richard,3,Vincent,0
+Corri,1,Gavin,2
+Corri,3,Lauren,0
+Jason,0,Jeff,3
+Jason,3,Griff,0
+Jeff,3,Paul,0
+Jordan,0,Matt C,3
+Casey,3,Josh B,0
+Aditi,1,Chris O,2
+Andrew,0,Sam,3
+Aditi,2,Andrew,1
+Amita,1,Robert,2
+Kevin,0,Robert,3
+Kevin,0,Mitch,3
+Mitch,1,Paul,2
+Josh K,2,Mitch,1
+Josh K,3,Nick,0
+Matt C,0,Vincent,3
+Casey,2,Griff,1
+Ed,1,Eric,2
+Greg,2,Joe,1
+David,0,Richard,3
+Greg,0,Sam,3
+David,3,Raelynn,0
+Amita,0,Bart,3
+Lauren,1,Raelynn,2
+Ed,1,Nick,2
+Eva,1,Gavin,2
+Eva,3,Jordan,0
+Eric,2,Tom,1
+Josh B,2,Tom,1
+Amanda,0,Chris O,3
+Amanda,2,Greg,1
+Andrew,3,Bart,0
+Andrew,0,Brett,3
+Josh B,3,Richard,0
+Ed,1,Eva,2
+Casey,1,Jason,2
+Eric,0,Vincent,3
+Jason,0,Sam,3
+Eric,1,Terry,2
+Casey,2,Juan,1
+Nick,1,Robert,2
+Chris O,1,Matt M,2
+Joe,0,Matt M,3
+Bart,0,Brett,3
+Garrett,2,Greg,1
+Aditi,2,Joe,1
+Aditi,3,Paul,0
+Amita,2,Matt C,1
+Amita,0,Mitch,3
+Chris G,0,Vincent,3
+Jeff,3,Josh K,0
+Garrett,2,Mitch,1
+Jeff,2,Griff,1
+Sam,2,Garrett,1
+Juan,3,Paul,0
+Corri,2,Leor,0
+Kevin,3,Leor,0
+Corri,1,David,2
+David,3,Lauren,0
+Chris G,1,Richard,2
+Kevin,3,Lauren,0
+Ed,3,Jordan,0
+Jordan,3,Raelynn,0
+Matt C,3,Raelynn,0
+Josh B,3,Robert,0
+Josh K,2,Terry,1
+Griff,3,Tom,0
+Nick,1,Tom,2
+Amanda,2,Juan,1
+Juan,3,Greg,0
+Jeff,3,Greg,0
+Jeff,1,Chris O,2
+Andrew,0,Terry,3
+Jeff,2,Garrett,1
+Juan,1,Chris O,2
+Brett,2,Aditi,1
+Garrett,2,Aditi,1
+Nick,1,Eva,2
+Eric,1,Aditi,2
+Griff,3,Tom,0
+Sam,2,Garrett,1
+Chris O,2,Greg,1
+Amanda,3,Kevin,0
+David,2,Kevin,1
+Amanda,2,Griff,1
+Joe,1,Chris O,2
+Corri,2,Nick,1
+Sam,3,Juan,0
+Brett,0,Sam,3
+Brett,3,Juan,0
+Brett,3,Josh B,0
+Josh B,1,Casey,2
+Brett,1,Casey,2
+Juan,0,Casey,3
+Juan,1,Casey,2
+David,2,Gavin,1
+Chris O,3,Griff,0
+Gavin,2,Kevin,1
+Gavin,2,Corri,1
+Juan,3,Andrew,0
+Griff,2,Terry,1
+Griff,3,Andrew,0
+Josh B,1,Terry,2
+Vincent,2,Tom,1
+Vincent,2,Eva,1
+Juan,3,Eric,0
+Andrew,3,Nathan,0
+Bart,2,Tom,1
+Amanda,2,Brett,1
+Aditi,2,Amanda,1
+Griff,0,Chris O,3
+Aditi,1,Jeff,2
+Brett,0,Sam,3
+Josh K,2,Nathan,1
+Jeff,1,Sam,2
+Joe,3,Terry,0
+Garrett,2,Paul,1
+Juan,2,Terry,1
+Juan,3,Vincent,0
+David,3,Hendrix,0
+Greg,3,Paul,0
+Andrew,3,Josh K,0
+Greg,1,Jason,2
+Casey,0,Chris O,3
+Bart,1,Vincent,2
+Griff,2,Mitch,1
+Casey,2,Garrett,1
+Jordan,3,Raelynn,0
+Gavin,2,Kevin,1
+Corri,0,Tom,3
+Vincent,3,Hendrix,0
+Corri,1,Matt C,2
+David,2,Matt C,1
+Chris G,2,Eva,1
+Eva,2,Raelynn,1
+Chris G,2,Robert,1
+Jordan,2,Kevin,1
+Gavin,3,Lauren,0
+Joe,2,Robert,0
+Lauren,0,Matt C,3
+Gavin,1,Nick,2
+Amanda,0,Chris O,3
+Andrew,3,Brian,0
+Andrew,2,Amanda,1
+Josh B,2,Nathan,1
+Chris O,1,Sam,2
+Brett,2,Chris O,1
+Garrett,3,Juan,0
+Brett,0,Sam,3
+Jason,3,Paul,0
+Griff,2,Mitch,1
+Griff,3,Vincent,0
+Joe,0,Jason,3
+Joe,0,Casey,3
+Alex,1,Gavin,0
+Gavin,0,Robert,3
+Alex,1,Raelynn,2
+Josh K,0,Matt M,3
+Gavin,3,Raelynn,0
+Jason,0,Matt M,3
+Nathan,3,Brian,0
+Nathan,3,Vincent,0
+Chris G,0,Josh K,3
+Casey,1,Garrett,2
+Casey,1,Juan,2
+Amita,0,Eva,3
+Amita,2,Nick,1
+David,3,Ed,0
+David,2,Emilio,1
+Hendrix,2,Nick,1
+Ed,0,Emilio,3
+Chris G,3,Hendrix,0
+Eva,1,Robert,2
+Josh B,2,Eric,1
+Eric,2,Paul,1
+Kevin,2,Matt C,1
+Kevin,1,Mitch,2
+Matt C,3,Raelynn,0
+Amanda,2,Bart,1
+Chris O,2,Juan,1
+Amanda,0,Matt M,3
+Bart,3,Vincent,0
+Chris O,2,Jeff,1
+Brian,1,Josh K,2
+Josh B,1,Griff,2
+Josh B,2,Vincent,1
+Jeff,0,Juan,3
+Jason,0,Sam,3
+Aditi,0,Jason,3
+Garrett,0,Sam,3
+Andrew,1,Joe,2
+Andrew,1,Matt M,2
+Joe,3,Griff,0
+Josh K,2,Paul,1
+Aditi,1,Garrett,2
+Eva,3,Raelynn,0
+Eric,2,Emilio,1
+Eric,2,Robert,1
+Emilio,0,Gavin,3
+Jordan,3,Raelynn,0
+David,0,Nathan,3
+David,0,Paul,3
+Nathan,2,Tom,1
+Alex,0,Hendrix,3
+Ed,0,Eva,3
+Corri,0,Robert,3
+Alex,0,Brian,3
+Lauren,0,Tom,3
+Ed,2,Gavin,1
+Corri,0,Matt C,3
+Amita,1,Hendrix,2
+Amita,3,Jordan,0
+Lauren,0,Matt C,3
+Amanda,3,Nathan,0
+Andrew,2,Bart,1
+Andrew,2,Chris O,0
+Brett,3,Joe,0
+Garrett,0,Jeff,3
+Brett,2,Casey,1
+Casey,1,Griff,2
+Jason,1,Josh K,2
+Garrett,3,Griff,0
+Aditi,0,Jeff,3
+Alex,0,Nick,3
+Gavin,0,Paul,3
+Corri,2,Raelynn,1
+Chris O,3,Matt M,0
+Amanda,1,Juan,2
+Bart,3,Nathan,0
+Matt M,3,Sam,0
+Juan,0,Sam,3
+Joe,1,Josh K,2
+Emilio,0,Matt C,3
+Aditi,1,Jason,2
+Mitch,3,Robert,0
+Eric,1,Tom,2
+Eric,1,Mitch,2
+Emilio,0,Robert,3
+Kevin,3,Lauren,0
+Corri,3,Lauren,0
+Chris G,1,David,2
+David,2,Hendrix,1
+Brian,2,Chris G,1
+Hendrix,3,Matt C,0
+Tom,2,Raelynn,1
+Brian,0,Paul,3
+Eva,2,Gavin,1
+Jordan,0,Nick,3
+Eva,2,Thomas S,1
+Ed,2,Jordan,1
+Ed,2,Kevin,1
+Alex,0,Thomas S,3
+Juan,1,Matt M,2
+Amanda,1,Jeff,2
+Josh B,0,Chris O,3
+Josh K,0,Sam,3
+Garrett,3,Jason,0
+Griff,0,Sam,3
+Bart,1,Paul,2
+Alex,2,Jordan,1
+Jordan,2,Lauren,1
+Alex,3,Lauren,0
+Paul,3,Robert,0
+Amanda,3,Joe,0
+Brett,1,Juan,2
+Garrett,0,Joe,3
+Brett,3,Jason,0
+Chris O,2,Jason,1
+Casey,2,Nathan,1
+Chris G,0,Nathan,3
+Casey,1,Josh K,2
+Ed,0,Robert,3
+Bart,1,Griff,2
+Gavin,2,Hendrix,1
+Gavin,2,Thomas S,1
+Corri,0,David,3
+Corri,0,Jordan,3
+David,1,Matt C,2
+Brian,0,Josh B,3
+Matt C,3,Raelynn,0
+Brian,1,Mitch,2
+Amita,2,Raelynn,1
+Thomas S,3,Nick,0
+Amita,2,Thomas S,1
+Chris G,1,Vincent,2
+Ed,1,Nick,2
+Eva,0,Mitch,3
+Eva,1,Hendrix,2
+Andrew,1,Juan,2
+Garrett,2,Matt M,1
+Amanda,3,Andrew,0
+Jason,0,Juan,3
+Josh K,0,Vincent,3
+Josh K,3,Nathan,0
+Joe,0,Sam,3
+Griff,2,Nathan,1
+Corri,0,Thomas S,3
+Eva,2,Kevin,1
+Jordan,3,Raelynn,0
+Lauren,0,Nick,3
+Griff,3,Garrett,0
+Chris O,3,Garrett,0
+Amanda,1,Brett,2
+Chris O,3,Matt M,0
+Brett,3,Jeff,0
+Chris G,1,Paul,2
+Jason,0,Jeff,3
+Chris G,0,Tom,3
+Josh B,2,Paul,1
+Josh K,2,Joe,1
+Ed,1,Hendrix,2
+Ed,1,Gavin,2
+Nick,1,Robert,2
+Corri,1,Gavin,2
+Jeff,2,Sam,1
+David,3,Raelynn,0
+Bart,3,Brian,0
+Amita,0,Mitch,3
+David,0,Vincent,1
+Bart,2,Josh B,1
+Ed,0,Mitch,3
+Amita,0,Robert,3
+Brian,2,Hendrix,1
+Alex,0,Eva,3
+Alex,0,Kevin,3
+Emilio,2,Jordan,1
+Lauren,0,Thomas S,3
+Emilio,0,Tom,3
+Aditi,0,Sam,3
+Aditi,3,Juan,0
+Juan,3,Vincent,0
+Andrew,0,Jason,3
+Nathan,2,Paul,1
+Ed,0,Nathan,3
+Corri,1,Hendrix,2
+Ed,0,Vincent,3
+Corri,0,Nick,3
+Jordan,1,Matt C,2
+Amanda,1,Chris O,2
+Andrew,1,Sam,2
+Amanda,1,Jason,2
+Brett,1,Chris O,2
+Bart,2,Josh K,1
+Brett,2,Bart,1
+Casey,0,Jeff,3
+Casey,1,Griff,2
+Jeff,2,Griff,1
+Nick,1,Paul,2
+Brian,1,David,2
+Brian,1,Tom,2
+David,0,Tom,3
+Mitch,0,Josh K,3
+Hendrix,0,Mitch,3
+Alex,1,Emilio,2
+Alex,1,Matt C,2
+Emilio,3,Lauren,0
+Jordan,2,Lauren,1
+Thomas S,0,David,3
+Raelynn,0,Robert,3
+Raelynn,3,Lauren,0
+Jordan,1,Kevin,2
+Corri,0,lauren,3
+Corri,0,Matt C,3
+Tom,3,Matt C,0
+Thomas S,0,Kevin,3
+Nathan,2,Josh B,1
+Gavin,1,David,2
+Alex,1,Jordan,2
+Nathan,2,Gavin,1
+Kevin,3,Alex,0
+Brett,2,Jason,1
+Bart,1,Andrew,2
+Vincent,2,David,1
+Tom,1,Vincent,2
+Bart,1,Joe,2
+Robert,0,Josh B,3
+Josh K,2,Josh B,1
+Griff,2,Josh K,1
+Griff,2,Jason,1
+Matt C,2,Thomas S,1
+Garrett,3,Andrew,0
+Amanda,2,Josh B,1
+Brett,0,Garrett,3
+Jeff,2,Amanda,1
+Matt M,2,Jason,1
+Matt M,1,Jeff,2
+Garrett,0,Jeff,3
+Aditi,1,Joe,2
+Aditi,3,Griff,0
+Sam,3,Jason,0
+Aditi,2,Jason,1
+Chris O,3,Juan,0
+David,0,Nathan,3
+Amanda,3,Garrett,0
+Sam,2,Chris O,1
+Aditi,2,Matt M,1
+Joe,0,Matt M,3
+Eva,1,Vincent,2
+Garrett,2,Vincent,1
+Emilio,1,Gavin,2
+Andrew,1,Garrett,2
+Bart,0,Juan,3
+Andrew,1,Josh K,2
+Bart,2,Joe,1
+Nathan,3,Thomas S,0
+Aditi,2,Josh K,1
+Brett,2,Garrett,1
+Brett,0,Sam,3
+Gavin,2,Tom,1
+Jordan,0,Tom,3
+David,1,Paul,2
+Alex,1,Ed,2
+Ed,2,Thomas S,1
+Paul,3,David,0
+Amita,1,Matt C,2
+Lauren,0,Matt C,3
+Alex,0,Robert,3
+Amita,3,Lauren,0
+Emilio,2,Eva,1
+Jordan,1,Robert,2
+Eva,2,Amita,1
+Amanda,1,Juan,2
+Amanda,1,Matt M,2
+Joe,2,Nathan,1
+Garrett,0,Juan,3
+Joe,1,Paul,2
+Brett,1,Matt M,2
+Brett,2,Josh B,1
+Garrett,2,Griff,1
+Bart,3,Tom,0
+Bart,0,Casey,3
+Casey,2,Jason,1
+Chris G,0,Nick,3
+Chris G,3,Emilio,0
+Gavin,0,Hendrix,3
+Gavin,1,Robert,2
+Aditi,3,Mitch,0
+Chris O,1,Jeff,2
+Aditi,3,Nathan,0
+Chris O,1,Sam,2
+Jason,2,Josh B,1
+Jason,1,Mitch,2
+Jeff,1,Sam,2
+Amita,2,Jordan,1
+Amita,3,Thomas S,0
+Emilio,1,Thomas S,2
+Tom,0,Griff,3
+Brian,3,Nick,0
+Eva,3,Hendrix,0
+Paul,1,Eva,2
+Ed,3,Lauren,0
+Brian,3,Matt C,0
+Ed,0,Eva,3
+Matt C,3,Raelynn,0
+Lauren,3,Raelynn,0
+Alex,3,Raelynn,0
+Alex,3,Jordan,0
+Robert,2,Griff,1
+Amanda,2,Tom,1
+Andrew,2,Vincent,1
+Aditi,3,Amanda,0
+Brett,3,Garrett,0
+Brett,1,Jeff,2
+Jason,0,Jeff,3
+Paul,1,Vincent,2
+Jason,0,Sam,3
+Brian,3,Kevin,0
+Raelynn,1,Thomas S,2
+Joe,2,Josh B,1
+Josh B,0,Griff,3
+Chris O,2,Joe,1
+Aditi,2,Andrew,1
+Chris O,2,Garrett,1
+Griff,1,Juan,2
+Paul,3,Robert,0
+Juan,0,Sam,3
+Brian,1,Robert,2
+Chris G,0,Brian,3
+David,3,Jordan,0
+David,3,Lauren,0
+Alex,2,Thomas S,1
+Robert,3,Tom,0
+Alex,3,Lauren,0
+Ed,3,Jordan,0
+Amita,3,Raelynn,0
+Ed,0,Matt C,3
+Amita,2,Kevin,1
+Chris G,2,Matt C,1
+Francis,0,Vincent,3
+Andrew,2,Vincent,1
+Francis,1,Kevin,2
+Sam,3,Brett,0
+Brett,0,Chris O,3
+Casey,1,Jeff,2
+Garrett,0,Sam,3
+Josh B,2,Nathan,1
+Casey,3,Jason,0
+Mitch,3,Nathan,0
+Gavin,2,Kevin,1
+Gavin,3,Lauren,0
+Garrett,3,Joe,0
+Paul,2,Richard,1
+Amanda,2,Andrew,1
+Chris O,2,Sam,1
+Jason,0,Jeff,3
+Luke,0,Terry,3
+Joe,0,Juan,3
+Alex,0,Chris G,3
+Mitch,3,Nick,0
+Griff,1,Juan,2
+Amita,1,Chris G,2
+Griff,2,Terry,1
+Amita,1,Eva,2
+David,1,Paul,2
+Matt C,3,Thomas S,0
+David,1,Richard,2
+Josh B,3,Tom,0
+Matt C,2,Tom,1
+Jordan,2,Lauren,1
+Raelynn,0,Thomas S,3
+Jordan,3,Rebecca,0
+Alex,1,Luke,2
+Raelynn,3,Rebecca,0
+Eva,2,Vincent,1
+Amanda,0,Garrett,3
+Amanda,2,Matt M,1
+Richard,0,Chris O,3
+Brett,0,Garrett,3
+Vincent,1,Casey,2
+Sam,1,Jeff,2
+Hendrix,2,Jordan,1
+Gavin,1,Thomas S,2
+Brett,3,Juan,0
+Gavin,2,Jordan,1
+Bart,0,Griff,3
+Bart,1,Josh B,2
+Griff,1,Jason,2
+Andrew,2,Joe,1
+Andrew,1,Sam,2
+Jeff,1,Matt M,2
+Brian,2,Kevin,1
+Jason,3,Joe,0
+Brian,2,Amita,1
+Matt C,1,Kevin,2
+Chris G,2,Thomas S,1
+Juan,0,Sam,3
+Chris G,1,Eva,2
+Eva,3,Matt C,0
+Garrett,1,Casey,2
+Andrew,1,Chris O,2
+Nathan,0,Paul,3
+Hendrix,0,Richard,3
+Paul,2,Tom,1
+Alex,3,Lauren,0
+Nathan,2,Brian,1
+Alex,3,Lynea,0
+Nick,2,Tom,1
+Amita,0,Nick,3
+Lauren,3,Rebecca,0
+Lynea,2,Rebecca,1
+Mitch,2,Terry,1
+Mitch,0,Vincent,3
+Terry,2,Josh B,1
+Amanda,1,Chris O,2
+Chris O,2,Matt M,1
+Amanda,1,Juan,2
+Brian,0,Jason,3
+Juan,0,Matt M,3
+Brett,2,Griff,1
+Brian,2,Matt C,1
+Brett,2,Garrett,1
+Garrett,2,Griff,1
+Terry,3,Tom,0
+Tom,0,Vincent,3
+Bart,3,Francis,0
+Andrew,1,Jason,2
+Andrew,2,Bart,1
+Jason,3,Terry,0
+Brett,0,Sam,3
+Hendrix,0,Luke,3
+Joe,1,Vincent,2
+Mitch,2,Tom,1
+Nick,3,Thomas S,0
+Casey,3,Joe,0
+Casey,1,Sam,2
+Gavin,0,Bart,3
+Francis,2,Gavin,1
+Alex,2,Amita,1
+Alex,3,Raelynn,0
+Lauren,0,Thomas S,3
+Amita,1,Hendrix,2
+Lauren,0,Lynea,3
+Matt C,0,Mitch,3
+Luke,2,Robert,1
+Lynea,2,Raelynn,1
+Jordan,0,Nick,3
+Robert,3,Jordan,0
+Amanda,3,Mitch,0
+Amanda,1,Sam,2
+Matt M,2,Richard,1
+Brian,1,Eva,2
+Andrew,1,Matt M,2
+Andrew,3,Luke,0
+Brett,2,Jason,1
+Brett,3,Joe,0
+Casey,3,Joe,0
+Casey,3,Vincent,0
+Joe,3,Paul,0
+Garrett,0,Jason,3
+Juan,3,Richard,0
+Chris O,1,Juan,2
+Chris O,2,Sam,1
+Jordan,2,Kevin,1
+Jordan,0,Matt C,3
+Brian,2,Francis,1
+Luke,2,Terry,1
+Lynea,1,Tom,2
+Terry,3,Vincent,0
+Amita,3,Lynea,0
+Amita,0,Robert,3
+Chris G,2,Luke,1
+Chris G,1,Nick,2
+Eva,0,Mitch,3
+Francis,2,Nick,1
+Kevin,0,Tom,3
+Raelynn,1,Rebecca,2
+Lauren,1,Raelynn,2
+Griff,3,Robert,0
+Garrett,3,Paul,0
+Amanda,1,Jason,2
+Amanda,1,Matt M,2
+Amanda,1,Andrew,2
+Andrew,1,Paul,2
+Jason,1,Jeff,2
+Jason,1,Juan,2
+Juan,0,Chris O,3
+Brett,1,Sam,2
+Brett,3,Terry,0
+Jason,0,Sam,3
+Juan,3,Joe,0
+Garrett,3,Joe,0
+Garrett,3,Josh B,0
+Bart,1,Matt M,2
+Bart,1,Richard,2
+Chris O,3,Jeff,0
+Amita,1,Matt C,2
+Alex,0,Jordan,3
+Amita,3,Jordan,0
+Alex,3,Lauren,0
+Brian,2,Robert,1
+Brian,1,Vincent,2
+Griff,1,Casey,2
+Griff,2,Vincent,1
+Francis,0,Richard,3
+Francis,0,Terry,3
+Gavin,3,Lauren,0
+Gavin,3,Lynea,0
+Matt C,3,Rebecca,0
+Lynea,0,Thomas S,3
+Thomas S,2,Jordan,1
+Terry,2,Paul,1
+Josh B,0,Vincent,3
+Garrett,1,Casey,2
+Brett,1,Matt M,2
+Amanda,0,Brett,3
+Andrew,1,Jason,2
+Andrew,0,Jeff,3
+Joe,2,Juan,1
+Eva,1,Robert,2
+Mitch,3,Nick,0
+Casey,3,Terry,0
+Garrett,2,Griff,1
+Garrett,0,Sam,3
+Francis,1,Josh B,2
+Chris G,1,Richard,2
+Francis,3,Lynea,0
+Chris G,0,Nathan,3
+Bart,3,Mitch,0
+Eva,1,Lynea,2
+Bart,2,Terry,1
+Jeff,0,Sam,3
+Casey,3,Nathan,0
+Juan,3,Mitch,0
+Paul,3,Gavin,0
+Luke,2,Richard,1
+Kevin,0,Matt C,3
+Kevin,3,Lauren,0
+Amita,3,Raelynn,0
+Luke,2,Vincent,1
+Amita,3,Lauren,0
+Jordan,1,Matt C,2
+Jordan,2,Raelynn,1
+Thomas S,1,Tom,2
+Thomas S,1,Vincent,2
+Nick,1,Tom,2
+Gavin,0,Robert,3
+Griff,2,Paul,1
+Amanda,2,Joe,1
+Jason,1,Matt M,2
+Amanda,3,Richard,0
+Amanda,1,Brett,2
+Amanda,0,Jason,3
+Andrew,2,Casey,1
+Casey,2,Mitch,1
+Gavin,3,Rebecca,0
+Gavin,1,Tom,2
+Juan,1,Jason,2
+Jordan,2,Lauren,1
+Paul,2,Brian,1
+Andrew,0,Joe,3
+Sam,3,Terry,0
+Brett,2,Jeff,1
+Garrett,3,Terry,0
+Juan,0,Sam,3
+Nathan,1,Vincent,2
+Garrett,3,Mitch,0
+Hendrix,0,Gavin,3
+Jason,3,Vincent,0
+Kevin,3,Lynea,0
+Lauren,1,Rebecca,2
+Lynea,1,Nick,2
+Tom,1,Nathan,2
+Francis,0,Nathan,3
+Joe,2,Richard,1
+Chris G,3,Francis,0
+Richard,3,Vincent,0
+Amita,1,Kevin,2
+Amita,2,Eva,1
+Brian,2,Hendrix,1
+Eva,1,Thomas S,2
+Nick,1,Thomas S,2
+Rebecca,0,Kevin,3
+Bart,3,Nathan,0
+Andrew,1,Bart,2
+Andrew,0,Nathan,3
+Jason,3,Joe,0
+Jeff,2,Juan,1
+Joe,0,Sam,3
+Brian,3,Josh B,0
+Mitch,3,Thomas S,0
+Hendrix,2,Jordan,1
+Hendrix,0,Nick,3
+Casey,1,Garrett,2
+Casey,1,Griff,2
+Raelynn,1,Jordan,2
+Chris O,1,Matt M,2
+Matt M,2,Sam,1
+Paul,1,Terry,2
+Brian,0,Richard,3
+Luke,0,Terry,3
+Chris O,3,Jeff,0
+Chris G,1,Kevin,2
+Chris G,0,Josh B,3
+Gavin,3,Lauren,0
+Gavin,1,Nick,2
+Garrett,2,Jason,1
+Griff,1,Juan,2
+Matt C,0,Vincent,3
+Paul,1,Vincent,2
+Francis,0,Matt C,3
+Francis,1,Robert,2
+Richard,3,Robert,0
+Alex,3,Rebecca,0
+Alex,0,Tom,3
+Amita,2,Thomas S,1
+Eva,0,Luke,3
+Eva,2,Tom,1
+Jordan,2,Kevin,1
+Lauren,2,Raelynn,1
+Chris O,3,Juan,0
+Bart,0,Juan,3
+Chris O,3,Vincent,0
+Tom,0,Bart,3
+Chris O,3,Terry,0
+Vincent,0,Juan,3
+Terry,0,Juan,3
+Joe,0,Juan,3
+Tom,0,Terry,3
+Garrett,2,Matt M,1
+Matt M,2,Juan,1
+Tom,0,Thomas S,3
+Joe,0,Chris O,3
+Luke,0,Garrett,3
+Bart,1,Terry,2
+Joe,1,Terry,2
+Matt M,3,Vincent,0
+Chris O,2,Brett,1
+Thomas S,2,Kevin,1
+Paul,0,Juan,3
+Jason,3,Paul,0
+Brett,3,Matt M,0
+Garrett,3,Paul,0
+Jason,3,Terry,0
+Brett,3,Casey,0
+Paul,2,Luke,1
+Jason,3,Casey,0
+Reese,0,Paul,3
+Bart,3,Eva,0
+Juan,1,Jeff,2
+Gavin,0,Robert,3
+Alex,2,Raelynn,1
+Gavin,1,Thomas S,2
+Bart,0,Juan,3
+Griff,0,Juan,3
+Griff,3,Mitch,0
+Richard,2,Bart,1
+Richard,2,Terry,1
+Raelynn,0,Thomas S,3
+Lauren,2,Lynea,1
+Eva,0,Robert,3
+Jason,3,Nathan,0
+Jason,1,Jeff,2
+C Olson,1,Lauren,2
+Alex,3,C Olson,0
+Reese,2,Gavin,1
+Nick,3,Matt C,0
+Kevin,0,Tom,3
+Kevin,0,Vincent,3
+Jordan,3,Lynea,0
+Jordan,0,Matt C,3
+Mitch,0,Terry,3
+Nathan,0,Paul,3
+Nick,2,Tom,1
+Vincent,2,Bart,1
+Amanda,0,Chris O,3
+Amanda,2,Paul,1
+Chris O,2,Jeff,1
+Amita,2,Vincent,1
+Nick,3,Raelynn,0
+Lynea,0,Nick,3
+Bart,2,Nathan,1
+Brett,2,Jeff,1
+Brett,1,Jason,2
+Kevin,0,Thomas S,3
+Lauren,0,Robert,3
+Paul,1,Richard,2
+Richard,3,Tom,0
+Bart,1,Joe,2
+Josh B,1,Terry,2
+Josh B,0,Vincent,3
+Jordan,0,Luke,3
+Joe,2,Nathan,1
+Jordan,3,Raelynn,0
+Amita,3,Matt C,0
+Griff,2,Terry,1
+Garrett,0,Jason,3
+Garrett,1,Griff,2
+Alex,3,Lynea,0
+Lauren,0,Reese,3
+Amita,2,Kevin,1
+Thomas S,1,Luke,2
+Chris G,0,Mitch,3
+Chris G,0,Robert,3
+Matt C,0,Tom,3
+Alex,1,Reese,2
+Amanda,0,Jason,3
+Andrew,1,Chris O,2
+Amanda,3,Juan,0
+Andrew,2,Paul,1
+Jeff,3,Juan,0
+Casey,3,Joe,0
+Eva,0,Tom,3
+Jeff,3,Terry,0
+Griff,1,Jason,2
+Griff,3,Reese,0
+Joe K,0,Bart,3
+Joe K,0,Nathan,3
+Garrett,3,Richard,0
+Chris G,2,Nathan,1
+Casey,1,Chris O,2
+Chris G,1,Eva,2
+Joe,2,Terry,1
+Garrett,3,Vincent,0
+Gavin,3,Lauren,0
+Gavin,1,Nick,2
+Matt C,0,Thomas S,3
+Lynea,2,Raelynn,1
+Lynea,0,Robert,3
+Bart,2,Paul,1
+Richard,3,Robert,0
+Jordan,0,Nick,3
+Luke,3,Matt C,0
+Jordan,0,Tom,3
+Lauren,1,Raelynn,2
+C Olson,1,Reese,2
+C Olson,1,Vincent,2
+Luke,2,Thomas S,1
+Paul,1,Richard,2
+Amanda,2,Andrew,1
+Andrew,2,Bart,1
+Amanda,0,Jeff,3
+Garrett,3,Terry,0
+Chris O,3,Juan,0
+Jason,3,Jeff,0
+Josh B,3,Tom,0
+Jordan,3,Raelynn,0
+Eva,0,Vincent,3
+Thomas S,0,Vincent,3
+Bart,0,Garrett,3
+Reese,0,Richard,3
+Brett,1,Chris O,2
+Bart,1,Jason,2
+Eva,0,Paul,3
+Casey,3,Nathan,0
+Casey,2,Terry,1
+Brett,3,Juan,0
+Gavin,0,Tom,3
+Gavin,2,Matt C,1
+Alex,0,Matt C,3
+Nathan,2,Reese,1
+Kevin,0,Robert,3
+Lauren,2,Lynea,1
+Lauren,0,Tom,3
+Kevin,2,Lynea,1
+C Olson,0,Jordan,3
+Joe K,0,Robert,3
+C Olson,0,Nick,3
+Alex,2,Raelynn,1
+Joe K,2,Nick,1
+Josh B,3,Thomas S,0
+Alex,0,Josh B,3
+Andrew,0,Jason,3
+Andrew,2,Mitch,1
+Juan,3,Richard,0
+Alex,0,Joe K,3
+Jason,3,Terry,0
+Joe,2,Robert,1
+Bart,0,Griff,3
+Joe,1,Vincent,2
+Eva,2,Reese,1
+Gavin,1,Vincent,2
+Mitch,2,Richard,1
+Garrett,0,Jeff,3
+Garrett,2,Nick,1
+Casey,2,Jeff,1
+Nick,1,Paul,2
+Casey,1,Juan,2
+Nathan,2,Thomas S,1
+Matt C,0,Paul,3
+Gavin,1,Reese,2
+Joe K,3,Jordan,0
+Bart,3,Terry,0
+Eva,0,Robert,3
+Josh B,3,Lynea,0
+Chris G,0,Matt C,3
+Jordan,2,Lauren,1
+Chris G,0,Thomas S,3
+Tom,3,Lauren,0
+Lynea,0,Tom,3
+Griff,3,Nathan,0
+Amanda,3,Richard,0
+Amanda,3,Mitch,0
+Andrew,2,Josh B,1
+Andrew,1,Richard,2
+Bart,3,Nathan,0
+Bart,1,Robert,2
+Gavin,2,Jordan,1
+Garrett,3,Juan,0
+Terry,3,Vincent,0
+Casey,3,Griff,0
+Griff,2,Juan,1
+Joe,3,Mitch,0
+Joe,1,Josh B,2
+Chris O,0,Garrett,3
+Brett,2,Jason,1
+Brett,3,Casey,0
+Chris O,1,Jason,2
+Robert,0,Terry,3
+Joe K,3,Raelynn,0
+Nathan,3,Tom,0
+Paul,1,Vincent,2
+Reese,2,Tom,1
+Chris G,3,Gavin,0
+Eva,1,Joe K,2
+Luke,3,Nick,0
+Eva,1,Luke,2
+Chris G,3,Lauren,0
+Jordan,0,Nick,3
+Alex,3,Lauren,0
+Paul,3,Thomas S,0
+Alex,3,Kevin,0
+Kevin,3,Raelynn,0
+Reese,1,Thomas S,2
+Amanda,3,Josh B,0
+Andrew,1,Garrett,2
+Andrew,0,Juan,3
+Bart,0,Chris O,3
+Alex,0,Reese,3
+Alex,2,Jordan,1
+Casey,1,Chris O,2
+Eva,2,Thomas S,1
+Casey,0,Jason,3
+Eva,1,Vincent,2
+Griff,2,Jason,1
+Griff,2,Garrett,1
+Terry,0,Juan,3
+Josh B,2,Richard,1
+Amanda,1,Garrett,2
+Bart,3,Mitch,0
+Jordan,0,Matt C,3
+Gavin,3,Lynea,0
+Terry,2,Nathan,1
+Nathan,1,Vincent,2
+Nick,3,Thomas S,0
+Mitch,0,Garrett,3
+Kevin,0,Matt C,3
+Joe K,2,Matt C,1
+Kevin,0,Richard,3
+Bart,2,Joe K,1
+Alex,3,Lauren,0
+Lynea,1,Raelynn,2
+Lauren,1,Nick,2
+Gavin,3,Raelynn,0
+Paul,3,Robert,0
+Paul,0,Terry,3
+Reese,0,Robert,3
+Amanda,2,Bart,1
+Andrew,3,Joe K,0
+Amanda,2,Juan,1
+Andrew,1,Joe,2
+Joe K,0,Paul,3
+Brett,3,Garrett,0
+Joe,3,Nick,0
+Brett,2,Chris O,1
+Matt C,0,Nathan,3
+Griff,1,Jeff,2
+Griff,3,Vincent,0
+Gavin,0,Nathan,3
+Jason,3,Paul,0
+Bart,1,Jason,2
+Eva,2,Kevin,1
+Gavin,0,Mitch,3
+Josh B,2,Robert,1
+Chris O,2,Jeff,1
+Casey,1,Juan,2
+Casey,2,Garrett,1
+Robert,2,Tom,1
+Thomas S,1,Tom,2
+Mitch,2,Reese,1
+Alex,1,Chris G,2
+Josh B,2,Luke,1
+Lauren,0,Reese,3
+Chris G,1,Nick,2
+Alex,1,Eva,2
+Jordan,2,Kevin,1
+Lauren,2,Raelynn,1
+Jordan,1,Thomas S,2
+Luke,0,Vincent,3
+Matt C,3,Raelynn,0
+Chris O,3,Bart,0
+Chris O,3,Richard,0
+Chris O,2,Andrew,1
+Garrett,2,Josh B,1
+Griff,1,Andrew,2
+Terry,0,Jason,3
+Bart,2,Josh B,1
+Casey,0,Chris O,3
+Garrett,1,Jason,2
+Chris O,3,Terry,0
+Chris O,3,Griff,0
+Jason,3,Vincent,0
+Amanda,2,Richard,1
+Amanda,3,Bart,0
+Andrew,2,Terry,1
+Richard,0,Bart,3
+Paul,0,Jason,3
+Griff,2,Josh B,1
+Brett,3,Bart,0
+Paul,1,Bart,2
+Casey,3,Paul,0
+Terry,3,Josh B,0
+Casey,2,Garrett,1
+Thomas S,1,Vincent,2
+Jason,3,Gavin,0
+Tom,1,Terry,2
+Thomas S,2,Gavin,1
+Alex,1,Gavin,2
+Amanda,2,Jason,1
+Tom,2,Thomas S,1
+Brett,1,Chris O,2
+Alex,0,Thomas S,3
+Jason,3,Thomas S,0
+Casey,2,Griff,1
+Amanda,3,Andrew,0
+Amanda,3,Casey,0
+Bart,0,Jeff,3
+Lauren,0,Thomas S,3
+Gavin,3,Lauren,0
+Juan,3,Nathan,0
+Bart,2,Paul,1
+Chris O,3,Juan,0
+Chris G,0,Luke,3
+Luke,2,Reese,1
+Amanda,1,Jason,2
+Jeff,3,Jason,0
+Andrew,1,Casey,2
+Terry,0,Joe,3
+Joe,3,Paul,0
+Chris O,3,Jason,0
+Amita,0,Gavin,3
+Jordan,0,Reese,3
+Amita,0,Eva,3
+Luke,2,Tom,1
+Raelynn,0,Tom,3
+Robert,2,Terry,1
+Jordan,0,Robert,3
+Nathan,3,Richard,0
+Matt C,2,Mitch,1
+Eva,1,Richard,2
+Matt C,2,Thomas S,1
+Mitch,3,Nick,0
+Nick,3,Raelynn,0
+Chris O,3,Juan,0
+Amanda,3,Richard,0
+Amanda,2,Andrew,1
+Brett,1,Chris O,2
+Andrew,0,Jason,3
+Brett,1,Jeff,2
+Casey,3,Terry,0
+Garrett,1,Jeff,2
+Casey,1,Garrett,2
+Reese,1,Vincent,2
+Matt C,2,Thomas S,1
+Richard,3,Robert,0
+Chris G,3,Darrell,0
+Paul,3,Robert,0
+Darrell,2,Gavin,1
+Karan,0,Paul,3
+Chris G,3,Eva,0
+Jason,3,Juan,0
+Lynea,0,Jordan,3
+Luke,3,Terry,0
+Josh B,3,Thomas S,0
+Matt C,2,Scott,1
+Gavin,2,Karan,1
+Raelynn,0,Valentino,3
+Jordan,3,Raelynn,0
+Tom,3,Valentino,0
+Lauren,0,Nick,3
+Jordan,0,Tom,3
+Eva,2,Scott,1
+Lauren,0,Lynea,3
+Josh B,2,Luke,1
+Nick,1,Reese,2
+Nick,2,Vincent,1
+Amanda,1,Chris O,2
+Andrew,3,Joe,0
+Andrew,1,Brett,2
+Amanda,3,Paul,0
+Casey,3,Luke,0
+Casey,2,Griff,2
+Nick,2,Robert,1
+Nick,2,Thomas S,1
+Griff,2,Luke,1
+Juan,3,Terry,0
+Juan,1,Josh B,2
+Garrett,3,Joe,0
+Chris O,2,Jason,1
+Nathan,1,Paul,2
+Garrett,3,Terry,0
+Joe,3,Nathan,0
+Brett,2,Jason,1
+Robert,2,Thomas S,1
+Darrell,2,Kevin,1
+Eric,1,Eva,2
+Eva,0,Josh B,3
+Darrell,1,Nick,2
+Jason,1,Garrett,2
+Scott,2,Tom,1
+Raelynn,0,Tom,3
+Alex,2,Kevin,1
+Lauren,1,Scott,2
+Alex,3,Jordan,0
+Jordan,1,Karan,2
+Lauren,0,Valentino,3
+Karan,3,Raelynn,0
+Matt C,3,Valentino,0
+Matt C,1,Luke,2
+Eric,3,Josh B,0
+Jason,3,Luke,0
+Amanda,0,Jeff,3
+Andrew,3,Luke,0
+Andrew,2,Paul,1
+Amanda,2,Griff,1
+Casey,0,Jeff,3
+Brett,2,Garrett,1
+Joe,1,Luke,2
+Brett,1,Casey,2
+Terry,0,Jason,3
+Lauren,0,Raelynn,3
+Joe,2,Vincent,1
+Josh B,2,Vincent,1
+Reese,1,Robert,2
+Bart,2,Richard,1
+Chris O,3,Garrett,0
+Matt C,1,Tom,2
+Chris O,3,Jason,0
+Bart,2,Paul,1
+Terry,3,Valentino,0
+Gavin,2,Nick,1
+Jordan,3,Kat,0
+Jordan,3,Lynea,0
+Kat,0,Lauren,3
+Darrell,3,Raelynn,0
+Darrell,3,Valentino,0
+Jason,3,Josh B,0
+Kevin,0,Matt C,3
+Kevin,3,Thomas S,0
+Griff,3,Richard,0
+Alex,3,Lynea,0
+Alex,1,Scott,2
+Eric,2,Gavin,1
+Thomas S,1,Tom,2
+Eric,0,Karan,3
+Josh B,3,Scott,0
+Eva,1,Karan,2
+Eva,0,Robert,3
+Reese,2,Thomas S,1
+Darrell,0,Vincent,2
+Amanda,2,Garrett,1
+Amanda,2,Juan,1
+Andrew,3,Bart,0
+Andrew,0,Jeff,3
+Jason,3,Joe,0
+Bart,3,Joe,0
+Darrell,2,Eva,1
+Darrell,1,Reese,2
+Vincent,0,Jason,3
+Matt C,1,Nick,2
+Thomas S,0,Vincent,3
+Brett,3,Chris O,0
+Richard,3,Robert,0
+Garrett,2,Juan,1
+Richard,2,Terry,1
+Brett,2,Jeff,1
+Chris O,2,Terry,1
+Kat,0,Tom,3
+Kevin,3,Lauren,0
+Eva,0,Luke,3
+Luke,2,Paul,1
+Griff,1,Paul,2
+Griff,3,Reese,0
+Chris G,1,Valentino,2
+Chris G,2,Tom,1
+Gavin,3,Kevin,0
+Gavin,3,Lauren,0
+Josh B,1,Matt C,2
+Josh B,3,Nick,0
+Jordan,0,Thomas S,3
+Robert,3,Scott,0
+Jordan,1,Valentino,2
+Kat,0,Raelynn,3
+Raelynn,0,Scott,3
+Amanda,2,Brett,1
+Andrew,1,Garrett,2
+Brett,3,Jason,0
+Amanda,2,Bart,1
+Joe,2,Paul,1
+Joe,2,Terry,1
+Josh B,3,Karan,0
+Chris O,3,Griff,0
+Casey,0,Chris O,3
+Casey,3,Paul,0
+Josh B,0,Jason,3
+Darrell,1,Scott,2
+Darrell,3,Valentino,0
+Andrew,2,Richard,1
+Garrett,0,Jeff,3
+Jason,3,Juan,1
+Griff,1,Jeff,2
+Juan,2,Luke,1
+Bart,2,Reese,1
+Eric,2,Terry,1
+Eric,0,Vincent,3
+Luke,3,Vincent,0
+Chris G,0,Richard,3
+Gavin,3,Kat,0
+Chris G,2,Karan,1
+Gavin,3,Jordan,0
+Scott,1,Thomas S,2
+Lauren,3,Kat,0
+Thomas S,3,Valentino,0
+Josh B,0,Reese,3
+Jordan,2,Lauren,1
+Amanda,3,Richard,0
+Jeff,2,Jason,1
+Bart,2,Richard,1
+Amanda,0,Jeff,3
+Darrell,0,Joe,3
+Richard,3,Scott,0
+Garrett,3,Griff,0
+Casey,3,Joe,0
+Darrell,0,Thomas S,3
+Jeff,0,Garrett,3
+Casey,3,Tom,0
+Andrew,2,Reese,1
+Andrew,1,Luke,2
+Garrett,3,Nick,0
+Josh B,2,Garrett,1
+Amanda,1,Bart,2
+Josh B,0,Jason,3
+Matt C,3,Kevin,0
+Jason,3,Nick,0
+Terry,2,Robert,1
+Nick,2,Robert,1
+Jason,3,Robert,0
+Terry,0,Griff,3
+Luke,0,Terry,3
+Paul,1,Darrell,2
+Paul,1,Casey,2
+Luke,2,Reese,1
+Matt C,1,Paul,2
+Josh B,2,Casey,1
+Griff,0,Casey,3
+Alex,0,Richard,3
+Bart,0,Josh B,3
+Tom,2,Alex,1
+Tom,0,Jason,3
+Nick,3,Eva,0
+Raelynn,1,Kevin,2
+Raelynn,0,Eva,3
+Matt C,0,Robert,3
+Paul,0,Luke,3
+Reese,1,Josh B,2
+Reese,3,Scott,0
+Thomas S,2,Eva,1
+Josh B,3,Eva,0
+Amanda,3,Richard,0
+Chris O,1,Garrett,2
+Paul,2,Richard,1
+Chris O,3,Juan,0
+Andrew,0,Griff,3
+Andrew,0,Juan,3
+Brett,3,Joe,0
+Joe,3,Vincent,0
+Thomas S,1,Vincent,2
+Brett,3,Casey,0
+Karan,0,Reese,3
+Paul,1,Reese,2
+Karan,0,Terry,3
+Amanda,1,Josh B,2
+Garrett,1,Josh B,2
+Brett,3,Griff,0
+Bart,2,Robert,1
+Bart,3,Tom,0
+Nick,1,Scott,2
+Nick,2,Tom,1
+Garrett,0,Casey,3
+Chris G,2,Valentino,1
+Terry,2,Valentino,1
+Chris G,1,Darrell,2
+Jordan,3,Kat,0
+Darrell,1,Thomas S,2
+Jordan,1,Scott,2
+Kat,0,Raelynn,3
+Lauren,0,Matt C,3
+Lauren,2,Raelynn,1
+Matt C,1,Robert,2
+Amanda,0,Chris O,3
+Joe,2,Richard,1
+Amanda,1,Jason,2
+Luke,1,Richard,2
+Josh K,0,Juan,3
+Andrew,2,Luke,1
+Brett,3,Jason,0
+Brett,3,Juan,0
+Casey,2,Garrett,1
+Casey,3,Griff,0
+Lauren,0,Nick,3
+Nick,1,Paul,2
+Josh K,1,Luke,2
+Jason,1,Garrett,2
+Joe,2,Josh B,1
+Josh K,1,Terry,2
+Chris O,2,Josh B,1
+Jordan,0,Kevin,3
+Andrew,3,Terry,0
+Darrell,2,Gavin,1
+Jordan,1,Raelynn,2
+Kat,0,Kevin,3
+Kat,0,Lauren,3
+Josh K,2,Thomas S,1
+Garrett,2,Griff,1
+Matt C,0,Nick,3
+Reese,2,Josh K,1
+Gavin,3,Lynea,0
+Gavin,0,Matt C,3
+Lynea,1,Raelynn,2
+Chris G,0,Scott,3
+Darrell,0,Robert,3
+Chris G,2,Thomas S,1
+Eva,1,Scott,2
+Eva,1,Valentino,2
+Tom,3,Valentino,0
+Paul,1,Robert,2
+Reese,3,Tom,0
+Darrell,0,Jason,3
+Amanda,0,Jeff,3
+Chris O,3,Jason,0
+Amanda,3,Bart,0
+Garrett,0,Joe,3
+Andrew,2,Josh B,1
+Garrett,0,Luke,3
+Andrew,0,Jason,3
+Casey,1,Juan,2
+Griff,1,Juan ,2
+Griff,3,Vincent,0
+Kat,0,Raelynn,3
+Casey,2,Griff,1
+Bart,1,Richard,2
+Jason,1,Jeff,2
+Richard,1,Terry,2
+Brett,0,Chris O,3
+Brett,3,Josh B,0
+Joe,1,Terry,2
+Scott,1,Nick,2
+Luke,3,Robert,0
+Lynea,0,Raelynn,3
+Matt C,2,Thomas S,1
+Garrett,0,Robert,3
+Josh K,2,Karan,1
+Kat,0,Lynea,3
+Nick,2,Valentino,1
+Matt C,2,Valentino,1
+Darrell,2,Karan,1
+Scott,1,Tom,2
+Darrell,3,Tom,0
+Josh K,3,Robert,0
+Eva,2,Thomas S,1
+Eva,3,Vincent,0
+Matt C,0,Josh K,3
+Amanda,0,Bart,3
+Andrew,2,Paul,1
+Amanda,2,Garrett,1
+Andrew,2,Bart,1
+Chris O,1,Jeff,2
+Casey,3,Juan,0
+Casey,3,Joe,0
+Joe,2,Terry,1
+Darrell,0,Thomas S,3
+Chris G,3,Luke N,0
+Chris O,3,Jason,0
+Paul,2,Reese,1
+Jason,0,Garrett,3
+Jeff,3,Luke,0
+Juan,3,Luke,0
+Vincent,0,Terry,3
+Reese,3,Sayed,0
+Luke N,0,Sayed,3
+Chris G,2,Scott,1
+Patty,0,Valentino,3
+Scott,1,Valentino,2
+Thomas S,3,Patty,0
+Darrell,1,Vincent,2
+Andrew,0,Garrett,3
+Chris O,2,Juan,1
+Andrew,2,Luke,1
+Brett,1,Chris O,2
+Garrett,3,Paul,0
+Jason,3,Jeff,0
+Jason,3,Juan,0
+Casey,2,Griff,1
+Casey,1,Luke,2
+Joe,3,Luke N,0
+Joe,3,Reese,0
+Luke N,0,Reese,3
+Bart,2,Paul,1
+Brett,1,Jeff,2
+Darrell,3,Robert,0
+Darrell,3,Scott,0
+Josh K,1,Vincent,2
+Bart,0,Griff,3
+Vincent,2,Robert,1
+Jim,1,Michael,2
+Chris G,1,Robert,2
+Josh K,3,Jim,0
+Terry,1,Michael,2
+Scott,0,Thomas S,3
+Chris G,0,Matt C,3
+Patty,0,Harrison,3
+Terry,1,Josh K,2
+Matt C,3,Patty,0
+Harrison,0,Thomas S,3
+Amanda,3,Andrew,0
+Amanda,1,Juan,2
+Andrew,3,Terry,0
+Chris O,1,Garrett,2
+Casey,1,Jeff,2
+Casey,0,Chris O,3
+Jeff,0,Juan,3
+Joe,1,Josh K,2
+Bart,3,Paul,0
+Matt C,3,Patty,0
+Reese,0,Luke,3
+Karan,2,Luke N,1
+Harrison,0,Reese,3
+Jason,3,Luke,0
+Bart,3,Robert,0
+Garrett,2,Griff,1
+Jason,3,Joe,0
+Griff,2,Josh K,1
+Paul,3,Robert,0
+Luke N,1,Scott,2
+Harrison,0,Scott,3
+Karan,0,Thomas S,3
+Matt C,2,Chris G,1
+Darrell,1,Terry,2
+Matt C,0,Thomas S,3
+Darrell,3,Patty,0
+Chris G,0,Darrell,3
+Harrison,0,Joe,3
+Robert,0,Casey,3
+Chris O,3,Garrett,0
+Darrell,1,Sayed,2
+Jeff,2,Joe,1
+Darrell,1,Terry,2
+Garrett,1,Jeff,2
+Vincent,0,Jason,3
+Vincent,1,Griff,2
+Terry,0,Jason,3
+Casey,0,Brett,3
+Garrett,1,Brett,2
+Scott,1,Sayed,2
+Amanda,3,Josh B,0
+Thomas S,1,Robert,2
+Terry,3,Josh K,0
+Chris O,3,Griff,0
+Amanda,3,Thomas S,0
+Joe,0,Jason,3
+Darrell,2,Josh K,1
+Jeff,2,Chris O,1
+Casey,2,Garrett,1
+Harrison,0,Jason,3
+Harrison,0,Luke N,3
+Andrew,3,Luke N,0
+Andrew,1,Robert,2
+Harrison,0,Josh K,3
+Josh B,1,Robert,2
+Scott,0,Thomas S,3
+Amanda,3,Joe,0
+Joe,3,Josh B,0
+Andrew,0,Chris O,3
+Amanda,2,Jason,1
+Andrew,2,Josh B,1
+Brett,2,Bart,1
+Thomas S,3,Valentino,0
+Luke,3,Vincent,0
+Casey,1,Brett,2
+Casey,2,Bart,1
+Chris O,3,Jeff,0
+Luke N,0,Terry,3
+Garrett,2,Jeff,1
+Paul,0,Terry,3
+Bart,2,Josh K,1
+Chris O,0,Jason,3
+Brett,1,Garrett,2
+Jason,2,Paul,1
+Darrell,1,Josh K,2
+Michael,3,Harrison,0
+Scott,2,Valentino,1
+Karan,1,Sayed,2
+Luke N,0,Luke,3
+Michael,2,Scott,1
+Darrell,3,Harrison,0
+Robert,2,Sayed,1
+Robert,2,Thomas S,1
+Karan,2,Vincent,1
+Harrison,2,Patty,1
+Scott,3,Patty,0
+Luke,3,Karan,0
+Amanda,0,Brett,3
+Amanda,0,Chris O,3
+Bart,0,Garrett,3
+Bart,1,Terry,2
+Griff,1,Jeff,2
+Chris O,2,Griff,1
+Jason,2,Jeff,1
+Vincent,0,Garrett,3
+Garrett,3,Casey,0
+Harrison,0,Valentino,3
+Brett,3,Jason,0
+Robert,1,Terry,2
+Harrison,0,Matt C,3
+Robert,0,Vincent,3
+Josh K,2,Thomas S,1
+Casey,0,Jason,3
+Chris G,0,Josh K,3
+Luke N,0,Valentino,3
+Luke N,2,Scott,1
+Chris G,0,Sayed,3
+Sayed,3,Scott,0
+Darrell,2,Matt C,1
+Darrell,3,Michael,0
+Michael,1,Thomas S,2
+Chris O,3,Juan,0
+Luke N,3,Harrison,0
+Brett,3,Juan,0
+Brett,3,Andrew,0
+Jason,3,Paul,0
+Jason,2,Amanda,1
+Josh K,3,Paul,0
+Chris O,2,Brett,1
+Garrett,3,Josh K,0
+Garrett,3,Juan,0
+Luke,1,Chris O,2
+Juan,2,Jason,1
+Casey,3,Luke,0
+Chris O,2,Joe,1
+Amanda,3,Thomas S,0
+Jason,3,Joe,0
+Luke,2,Andrew,1
+Chris O,2,Luke,1
+Patty,1,Sayed,2
+Juan,3,Terry,0
+Josh K,1,Matt C,2
+Scott,3,Harrison,0
+Garrett,2,Luke,1
+Juan,2,Chris O,1
+Juan,2,Luke,1
+Garrett,3,Casey,0
+Jason,3,Josh K,0
+Jason,3,Luke,0
+Scott,1,Sayed,2
+Harrison,1,Sayed,2
+Scott,2,Luke N,1
+Paul,2,Andrew,1
+Vincent,1,Thomas S,2
+Terry,1,Thomas S,2
+Vincent,2,Scott,1
+Patty,0,Matt C,3
+Sayed,1,Matt C,2
+Jason,3,Matt C,0
+Casey,2,Chris O,1
+Luke,3,Josh K,0
+Andrew,2,Joe,1
+Andrew,0,Juan,3
+Brett,0,Chris O,3
+Chris O,2,Juan,1
+Casey,2,Griff,1
+Casey,1,Juan,2
+Garrett,3,Griff,0
+Chris G,1,Scott,2
+Scott,3,Patty,0
+Luke N,2,Michael,1
+Luke N,1,Robert,2
+Garrett,3,Terry,0
+Brett,3,Terry,0
+Josh B,2,Michael,1
+Darrell,2,Josh B,1
+Darrell,0,Joe,3
+Darrell,1,Paul,2
+Paul,3,Terry,0
+Robert,3,Thomas S,0
+Sayed,1,Valentino,2
+Chris G,0,Thomas S,3
+Matt C,1,Sayed,2
+Matt C,1,Scott,2
+Valentino,3,Scott,0
+Amanda,2,Andrew,1
+Amanda,2,Bart,1
+Andrew,1,Juan,2
+Brett,1,Chris O,2
+Bart,2,Thomas S,1
+Brett,2,Jason,1
+Griff,2,Terry,1
+Casey,0,Jason,3
+Casey,2,Juan,1
+Justin,0,Jason,3
+Justin,1,Garrett,2
+Chris O,3,Luke,0
+Joe,2,Richard,1
+Richard,3,Scott,0
+Joe,0,Terry,3
+Garrett,3,Griff,0
+Garrett,2,Luke,1
+Matt C,3,Tom,0
+Justin,1,Juan,2
+Harrison,3,Patty,0
+Gavin,3,Patty,0
+Adam,2,Harrison,1
+Adam,1,Matt C,2
+Karan,0,Scott,3
+Gavin,3,Vinod,0
+Darrell,3,Karan,0
+Darrell,3,Eric,0
+Eric,0,Thomas S,3
+Tom,3,Vinod,0
+Andrew,2,Joe,1
+Andrew,3,Richard,0
+Joe,2,Josh B,1
+Chris O,3,Jason,0
+Josh B,2,Terry,1
+Jason,3,Juan,0
+Chris O,2,Justin,1
+Brett,3,Juan,0
+Darrell,1,Thomas S,2
+Valentino,0,Vincent,3
+Tom,0,Valentino,3
+Adam,3,Chris G,0
+Adam,3,Branson,0
+Eric,1,Richard,2
+Chris G,0,Eric,3
+Bart,1,Darrell,2
+Brett,3,Casey,0
+Bart,0,Casey,3
+Bart,2,Vincent,1
+Katey,2,Vinod,1
+Scott,3,Vinod,0
+Edie,3,Katey,0
+Branson,3,Harrison,0
+Darrell,1,Scott,2
+Edie,0,Harrison,3
+Thomas S,0,Matt C,3
+Terry,3,Thomas S,0
+Matt C,3,Tom,0
+Amanda,0,Chris O,3
+Amanda,1,Jason,2
+Terry,2,Bart,1
+Chris O,1,Garrett,2
+Jason,3,Garrett,0
+Casey,3,Justin,0
+Casey,3,Griff,0
+Griff,0,Jason,3
+Casey,1,Juan,2
+Chris G,0,Nathan,3
+Chris G,2,Tom,1
+Richard,0,Terry,3
+Josh B,1,Richard,2
+Josh B,3,Valentino,0
+Darrell,0,Valentino,3
+Bart,0,Griff,3
+Juan,1,Justin,2
+Juan,2,Nathan,1
+Justin,1,Valentino,2
+Matt R,3,Vinod,0
+Gavin,0,Matt C,3
+Branson,3,Katey,0
+Branson,3,Matt R,0
+Katey,1,Patty,2
+Edie,0,Patty,3
+Harrison,3,Matt R,0
+Adam,2,Darrell,1
+Adam,1,Thomas S,2
+Harrison,3,Vinod,0
+Edie,3,Vinod,0
+Harrison,1,Matt C,2
+Matt C,3,Matt R,0
+Gavin,0,Thomas S,3
+Amanda,2,Bart,1
+Jason,1,Chris O,2
+Bart,1,Josh B,2
+Jason,3,Robert,0
+Gavin,1,Robert,2
+Terry,3,Matt R,0
+Terry,1,Amanda,2
+Brett,1,Chris O,2
+Brett,3,Justin,0
+Garrett,1,Casey,2
+Griff,0,Chris O,3
+Garrett,1,Brett,2
+Valentino,0,Garrett,3
+Casey,0,Brett,3
+Amanda,3,Robert,0
+Scott,2,Joe K,1
+Jason,1,Josh B,2
+Thomas S,1,Joe K,2
+Thomas S,2,Gavin,1
+Nathan,3,Patty,0
+Adam,0,Jason,3
+Adam,1,Casey,2
+Casey,2,Joe,1
+Griff,1,Justin,2
+Justin,2,Terry,1
+Adam,0,Brett,3
+Chris O,3,Casey,0
+Nathan,3,Katey,0
+Patty,2,Katey,1
+Garrett,0,Josh B,3
+Matt R,1,Gavin,2
+Nathan,3,Scott,0
+Vinod,0,Nathan,3
+Branson,1,Valentino,2
+Branson,2,Darrell,1
+Bart,2,Justin,1
+Joe,1,Terry,2
+Adam,2,Darrell,2
+Vinod,0,Scott,3
+Vinod,0,Valentino,3
+Justin,2,Valentino,1
+Chris O,2,Jeff,1
+Andrew,1,Chris O,2
+Andrew,0,Justin,3
+Brett,1,Jeff,2
+Bart,1,Nathan,2
+Casey,1,Juan,2
+Bart,0,Jason,3
+Eric,1,Terry,2
+Branson,0,Terry,3
+Chris G,0,Richard,3
+Nathan,2,Richard,1
+Patty,0,Tom,3
+Matt R,2,Patty,1
+Joe,0,Juan,3
+Casey,3,Joe,0
+Matt R,3,Vinod,0
+Eric,0,Josh B,3
+Garrett,2,Juan,1
+Garrett,3,Justin,1
+Garrett,1,Jeff,2
+Gavin,0,Scott,3
+Chris G,2,Robert,1
+Scott,3,Matt R,0
+Gavin,3,Tom,0
+Harrison,0,Robert,3
+Darrell,1,Justin,2
+Darrell,1,Josh B,2
+Harrison,3,Vinod,0
+Brett,3,Jason,0
+Scott,3,Vinod,0
+Branson,0,Jason,3
+Amanda,2,Joe,1
+Andrew,0,Jeff,3
+Andrew,3,Richard,0
+Chris O,3,Jason,0
+Griff,0,Chris O,3
+Garrett,2,Juan,1
+Casey,2,Garrett,1
+Casey,0,Jason,3
+Garrett,2,Justin,1
+Joe K,2,Gavin,1
+Joe,2,Richard,1
+Bart,3,Joe,0
+Amanda,0,Jeff,3
+Bart,1,Thomas S,2
+Griff,2,Terry,1
+Jason,1,Juan,2
+Thomas S,3,Vinod,0
+Harrison,3,Katey,0
+Edie,2,Katey,1
+Edie,0,Harrison,3
+Gavin,1,Terry,2
+Chris G,0,Darrell,3
+Chris G,0,Thomas S,3
+Darrell,2,Gavin,1
+Justin,2,Robert,1
+Justin,3,Vincent,0
+Robert,3,Vinod,0
+Amanda,0,Garrett,3
+Andrew,0,Amanda,3
+Andrew,0,Luke,3
+Casey,0,Chris O,3
+Casey,0,Jason,3
+Chris O,3,Juan,0
+Brett,2,Garrett,1
+Brett,2,Juan,1
+Jason,2,Jeff,1
+Jeff,2,Juan,1
+Terry,3,Vincent,0
+Darrell,0,Vincent,3
+Robert,1,Richard,2
+Bart,3,Joe,0
+Bart,3,Scott,0
+Joe,2,Thomas S,1
+Luke,3,Matt C,0
+Darrell,1,Valentino,2
+Branson,2,Valentino,1
+Branson,1,Gavin,2
+Griff,1,Justin,2
+Scott,1,Richard,2
+Jason,3,Richard,0
+Chris G,3,Vinod,0
+Edie,0,Tom,3
+Griff,2,Matt C,1
+Patty,1,Vinod,2
+Chris G,1,Thomas S,2
+Edie,0,Gavin,3
+Matt R,0,Tom,3
+Gavin,3,Matt R,0
+Justin,2,Terry,1
+Vinod,0,Edie,3
+Patty,2,Vinod,1
+Amanda,0,Chris O,3
+Amanda,2,Luke,1
+Andrew,0,Jason,3
+Andrew,2,Thomas S,1
+Casey,1,Garrett,2
+Casey,1,Josh B,2
+Jason,3,Terry,0
+Terry,2,Valentino,1
+Valentino,3,Vinod,0
+Juan,2,Justin,1
+Jeff,3,Joe,0
+Chris O,2,Jeff,1
+Bart,2,Richard,1
+Gavin,0,Richard,3
+Bart,0,Luke,3
+Garrett,2,Joe,1
+Joe K,2,Scott,1
+Griff,2,Joe K,1
+Griff,1,Luke,2
+Brett,1,Justin,2
+Brett,2,Juan,1
+Patty,0,Robert,3
+Patty,1,Thomas S,2
+Gavin,1,Robert,2
+Harrison,1,Scott,2
+Branson,1,Robert,2
+Harrison,3,Vinod,0
+Harrison,0,Valentino,3
+Chris G,0,Josh B,3
+Branson,1,Thomas S,2
+Amanda,2,Josh B,1
+Andrew,0,Chris O,3
+Amanda,2,Justin,1
+Andrew,1,Garrett,2
+Chris O,3,Jason,0
+Bart,1,Branson,2
+Bart,3,Matt C,0
+Garrett,2,Jason,1
+Casey,2,Thomas S,1
+Matt C,1,Branson,2
+Juan,3,Bart,0
+Juan,3,Casey,0
+Brett,2,Casey,1
+Jeff,3,Josh B,0
+Joe K,1,Josh B,2
+Richard,0,Nathan,3
+Griff,0,Jeff,3
+Richard,2,Luke,1
+Justin,1,Richard,2
+Chris G,3,Matt R,0
+Matt C,1,Nathan,2
+Griff,1,Terry,2
+Matt C,0,Terry,3
+Jason,2,Luke,1
+Edie,0,Patty,3
+Katey,0,Patty,3
+Harrison,3,Katey,0
+Edie,1,Matt R,2
+Darrell,1,Richard,2
+Thomas S,2,Valentino,1
+Harrison,0,Joe K,3
+Darrell,3,Tom,0
+Branson,1,Chris G,2
+Tom,0,Valentino,3
+Luke,1,Justin,2
+Luke,1,Brett,2
+Amanda,0,Bart,3
+Amanda,1,Jason,2
+Andrew,1,Justin,2
+Bart,2,Valentino,1
+Andrew,2,Darrell,1
+Garrett,1,Juan,2
+Jason,1,Juan,2
+Justin,2,Jeff,1
+Jeff,1,Chris O,2
+Juan,2,Casey,1
+Justin,2,Casey,1
+Chris O,2,Justin,1
+Chris O,3,Garrett,0
+Thomas S,1,Richard,2
+Joe K,3,Matt R,0
+Matt R,0,Robert,3
+Robert,1,Terry,2
+Scott,1,Tom,2
+Terry,3,Thomas S,0
+Matt C,0,Richard,3
+Matt C,1,Valentino,2
+Edie,0,Harrison,3
+Darrell,3,Harrison,0
+Chris G,3,Edie,0
+Branson,2,Scott,1
+Branson,1,Tom,2
+Chris G,1,Joe K,2
+Luke,3,Bart,0
+Luke,0,Chris O,3
+Luke,0,Jason,3
+Amanda,1,Bashi,2
+Amanda,3,Sam,0
+Andrew,0,Bashi,3
+Andrew,1,Sam,2
+Brett S,0,Juan,3
+Harrison G,1,Terry,2
+Brett S,3,Luke,0
+Harrison W,0,Joe K,3
+Harrison W,0,Thomas S,3
+James,0,Josh B,3
+Jason,3,Justin,0
+Lacey,2,Darrell,1
+Lacey,3,Tom,0
+Chris O,2,Jason,1
+Chris O,3,Juan,0
+Bart,3,Harrison G,0
+Bart,3,James,0
+Bill,0,Joe,3
+Bill,3,Josh B,0
+Ramy,2,Scott,1
+Robert,2,Scott,1
+Joe,0,Luke,3
+Josh K,1,Ramy,2
+Dave,0,Tom,3
+Griff,2,Terry,1
+Larrett,2,Joe K,1
+Griff,1,Justin,2
+Jeffrey T,1,Richard,2
+Nathan,1,Richard,2
+Jeffrey T,1,Nathan,2
+Chris G,3,Patty,0
+Chris G,3,Sebastian,0
+Theron,2,Josh K,1
+Dave,3,Patty,0
+Scott,2,Sebastian,1
+Larrett,0,Theron,3
+Thomas S,2,Robert,1
+Darrell,2,Tom,1
+Luke,3,Ramy,0
+Bashi,3,Luke,0
+Amanda,3,Griff,0
+Andrew,1,Ramy,2
+Andrew,1,Richard,2
+Joe,1,Josh K,2
+Bill,2,Brett S,1
+Joe,2,Robert,1
+Bill,3,James,0
+Brett S,1,Justin,2
+Larrett,0,Josh B,3
+Larrett,1,Harrison G,2
+Amanda,2,Terry,1
+Bart,1,Griff,2
+Terry,2,Theron,1
+Bashi,1,Chris O,2
+Juan,3,Reza,0
+Jason,3,Theron,0
+Chris O,2,Justin,1
+Jason,1,Juan,2
+Sebastian,1,Tom,2
+Darrell,2,Jeffrey T,1
+Darrell,1,Josh K,2
+Scott,1,Tom,2
+Dave,0,Richard,3
+Dave,0,James,3
+Reza,1,Richard,2
+Joe K,0,Thomas S,3
+Joe K,3,Patty,0
+Patty,3,Sebastian,0
+Josh K,2,Thomas S,1
+Bart,3,Jeffrey T,0
+Chris G,1,Sam,2
+Chris G,0,Scott,3
+Harrison G,3,Sam,0
+Josh B,3,Robert,0
+Amanda,1,Chris O,2
+Amanda,2,Jason,1
+Andrew,2,James,1
+Andrew,1,Josh K,2
+Joe,2,Sam,1
+Josh B,0,Justin,3
+Juan,0,Justin,3
+Reza,2,Sam,1
+Reza,3,Sebastian,0
+Bashi,2,Jason,1
+Bashi,3,Juan,0
+Reza,2,Robert,1
+Lacey,0,Robert,3
+Dave,1,Larrett,2
+Dave,2,Sebastian,1
+Bart,1,Joe,2
+Bart,3,Josh K,0
+Larrett,0,James,3
+Gavin,3,Patty,0
+Gavin,1,Tom,2
+Joe K,0,Ramy,3
+Ramy,1,Terry,2
+Bill,1,Richard,2
+Joe K,0,Richard,3
+Bill,1,Terry,2
+Brett S,3,Harrison G,0
+Brett S,1,Josh B,2
+Harrison G,1,Scott,2
+Harrison W,0,Scott,3
+Harrison W,3,Patty,0
+Chris G,1,Tom,3
+Robert,1,Thomas S,2
+Chris G,0,Thomas S,3
+Lacey,0,Josh K,3
+Chris O,2,Andrew,1
+Chris O,1,Jeff,2
+Amanda,3,Theron,0
+Larrett,1,Sam,2
+Joe K,0,Sam,3
+Josh K,3,Bill,0
+Juan,3,Bill,0
+Larrett,2,Gavin,1
+Lacey,1,Thomas S,2
+Darrell,2,Lacey,1
+Terry,2,Justin,1
+Griff,0,Bashi,3
+Brett S,2,Darrell,1
+Terry,2,Lacey,1
+Amanda,1,Richard,2
+Jason,3,Richard,0
+Jason,1,Jeff,2
+Andrew,0,Jeff,3
+Bart,1,Nathan,2
+Larrett,2,Reza,1
+Joe,3,Reza,0
+Juan,0,Griff,3
+Bart,1,Justin,2
+Vincent,2,Robert,1
+Sebastian,1,Harrison W,2
+Thomas S,0,Griff,3
+Brett S,1,Justin,2
+Ramy,1,Thomas S,2
+Vincent,1,Darrell,2
+Dave,2,Chris G,1
+Theron,2,Chris G,1
+Dave,0,Nathan,3
+Josh K,2,Harrison G,1
+Joe,3,Harrison G,0
+Bart,1,Theron,2
+Scott,3,Sebastian,0
+Reza,1,Joe K,2
+Harrison W,1,Gavin,2
+Scott,3,Reza,0
+Robert,0,Bashi,3
+Vincent,2,Scott,1
+Tom,0,Larrett,3
+Vincent,0,Jason,3
+Tom,0,Ramy,3
+Bill,0,Brett S,3
+Andrew,0,Brett S,3
+Andrew,1,Larrett,2
+Juan,3,Richard,0
+Larrett,0,Joe,3
+James,2,Sam,1
+James,0,Josh B,3
+Joe,1,Josh B,2
+Jason,3,Juan,0
+Joe K,2,Tom,1
+Thomas S,2,Vincent,1
+Bart,2,Richard,1
+Bart,1,Bill,2
+Chris O,2,Jeff,1
+Chris O,3,Terry,0
+Bashi,0,Jeff,3
+Jason,2,Justin,1
+Bashi,1,Justin,2
+Griff,2,Robert,1
+Harrison W,3,Sebastian,0
+Harrison W,1,Tom,2
+Griff,2,Thomas S,1
+Thomas S,2,Darrell,1
+Dave,0,Harrison G,3
+Dave,1,Scott,2
+Harrison G,1,Reza,2
+Patty,0,Sam,3
+Joe K,0,Reza,3
+Patty,1,Sebastian,2
+Ramy,1,Robert,2
+Scott,1,Terry,2
+Darrell,1,Ramy,2
+Darrell,1,Vincent,0
+Amanda,1,Brett S,2
+Amanda,0,Jeff,3
+Andrew,2,Harrison G,1
+Chris O,3,Jason,0
+Chris O,2,Juan,1
+Jason,2,Jeff,1
+Bart,1,Juan,2
+Larrett,1,Gavin,2
+Larrett,1,Reza,2
+Griff,1,Brett S,2
+Scott,3,Sebastian,0
+Theron,2,Richard,1
+Brett S,3,Dave,0
+Andrew,0,Josh B,3
+Jeff,3,Josh B,0
+Joe,0,Justin,3
+Joe,2,Theron,1
+Josh K,2,Nathan,1
+Justin,3,Nathan,0
+Reza,2,Sebastian,1
+Bart,2,Ramy,1
+Bashi,0,Griff,3
+Bashi,2,Terry,1
+Josh K,2,Reza,1
+Darrell,2,Richard,1
+Darrell,3,Dave,0
+Richard,2,Terry,1
+Chris G,2,Patty,1
+Harrison G,0,Brett S,3
+Chris G,2,Gavin,1
+Harrison W,2,Patty,1
+Joe K,2,Sam,1
+Joe K,0,Terry,3
+Sam,2,Scott,1
+Harrison W,0,Ramy,3
+Reza,0,Jason,3
+Amanda,2,Josh B,1
+Andrew,1,Robert,2
+Amanda,2,Andrew,1
+Juan,1,Justin,2
+Larrett,0,Ramy,3
+Gavin,3,Sam,0
+Gavin,1,Scott,2
+Bart,1,Jason,2
+Brett S,2,Jason,1
+Josh K,3,Robert,0
+Terry,2,Thomas S,1
+Jeff,2,Justin,1
+Larrett,1,Josh B,2
+Jeff,3,Juan,0
+Chris O,2,Joe,1
+Chris O,3,Josh K,0
+Bart,0,Brett S,3
+Nathan,0,Joe,3
+Jason,1,Ramy,2
+Scott,1,Thomas S,2
+Dave,2,Sebastian,1
+Dave,2,Patty,1
+Harrison W,1,Jeffrey T,2
+Harrison W,0,Dave,3
+Sam,3,Sebastian,0
+Chris G,1,Nathan,2
+Patty,0,Tom,3
+Chris G,1,Tom,2
+Jeffrey T,1,Joe K,2
+Terry,2,Joe K,1
+Vincent,1,Josh K,2
+Lacey,1,Scott,2
+Chris O,3,Brett S,0
+Amanda,2,Josh K,1
+Jeff,0,Brett S,3
+Jeff,3,Chris O,0
+Jeff,2,Jason,1
+Sam,0,Juan,3
+Larrett,1,Robert,2
+Ramy,1,Juan,2
+Jason,3,Terry,0
+Joe,0,Bashi,3
+Juan,1,Chris O,2
+Jason,3,Joe,0
+Brett S,3,Juan,0
+Brett S,3,Griff,0
+Andrew,2,Bart,1
+Andrew,0,Jason,3
+Amanda,2,Bart,1
+Bashi,3,Brett S,0
+Larrett,1,Terry,2
+Griff,0,Bashi,3
+James,1,Joe,2
+Griff,2,Ramy,1
+Josh K,1,Bashi,2
+Jason,3,Juan,0
+Gavin,0,Nathan,3
+Nathan,3,Dave,0
+Nathan,2,Harrison G,1
+Jeffrey T,2,Harrison G,1
+Gavin,2,Dave,1
+Sam,1,Jeffrey T,2
+Harrison G,2,Larrett,1
+James,0,Josh K,3
+Brett S,3,Robert,0
+Gavin,0,Harrison G,3
+Ramy,2,Terry,1
+Jeffrey T,2,Josh K,1
+Ramy,3,Thomas S,0
+Harrison G,0,Richard,3
+Harrison G,1,Terry,2
+Andrew,2,Harrison G,1
+Andrew,3,Bill,0
+Chris O,3,Justin,0
+Bashi,3,Brett S,0
+Bashi,3,Jason,0
+Jeff,3,Luke,0
+Jeff,3,Ramy,0
+Lacey,0,Josh K,3
+Larrett,1,Griff,2
+Jason,1,Justin,2
+Lacey,0,Luke,3
+Joe K,3,Patty,0
+Joe,0,Terry,3
+Harrison W,0,Joe K,3
+Luke,2,Chris O,1
+Harrison W,0,Jeffrey T,3
+Chris G,0,Larrett,3
+Bill,1,Nathan,2
+Brett S,3,Justin,0
+Chris G,0,Sam,3
+Griff,0,Ramy,3
+Griff,3,Juan,0
+Sam,0,Thomas S,3
+Luke,0,Juan,3
+James,0,Richard,3
+Bart,3,Nathan,0
+Gavin,2,Patty,1
+Gavin,2,Thomas S,1
+James,2,Jeffrey T,1
+Bart,3,Thomas S,0
+Joe,3,Tom,0
+Josh K,3,Robert,0
+Josh K,3,Robert,0
+Josh K,0,Ramy,3
+Robert,0,Luke,3
+Sam,2,Sebastian,1
+Sebastian,0,Tom,3
+Josh K,1,Luke,2
+Amanda,2,Justin,1
+Amanda,2,Luke,1
+Andrew,2,Nathan,1
+Andrew,3,Terry,0
+Bill,0,Luke,3
+Josh K,1,Juan,2
+Griff,0,Justin,3
+Bill,3,Larrett,0
+Nathan,1,Terry,2
+Lacey,1,Gavin,2
+Bart,2,Darrell,1
+Josh K,3,Vincent,0
+Lacey,0,Darrell,3
+Chris O,2,Jason,1
+Ramy,3,Richard,0
+Bashi,0,Chris O,3
+Jason,3,Jeff,0
+Bashi,2,Juan,1
+Brett S,3,Griff,0
+Brett S,1,Jeff,2
+Larrett,1,Robert,2
+Joe K,0,Josh K,3
+Joe K,2,Scott,1
+Darrell,2,Josh B,1
+Josh B,3,Vincent,0
+Luke,3,Joe K,0
+Bart,1,Justin,2
+Dave,0,Tom,3
+Gavin,0,Richard,3
+Harrison G,3,Ramy,0
+Harrison G,3,Sebastian,0
+Gavin,3,Sebastian,0
+Chris G,0,Robert,3
+Chris G,3,Harrison W,0
+Patty,0,Tom,3
+Harrison W,2,Patty,1
+Darrell,1,Scott,2
+Josh B,3,Larrett,0
+Josh B,3,Bart,0
+Brett S,3,Ramy,0
+Jason,3,Josh K,0
+Amanda,0,Chris O,3
+Amanda,2,Brett S,1
+Andrew,3,Robert,0
+Andrew,1,Terry,2
+Robert,3,Terry,0
+Bill,3,Thomas S,0
+Bill,3,Scott,0
+Miles,1,Scott,2
+Griff,1,Jason,2
+Theron,3,Thomas S,0
+Patty,0,Kevin,3
+Joe K,1,Josh K,2
+Joe,3,William,0
+Harrison G,1,Josh K,2
+Bart,2,Richard,1
+Darrell,1,Richard,2
+Bart,1,Garrett,2
+Brett S,1,Chris O,2
+Juan,0,Jason,3
+Garrett,1,Griff,2
+Juan,1,Justin,2
+Justin,3,Jason,0
+Harrison G,2,Joe,1
+Harrison G,3,William,0
+Lacey,2,Vincent,1
+Josh K,1,Theron,2
+Tom,2,Miles,1
+Lacey,3,William,0
+Dave,2,Nick,1
+Dave,2,Eva,1
+Darrell,3,Nick,0
+Darrell,3,Eva,0
+Chris G,0,Nick,3
+Thomas S,3,Eva,0
+Chris G,2,Miles,1
+Harrison W,0,Joe K,3
+Harrison W,2,Patty,1
+Gavin,2,Tom,1
+Gavin,2,Kevin,1
+Joe,1,Vincent,2
+Amanda,1,Brett S,2
+Amanda,2,Garrett,1
+Bashi,1,Jeff,2
+Bashi,1,Jason,2
+Jeff,1,Justin,2
+Griff,1,Juan,2
+Griff,1,Bart,2
+Josh K,0,Vincent,3
+Bart,3,Harrison G,0
+Harrison G,1,Thomas S,2
+Harrison W,0,Miles,3
+Kevin,3,William,0
+Nick,2,Miles,1
+Brett S,2,Justin,1
+Thomas S,1,Richard,2
+Darrell,2,Terry,1
+Brett S,2,Juan,1
+Nathan,3,Jon,0
+Garrett,2,Jason,1
+Ramy,3,Terry,0
+Ramy,3,Jon,0
+Lacey,2,Harrison W,1
+Justin,2,Andrew Mc,1
+Lacey,2,Miles,1
+Joe,3,Vincent,0
+Joe,2,Andrew Mc,1
+Tom,1,Eva,2
+Tom,2,Kevin,1
+Darrell,0,Juan,3
+Dave,0,Sam,3
+Dave,3,Sebastian,0
+Nathan,2,Richard,1
+Gavin,0,Josh K,3
+Scott,3,Sebastian,0
+Gavin,2,Nick,1
+Patty,0,Sam,3
+Joe K,1,Nick,2
+Joe K,2,Eva,1
+Patty,3,William,0
+Josh B,2,Robert,1
+Josh B,2,Thomas S,1
+Robert,3,Scott,0
+Lacey,0,Josh K,3
+Harrison G,1,Andrew Mc,2
+Amanda,3,Justin,0
+Amanda,2,Juan,1
+Andrew,2,Richard,1
+Bart,1,Robert,2
+Justin,2,Luke,1
+Bart,2,Andrew Mc,1
+Harrison W,2,Sebastian,1
+Harrison W,3,Patty,0
+Bashi,3,Brett S,0
+Bashi,2,Garrett,1
+Brett S,2,Garrett,1
+Robert,2,Joe K,1
+Luke,1,Andrew Mc,2
+Chris O,0,Jason,3
+Chris O,2,Jeff,1
+Andrew,0,Theron,3
+Harrison G,0,Terry,3
+Harrison G,2,Jon,1
+Jason,2,Juan,1
+Jeff,2,Juan,1
+Joe,0,Josh K,3
+Joe,0,Ramy,3
+Miles,0,Nick,3
+Nick,1,Kevin,2
+Joe K,1,Miles,2
+Patty,1,Eva,2
+Griff,2,Josh K,1
+Luke,3,Josh K,0
+Dave,0,Theron,3
+Dave,1,Scott,2
+Richard,1,Andrew Mc,2
+Lacey,3,Chris G,0
+Lacey,0,Joe K,3
+Chris G,2,Eva,1
+Sam,3,Sebastian,0
+Sam,3,William,0
+Scott,1,Kevin,2
+Terry,3,Jon,0
+Thomas S,3,Vincent,0
+Griff,3,Ramy,0
+Thomas S,3,William,0
+Chris G,0,Joe K,3
+Amanda,1,Jason,2
+Andrew,3,Nick,0
+Andrew,2,Andrew Mc,1
+Amanda,3,Griff,0
+Harrison G,1,Joe K,2
+Griff,3,Joe,0
+Joe K,1,Robert,2
+Joe,0,Thomas S,3
+Bashi,1,Chris O,2
+Bashi,2,Ramy,1
+Scott,0,Thomas S,3
+Thomas S,3,Gavin,0
+Gavin,0,Richard,3
+Josh K,3,Kevin,0
+Ramy,1,Richard,2
+Brett S,1,Chris O,2
+Brett S,1,Jason,2
+Garrett,3,Josh K,0
+Garrett,1,Theron,2
+Robert,3,Miles,0
+Darrell,2,Sam,1
+Scott,2,Tom,1
+Darrell,3,Tom,0
+Josh K,1,Josh B,2
+Harrison G,1,Josh B,2
+Chris G,1,Sam,2
+Chris G,1,Kevin,2
+Patty,1,Sebastian,2
+Patty,2,Jon,1
+Sebastian,3,William,0
+Terry,1,Andrew Mc,2
+Terry,2,Theron,1
+Miles,1,Kevin,2
+Nick,3,William,0
+Eva,3,William,0
+Eva,0,Jon,3
+Amanda,1,Chris O,2
+Amanda,3,Josh K,0
+Josh K,0,Richard,3
+Harrison W,0,Thomas S,3
+Garrett,0,Jason,3
+Gavin,3,William,0
+Garrett,0,Justin,3
+Harrison W,0,Joe K,3
+Griff,3,Harrison G,0
+Thomas S,3,Jon,0
+Tom,1,Joe K,2
+Bashi,3,Juan,0
+Bashi,3,Luke,0
+Brett S,3,Richard,0
+Chris O,2,Justin,1
+Brett S,3,Terry,0
+Jason,3,Luke,0
+Josh B,2,Nathan,1
+Nathan,2,Kevin,1
+Robert,1,Andrew Mc,2
+Scott,1,Tom,2
+Scott,0,Nick,3
+Sebastian,0,Nick,3
+Sebastian,2,Eva,1
+Terry,3,Kevin,0
+Luke,0,Andrew Mc,3
+Lacey,2,Gavin,1
+Lacey,2,Jon,1
+Chris G,0,Darrell,3
+Chris G,1,Robert,2
+Miles,1,Eva,2
+Miles,3,William,0
+Darrell,1,Harrison G,2
+Griff,2,Andrew Mc,1
+Joe,2,Josh B,1
+Joe,1,Juan,2
+Justin,2,Brett S,1
+Miles,0,Harrison G,3
+Chris O,2,Luke,1
+Josh B,0,Bart,3
+Josh B,3,Richard,0
+Chris O,2,Garrett,1
+Sebastian,1,Miles,2
+Terry,2,Bart,1
+Chris O,1,Bashi,2
+Joe,0,Kevin,3
+Joe,0,Bashi,3
+Griff,2,Bart,1
+Griff,1,Brett S,2
+Juan,3,Andrew Mc,0
+Juan,1,Ramy,2
+Garrett,1,Brett S,2
+Bart,2,Richard,1
+Luke,3,Richard,0
+Reza,2,Thomas S,1
+Eva,2,Harrison W,1
+Nick,1,Thomas S,2
+Gavin,3,Harrison W,0
+Nick,0,Garrett,3
+Ramy,3,Reza,0
+Andrew Mc,2,Tom,1
+Ramy,3,Miles,0
+Ramy,1,Garrett,2
+Tom,2,Reza,1
+Lacey,2,Miles,1
+Garrett,3,Griff,0
+Juan,3,Joe,0
+Reza,2,Nathan,1
+Gavin,1,Nathan,2
+Harrison W,1,Nathan,2
+Miles,1,Terry,2
+Reza,0,Terry,3
+Eva,1,Thomas S,2
+Kevin,3,Sebastian,0
+Patty,2,Lacey,1
+Patty,0,Tom,3
+Andrew Mc,0,Bashi,3
+Patty,0,Chris G,3
+Brett S,2,Bashi,1
+Miles,2,Chris G,1
+Amanda,1,Juan,2
+Andrew,0,Bart,3
+Amanda,0,Bashi,3
+Bashi,1,Brett S,2
+Bashi,2,Jason,1
+Brett S,2,Jason,1
+Gavin,0,Joe,3
+Scott,2,Sebastian,1
+Scott,3,Eva,0
+Tom,1,Nick,2
+Gavin,0,Andrew Mc,3
+William,0,Jon,3
+Harrison G,2,Vincent,1
+Chris O,1,Garrett,2
+Chris O,3,Juan,0
+Andrew,3,Joe K,0
+Joe,1,Josh K,2
+Garrett,3,Ramy,0
+Griff,3,Reza,0
+Griff,3,Terry,0
+Josh K,1,Ramy,2
+Terry,2,Andrew Mc,1
+Lacey,3,Harrison G,0
+Lacey,3,Vincent,0
+Josh K,0,Jason,3
+Bart,3,Darrell,0
+Darrell,2,Joe K,1
+Reza,1,Robert,2
+Robert,2,Nick,1
+Dave,3,Miles,0
+Dave,2,Eva,1
+Harrison W,0,Kevin,3
+Harrison W,3,William,0
+Patty,0,Miles,3
+Patty,3,William,0
+Chris G,1,Sebastian,2
+Chris G,1,Tom,2
+Kevin,3,Jon,0
+Miles,1,Tom,2
+Chris O,2,Jason,1
+Chris O,1,Luke,2
+Andrew,2,Joe,1
+Joe,1,Nathan,2
+Bart,2,Josh K,1
+Bart,2,Luke,1
+Bart,1,Juan,2
+Josh K,2,Robert,1
+Jason,0,Justin,3
+Lacey,1,Nick,2
+Lacey,3,Eva,0
+Jason,2,Juan,1
+Darrell,3,Dave,0
+Darrell,2,Vincent,1
+Dave,3,Chris G,0
+Bashi,2,Garrett,1
+Bashi,2,Justin,1
+Juan,1,Luke,2
+Garrett,3,Griff,0
+Josh K,2,Griff,1
+Harrison W,1,Nick,2
+Harrison W,3,Miles,0
+Sebastian,1,Jon,2
+Juan,2,Chris O,1
+Juan,1,Chris O,2
+Richard,3,Vincent,0
+Richard,2,Thomas S,1
+Chris G,3,Scott,0
+Robert,3,Tom,0
+Tom,1,Jon,2
+Scott,3,William,0
+Sebastian,0,Kevin,3
+Sebastian,3,William,0
+Thomas S,1,Jason,2
+Tom,3,Miles,0
+Eva,0,Kevin,3
+Robert,2,Kevin,1
+Eva,3,William,0
+Amanda,1,Jeff,2
+Amanda,3,Ramy,0
+Andrew,1,Josh K,2
+Andrew,0,Luke,3
+Harrison G,2,Josh K,1
+Bart,2,Harrison G,1
+Bart,1,Griff,2
+Garrett,3,Luke,0
+Gavin,1,Vincent,2
+Griff,1,Jason,2
+Kevin,3,William,0
+Robert,0,Jason,3
+Chris O,2,Justin,1
+Bashi,1,Chris O,2
+Bashi,2,Jeff,1
+Brett S,3,Garrett,0
+Brett S,3,Juan,0
+Brett S,0,Justin,3
+Darrell,3,Gavin,0
+Darrell,1,Joe,2
+Jason,1,Juan,2
+Robert,0,Andrew Mc,3
+Lacey,1,Kevin,2
+Joe K,0,Richard,3
+Joe K,1,Nathan,2
+Dave,3,William,0
+Dave,3,Patty,0
+Harrison W,2,Patty,1
+Harrison W,0,Sebastian,3
+Joe,1,Terry,2
+Nathan,0,Thomas S,3
+Patty,1,Sebastian,2
+Ramy,2,Robert,1
+Ramy,2,Richard,1
+Jason,3,Andrew Mc,0
+Kevin,1,Tom,2
+Terry,2,Tom,1
+Lacey,3,William,0
+Amanda,2,Justin,1
+Andrew Mac,3,Andrew N,0
+Andrew Mac,2,Richard,1
+Andrew N,3,Richard,0
+Nick,2,Reza,1
+Ramy,2,Terry,1
+Ramy,2,Theron,1
+Reza,3,Sebastian,0
+Brett,3,Garrett,0
+Brett,3,Juan,0
+Robert,2,Tom,1
+Josh B,2,Nathan,1
+Josh B,3,Thomas S,0
+Justin,2,Garrett,1
+Nathan,2,Thomas S,1
+Bashi,0,Chris O,3
+Chris O,2,Jason,1
+Bashi,1,Jason,2
+Chris G,0,Nick,3
+Garrett,2,Juan,1
+Chris G,0,Reza,3
+Jon,3,Scott,0
+Terry,1,Theron,2
+William,0,Tom,3
+Kaitlin,2,Patty,1
+Anneliese,0,Patty,3
+Anneliese,0,Kaitlin,3
+Daniel,0,David C,3
+David C,2,Harrison W,1
+Daniel,0,Harrison W,3
+Gavin,2,Harrison G,1
+Lacey,3,Gavin,0
+Lacey,3,Harrison G,0
+Darrell,3,Jon,0
+Darrell,3,Scott,0
+Sebastian,3,William,0
+Robert,3,William,0
+Amanda,0,Chris O,3
+Amanda,0,Garrett,3
+Andrew N,0,Bart,3
+Andrew N,1,Nathan,2
+Bart,2,Nathan,1
+Josh B,2,Harrison G,1
+Justin,2,Ramy,1
+Luke,0,Ramy,3
+Terry,2,Thomas S,1
+Bashi,3,Andrew Mac,0
+Andrew Mac,0,Luke,3
+Miles,3,Sebastian,0
+Jason,1,Jeff,2
+Jason,3,Juan,0
+Jeff,3,Juan,0
+Chris O,2,Garrett,1
+Bashi,3,Justin,0
+Lacey,2,Eva,1
+Lacey,0,Nick,3
+Chris G,0,Scott,3
+Daniel,1,Eva,2
+Nick,3,Kaitlin,0
+Kaitlin,0,Miles,3
+Andrew Mac,1,Thomas S,2
+Darrell,2,David C,1
+Darrell,1,Richard,2
+David C,3,Tom,0
+Josh B,2,Richard,1
+Scott,2,Tom,0
+Dhivya,0,Harrison W,3
+Gavin,0,Justin,3
+Gavin,2,Nick,1
+Harrison G,0,Terry,3
+Anneliese,0,Harrison W,3
+Anneliese,2,Dhivya,1
+Harrison G,1,Thomas S,2
+Daniel,1,Sebastian,2
+Chris O,1,Jeff,2
+Chris O,3,Justin,0
+Andrew N,1,Robert,2
+Andrew N,1,Terry,2
+Bashi,1,Jeff,2
+Garrett,2,Ramy,1
+Griff,1,Ramy,2
+Griff,3,Nathan,0
+Brett,3,Jason,0
+Brett,3,Luke,0
+Darrell,1,Juan,2
+Jason,2,Luke,1
+Juan,0,Justin,3
+Harrison G,0,Richard,3
+Harrison G,1,Reza,2
+Amanda,1,Andrew Mac,2
+Reza,2,Richard,1
+Bart,0,Garrett,3
+Eva,1,Nathan,2
+Amanda,1,Josh B,2
+Bart,0,Bashi,3
+Daniel,1,Tom,2
+Chris G,1,Miles,2
+Terry,0,Robert,3
+Jason,2,Griff,1
+David C,1,Scott,2
+David C,2,Sebastian,1
+Scott,3,Sebastian,0
+Eva,2,Kaitlin,1
+Kaitlin,0,Nick,3
+Josh B,2,Nick,1
+Andrew Mac,2,Thomas S,1
+Darrell,1,Thomas S,2
+Lacey,1,Chris G,2
+Lacey,2,Miles,1
+Anneliese,0,Daniel,3
+Anneliese,0,Tom,3
+Amanda,1,Richard,2
+Amanda,2,Josh K,1
+Chris O,3,Ramy,0
+Bashi,2,Garrett,1
+Bashi,2,Griff,1
+Juan,2,Ramy,1
+Brett,2,Justin,1
+Brett,2,Jeff,1
+Brett,2,Chris O,1
+Chris O,3,Luke,0
+Andrew Mac,0,Jason,3
+Lacey,1,Nick,2
+Juan,3,Thomas S,0
+David C,2,Kaitlin,1
+David C,1,Reza,2
+Kaitlin,0,Reza,3
+Josh K,0,Richard,3
+Chris G,2,Harrison W,1
+Chris G,0,Thomas S,3
+Garrett,3,Griff,0
+Gavin,2,Harrison W,1
+Harrison G,0,Josh B,3
+Jason,2,Justin,1
+Jeff,3,Luke,0
+Jon,0,Nick,3
+Josh B,1,Andrew Mac,2
+Jon,0,Robert,3
+Ramy,2,Andrew Mac,1
+Daniel,2,Miles,1
+Daniel,0,Scott,3
+Miles,0,Scott,3
+Dhivya,0,Sebastian,3
+Dhivya,0,William,3
+Eva,2,Sebastian,1
+Eva,3,William,0
+Lacey,1,Josh K,2
+Lacey,1,Thomas S,2
+Darrell,2,Harrison G,1
+Darrell,2,Gavin,1
+Nick,2,Robert,1
+Scott,1,Reza,2
+Eva,2,Jon,1
+Reza,0,Gavin,3
+Thomas S,2,Richard,1
+Bart,1,Ramy,2
+Eva,0,Nick,3
+Chris O,2,Justin,1
+Bashi,2,Ramy,1
+Reza,0,Robert,3
+Robert,0,Ramy,3
+Bashi,1,Chris O,2
+Luke,3,Theron,0
+Luke,1,Griff,2
+Andrew Mac,0,Theron,3
+Andrew Mac,3,Lacey,0
+Amanda,3,Reza,0
+Bart,0,Amanda,3
+Nathan,3,Gavin,0
+Nathan,1,Richard,2
+Harrison G,3,Harrison W,0
+Harrison G,0,Thomas S,3
+Bart,2,Thomas S,1
+Justin,1,Bashi,2
+Miles,2,Sebastian,1
+Sebastian,2,William,1
+Scott,2,Harrison G,1
+Theron,2,Griff,1
+Andrew Mac,3,Jon,0
+Chris G,3,Eva,0
+Chris G,1,Nathan,2
+Thomas S,2,Nick,1
+Harrison W,0,Nathan,3
+Terry,2,Richard,1
+Sebastian,1,Jon,2
+William,0,Jon,3
+Miles,3,Dhivya,0
+Dhivya,0,Jon,3
+Miles,3,William,0
+Thomas S,3,Scott,0
+Tom,1,Miles,2
+Tom,2,Scott,1
+Lacey,1,Miles,2
+Amanda,2,Luke,1
+Amanda,3,Robert,0
+Bart,2,Josh K,1
+Griff,1,Luke,2
+Griff,1,Ramy,2
+Thomas S,1,Josh K,2
+Brett,3,Garrett,0
+Brett,3,Justin,0
+Chris O,3,Josh B,0
+Jason,2,Jeff,1
+Jeff,0,Justin,3
+Andrew Mac,1,Bart,2
+Andrew Mac,1,Terry,2
+Chris O,2,Garrett,1
+Chris O,1,Jason,2
+Chris G,3,Jon,0
+Harrison W,1,Reza,2
+Daniel,0,Nick,3
+Daniel,3,William,0
+Darrell,2,Eva,1
+Darrell,3,Harrison W,0
+Luke,0,Ramy,3
+Eva,1,Gavin,2
+Sebastian,0,Miles,3
+Josh B,0,Brett,3
+David C,1,Gavin,2
+David C,3,William,0
+Reza,3,William,0
+Robert,3,Scott,0
+Jon,2,Kaitlin,1
+Kaitlin,0,Scott,3
+Chris G,0,Thomas S,3
+Harrison G,2,Miles,1
+Harrison G,1,Nick,2
+Lacey,3,Sebastian,0
+Lacey,1,Tom,2
+Terry,2,Thomas S,1
+Tom,3,Chris G,0
+Chris O,2,Jeff,1
+Bart,1,Luke,2
+Bart,3,Terry,0
+Harrison G,0,Terry,3
+Garrett,2,Justin,1
+Bashi,0,Chris O,3
+Andrew Mac,1,Josh K,2
+Garrett,3,Luke,0
+Jason,3,Andrew Mac,0
+Jason,2,Ramy,1
+Jeff,3,Ramy,0
+Josh K,2,Harrison G,1
+Nick,2,Richard,1
+Nathan,2,Nick,1
+Nathan,1,Richard,2
+Sebastian,2,William,1
+Kaitlin,3,William,0
+Andrew N,3,Scott,0
+Andrew N,2,Tom,1
+Luke,2,Robert,1
+Jason,1,Justin,2
+Bashi,1,Brett,2
+Brett,2,Jason,1
+David C,2,Jon,1
+David C,1,Scott,2
+Chris G,3,Daniel,0
+Chris G,3,Kaitlin,0
+Daniel,0,Jon,3
+Sebastian,0,Tom,3
+Andrew Mac,2,Robert,1
+Lacey,0,Robert,3
+Lacey,3,Harrison G,0
+Chris O,2,Justin,1
+Theron,0,Juan,3
+Garrett,2,Justin,1
+Garrett,3,Terry,0
+Ramy,2,Bart,1
+Ramy,1,Juan,2
+Bashi,0,Chris O,3
+Josh B,1,Robert,2
+Juan,3,Robert,0
+Juan,0,Jeff,3
+Jason,3,Thomas S,0
+Griff,1,Jeff,2
+Chris O,3,Griff,0
+Thomas S,0,Richard,3
+Harrison G,1,Bart,2
+Bart,2,Richard,1
+Thomas S,2,Harrison G,1
+Bart,2,Josh B,1
+Josh B,0,Terry,3
+Theron,0,Jason,3
+Andrew N,1,Robert,2
+Andrew Mac,1,Griff,2
+Andrew Mac,1,Josh K,2
+Andrew Mac,0,Garrett,3
+Nathan,3,David C,0
+Nathan,2,Harrison W,1
+Harrison W,1,Chris G,2
+Chris G,2,David C,1
+Thomas S,2,Nick,1
+Dhivya,0,Nathan,3
+Dhivya,2,William,1
+Nick,0,Josh K,3
+Andrew N,2,Josh K,1
+Bashi,3,Jeff,0
+Nathan,3,Reza,0
+Nathan,2,Richard,1
+Andrew N,2,Reza,1
+Andrew N,1,Richard,2
+Robert,1,Terry,2
+Bart,1,Luke,2
+Bart,3,Robert,0
+Robert,1,Thomas S,2
+Thomas S,3,Tom,0
+Brett,3,Griff,0
+Lacey,1,Sam,2
+Lacey,1,Scott,2
+Garrett,3,Griff,0
+Garrett,2,Jason,1
+David C,0,Terry,3
+David C,3,Jon,0
+Chris O,2,Jeff,1
+Bashi,2,Chris O,1
+Nick,0,Sam,3
+Miles,1,Nick,2
+Bashi,1,Brett,2
+Jeff,2,Juan,1
+Chris G,0,Sam,3
+Chris G,0,Miles,3
+Jason,2,Ramy,1
+Jason,3,Josh B,0
+Josh B,0,Ramy,3
+Daniel,3,Jon,0
+Daniel,1,Kaitlin,2
+Gavin,3,Kaitlin,0
+Andrew Mac,0,Nathan,3
+Terry,3,Thomas S,0
+Andrew Mac,1,Gavin,2
+Dhivya,0,Harrison W,3
+Eva,3,Dhivya,0
+Eva,0,Harrison G,3
+Harrison W,0,Tom,3
+Harrison G,2,Scott,1
+Juan,3,Luke,0
+Amanda,2,Jason,1
+Amanda,1,Ramy,2
+Andrew N,2,Reza,1
+Andrew N,1,Thomas S,2
+Juan,3,Luke,0
+Bart,2,Griff,1
+Bart,1,Ramy,2
+Bashi,3,Garrett,0
+Bashi,2,Justin,1
+Sam,3,Gavin,0
+Chris G,1,Richard,2
+Richard,3,Terry,0
+Brett,2,Jason,1
+Luke,2,Terry,1
+Garrett,1,Justin,2
+Chris O,3,Juan,0
+Brett,2,Chris O,1
+Dhivya,0,Jon,3
+Dhivya,0,Gavin,3
+Reza,0,Robert,3
+Chris G,2,Sebastian,1
+Eva,1,Miles,2
+Eva,2,Scott,1
+Griff,2,Reza,1
+Sam,3,Scott,0
+Nick,2,Sebastian,1
+Nick,2,Thomas S,1
+Jon,0,Miles,3
+Amanda,2,Juan,1
+Amanda,3,Reza,0
+Juan,3,Reza,0
+Chris O,1,Justin,2
+Chris O,0,Ramy,3
+Justin,3,Ramy,0
+Bashi,3,Brett,0
+Bashi,3,Jason,0
+Brett,2,Jason,1
+Casey,2,Garrett,1
+Casey,2,Luke,1
+Garrett,2,Luke,1
+Griff,3,Matt C,0
+Richard,2,Joe,1
+Chris O,3,Jason,0
+Justin,3,Garrett,0
+Harrison G,1,Joe,2
+Chris G,0,Matt D,3
+Chris G,0,Richard,3
+Richard,1,Matt D,2
+Andrew Mac,3,Josh B,0
+Andrew Mac,3,Nathan,0
+Josh B,1,Nathan,2
+Darrell,2,Miles,1
+Darrell,2,Vincent,1
+Matt C,1,Terry,2
+Miles,2,Vincent,1
+Robert,0,Justin,3
+Miles,3,Matt C,0
+David C,2,Kaitlin,1
+David C,0,Laird,3
+Daniel,1,Dhivya,2
+Daniel,0,Sebastian,3
+Dhivya,0,Sebastian,3
+Gavin,0,Robert,3
+Jon,1,Thomas S,2
+Jon,0,Tom,3
+Griff,2,Terry,1
+Thomas S,3,Tom,0
+Gavin,1,Thomas S,2
+Laird,3,Kaitlin,0
+Amanda,0,Chris O,3
+Andrew Mac,2,Richard,1
+Andrew Mac,2,Terry,1
+Amanda,1,Bart,2
+Garrett,2,Jason,1
+Bart,2,Josh K,1
+Jason,3,Luke,0
+Josh K,2,Ramy,1
+Juan,2,Theron,1
+Brett,3,Garrett,0
+Brett,1,Justin,2
+Josh B,1,Laird,2
+Andrew N,0,Josh B,3
+Andrew N,1,Laird,2
+Bashi,1,Chris O,2
+Bashi,2,Justin,1
+Griff,2,Luke,1
+Griff,3,Ramy,0
+Harrison G,2,Miles,1
+Casey,1,Juan,2
+Casey,2,Theron,1
+Joe,2,Miles,1
+Joe,1,Vincent,2
+David C,3,Dhivya,0
+David C,0,Matt D,3
+Richard,1,Terry,2
+Chris G,1,Sam,2
+Chris G,3,Sebastian,0
+Daniel,0,Harrison G,3
+Daniel,0,Sam,3
+Kaitlin,0,Matt C,3
+Kaitlin,2,Sebastian,1
+Matt C,1,Vincent,2
+Chris O,3,Juan,0
+Chris O,3,Luke,0
+Bart,0,Laird,3
+Bart,3,Terry,0
+Juan,1,Ramy,2
+Bashi,2,Garrett,1
+Bashi,3,Luke,0
+Joe,2,Luke,1
+Garrett,3,Griff,0
+Gavin,2,Tom,1
+Casey,1,Jason,2
+Casey,0,Justin,3
+Richard,1,Thomas S,2
+Andrew N,1,Nathan,2
+Andrew N,1,Matt D,2
+Andrew Mac,2,Ramy,1
+Andrew Mac,3,Thomas S,0
+Laird,2,Matt D,1
+Josh B,1,Josh K,2
+Harrison G,1,Terry,2
+Griff,3,Joe,0
+Jason,1,Justin,2
+Jon,2,Sebastian,1
+Matt C,0,Nathan,3
+Matt C,1,Richard,2
+Chris G,0,Robert,3
+Chris G,0,Scott,3
+Darrell,1,Josh B,2
+Darrell,0,Josh K,3
+Robert,3,Scott,0
+Scott,3,Sebastian,0
+Gavin,2,Harrison G,1
+Dhivya,0,Jon,3
+Dhivya,0,Tom,3
+Amanda,0,Laird,3
+Amanda,0,Luke,3
+Andrew N,2,Reza,1
+Andrew N,3,Robert,0
+Laird,1,Luke,2
+Josh K,1,Terry,2
+Juan,1,Matt D,2
+Andrew Mac,1,Terry,2
+Jason,2,Ramy,1
+Andrew Mac,2,Miles,1
+Josh B,2,Luke,1
+Joe,0,Chris O,3
+Joe,2,Thomas S,1
+Andrew Mac,2,Josh B,1
+Chris O,3,Garrett,0
+Brett,3,Matt D,0
+Brett,2,Chris O,1
+Bashi,0,Jason,3
+Bashi,1,Ramy,2
+Darrell,1,Nathan,2
+Darrell,1,Thomas S,2
+Garrett,1,Juan,2
+Josh K,3,Sam,0
+Casey,1,Brett,2
+Casey,3,Josh B,0
+Sebastian,1,Vincent,2
+Scott,1,Vincent,2
+Bart,3,Reza,0
+Bart,1,Richard,2
+Reza,0,Robert,3
+Josh K,0,Richard,3
+Chris G,0,Thomas S,3
+Chris G,0,Nathan,3
+Daniel,0,Scott,3
+Kaitlin,3,Sebastian,0
+Daniel,0,Tom,3
+Dhivya,0,Kaitlin,3
+Dhivya,0,Scott,3
+Sam,1,Tom,2
+Miles,3,Tom,0
+Amanda,2,Juan,1
+Andrew N,0,Richard,3
+Andrew N,2,Robert,1
+Amanda,3,Luke,0
+Jason,2,Ramy,1
+Justin,3,Luke,0
+Justin,3,Matt D,0
+Joe,2,Terry,1
+Joe,3,Theron,0
+Matt C,2,Scott,1
+Jason,3,Josh K,0
+Bart,0,Richard,3
+Bart,2,Robert,1
+Jason,1,Juan,2
+Josh K,0,Terry,3
+Josh K,2,Theron,1
+Chris G,1,Tom,2
+Chris G,0,Thomas S,3
+Bashi,3,Matt D,0
+Bashi,3,Ramy,0
+Kaitlin,0,Scott,3
+Matt C,2,Miles,1
+Reza,2,Sebastian,1
+Sebastian,2,Tom,1
+Harrison G,0,Reza,3
+Harrison G,0,Richard,3
+Nathan,3,Sam,0
+Nathan,2,Thomas S,1
+Miles,2,Sam,1
+Daniel,2,Dhivya,1
+Daniel,0,Scott,3
+Dhivya,1,Kaitlin,2
+Kaitlin,3,Daniel,0
+Andrew Mac,1,Bart,2
+Andrew Mac,2,Josh K,1
+Andrew N,1,Gavin,2
+Andrew N,2,Josh K,1
+Jeff,3,Laird,0
+Bart,1,Luke,2
+Bashi,2,Jeff,1
+Bashi,2,Juan,1
+Brett,2,Chris O,1
+Brett,1,Jason,2
+Scott,3,Sebastian,0
+Justin,1,Jason,2
+Amanda,2,Griff,1
+Luke,0,Matt D,3
+Amanda,2,Justin,1
+Griff,0,Matt D,3
+Joe,0,Laird,3
+Chris O,2,Jason,1
+Jeff,2,Juan,1
+Joe,3,Tom,0
+Chris G,3,Kaitlin,0
+Kaitlin,1,Tom,2
+Reza,1,Robert,2
+Reza,1,Sam,2
+Gavin,1,Richard,2
+Miles,2,Richard,1
+Robert,3,Terry,0
+Dhivya,0,Scott,3
+Dhivya,0,Sebastian,3
+Chris G,1,Harrison G,2
+Miles,3,Terry,0
+Harrison G,2,Sam,1
+Joe ,1,Nathan,2
+Josh K,0,Nathan,3
+Joe,0,Josh K,3
+Chris O,1,Justin,2
+Andrew N,1,Andrew Mac,2
+Casey,0,Chris O,3
+Luke,2,Ramy,1
+Sam,1,Thomas S,2
+Jason,3,Luke,0
+Andrew N,1,Amanda,2
+Matt C,1,Casey,2
+Miles,1,Casey,2
+Bart,3,Vincent,0
+Gavin,1,Vincent,2
+Juan,2,Matt D,1
+Josh B,0,Juan,3
+Josh B,2,Luke,1
+Amanda,1,Matt D,2
+Andrew Mac,3,Robert,0
+Bart,2,Gavin,1
+Bart,1,Miles,2
+Bashi,2,Jason,1
+Bashi,1,Justin,2
+Dhivya,0,Matt C,3
+Dhivya,0,Kaitlin,3
+Harrison G,0,Thomas S,3
+Harrison G,3,Kaitlin,0
+Reza,1,Scott,2
+Richard,3,Sebastian,1
+Reza,1,Richard,2
+Sam,0,Terry,3
+Terry,2,Thomas S,1
+Chris G,1,Matt C,2
+Gavin,1,Miles,2
+Harrison G,0,Robert,3
+Daniel,1,Kaitlin,2
+Scott,2,Sebastian,1
+Chris G,1,Sebastian,2
+Daniel,0,Miles,3
+Josh B,1,Matt D,2
+Josh K,1,Matt D,2
+Josh K,2,Richard,1
+Bart,1,Ramy,2
+Chris O,2,Ramy,1
+Bashi,1,Brett,2
+Bashi,1,Chris O,2
+Garrett,0,Jason,3
+Garrett,0,Juan,3
+Andrew Mac,3,Joe,0
+Andrew Mac,2,Theron,1
+Andrew N,1,Bart,2
+Andrew N,2,Luke,1
+Brett,0,Justin,3
+Casey,1,Juan,2
+Casey,0,Luke,3
+Jason,1,Josh B,2
+Joe,2,Robert,1
+Justin,2,Theron,1
+Kaitlin,1,Matt C,2
+Kaitlin,1,Miles,2
+Miles,2,Theron,1
+Miles,3,Thomas S,0
+Josh K,2,Luke,1
+Scott,1,Terry,2
+Sebastian,0,Terry,3
+Richard,1,Robert,2
+Sam,3,Scott,0
+Chris G,3,Daniel,0
+Chris G,3,Dhivya,0
+Daniel,0,Tom,3
+Dhivya,0,Tom,3
+Matt C,0,Thomas S,3
+Andrew N,0,Juan,3
+Jason,2,Jeff,1
+Justin,3,Juan,0
+Andrew Mac,2,Chris O,1
+Ramy,0,Justin,3
+Josh B,2,Thomas S,1
+Bashi,3,Andrew Mac,0
+Bashi,2,Laird,1
+Josh K,3,Tom,0
+Josh B,2,Theron,1
+Richard,2,Matt D,1
+Theron,0,Jason,3
+Richard,1,Terry,2
+Chris O,0,Matt D,3
+Jeff,3,Bart,0
+Harrison G,0,Joe,3
+Casey,0,Josh K,3
+Joe,2,Sam,1
+Ramy,2,Casey,1
+Theron,2,Luke,1
+Ramy,1,Laird,2
+Kaitlin,1,Chris G,2
+Kaitlin,0,Thomas S,3
+Andrew N,3,Terry,0
+Matt D,3,Miles,0
+Gavin,2,Scott,1
+Gavin,1,Sebastian,2
+Harrison G,1,Sebastian,2
+Luke,2,Miles,1
+Scott,1,Tom,2
+Kaitlin,0,Harrison G,3
+Daniel,0,Chris G,3
+Bart,3,Sam,0
+Daniel,0,Dhivya,3
+Tom,3,Dhivya,0
+Amanda,2,Richard,1
+Amanda,1,Ramy,2
+Ramy,3,Richard,0
+Bashi,3,Laird,0
+Brett,2,Chris O,1
+Jeff,1,Justin,2
+Bashi,2,Jeff,1
+Brett,3,Jeff,0
+Garrett,2,Josh B,1
+Kaitlin,0,Sebastian,3
+Miles,1,Robert,2
+Chris O,3,Juan,0
+Jason,2,Juan,1
+Andrew N,1,Miles,2
+Andrew N,0,Theron,3
+Jason,1,Laird,2
+Bart,0,Garrett,3
+Bart,1,Josh B,2
+Joe,2,Luke,1
+Nathan,1,Theron,2
+Joe,3,Matt C,0
+Luke,1,Terry,2
+Matt C,1,Terry,2
+Gavin,1,Tom,2
+Gavin,1,Scott,2
+Harrison G,1,Scott,2
+Harrison G,3,Tom,0
+Josh K,0,Justin,3
+Josh K,3,Robert,0
+Chris G,0,Nathan,3
+Chris G,1,Tom,2
+Daniel,1,Dhivya,2
+Daniel,0,Gavin,3
+Daniel,1,Kaitlin,2
+Dhivya,1,Sebastian,2
+Amanda,3,Justin,0
+Amanda,1,Ramy,2
+Andrew N,2,Reza,1
+Andrew N,1,Richard,2
+Bart,2,Luke,1
+Bashi,3,Jason,0
+Jason,1,Jeff,2
+Bashi,1,Jeff,2
+Juan,1,Theron,2
+Casey,1,Juan,2
+Casey,2,Theron,1
+Reza,1,Richard,2
+Brett,1,Chris O,2
+Luke,1,Ramy,2
+Brett,3,Laird,0
+Chris O,1,Laird,2
+Josh K,2,Miles,1
+Justin,2,Luke,1
+Josh K,1,Justin,2
+Eric,1,Thomas C,2
+Joe,3,Terry,0
+Joe,0,Robert,3
+Eric,0,Thomas S,3
+Gavin,1,Miles,2
+David S,0,Harrison G,3
+Bart,3,David S,0
+Chris G,2,Sebastian,1
+Gavin,0,Terry,3
+Daniel,0,Sebastian,3
+Chris G,0,Kaitlin,3
+Daniel,0,Tom,3
+Kaitlin,0,Tom,3
+Robert,2,Tom,1
+Thomas C,2,Thomas S,1
+David S,0,Thomas S,3
