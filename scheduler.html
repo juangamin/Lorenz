@@ -141,6 +141,19 @@ th {
   font-weight: bold;
 }
 
+.schedule-cell {
+  vertical-align: top;
+  min-width: 220px;
+}
+
+.schedule-match {
+  margin-bottom: 12px;
+}
+
+.schedule-match:last-child {
+  margin-bottom: 0;
+}
+
 
 /* =========================================================
    PROGRESS BAR
@@ -192,6 +205,10 @@ th {
     padding: 7px 5px;
   }
 
+  .schedule-cell {
+    min-width: 150px;
+  }
+
 }
 
 </style>
@@ -203,8 +220,8 @@ th {
 <h1>Tilt Summer 2026</h1>
 
 <div class="subtitle">
-  Three matches per player, prioritizing similar ELO
-  while respecting hard availability constraints
+  Three matches per player, prioritizing similar ELO,
+  avoiding rematches, and respecting hard availability constraints
 </div>
 
 
@@ -289,7 +306,7 @@ th {
 
     <p class="small">
 
-      Each active player will be given
+      Each active player will be assigned
       <strong>3 different opponents</strong>
       whenever possible.
 
@@ -380,13 +397,13 @@ const TARGET_MATCHES_PER_PLAYER = 3;
 
 
 /*
-  Randomized optimization attempts.
+  More attempts = slightly better schedule,
+  but slower.
 
-  Increase this if you want a deeper search.
-  Decrease it if scheduling feels slow.
+  2500 should still remain responsive.
 */
 
-const ATTEMPTS = 3000;
+const ATTEMPTS = 2500;
 
 
 
@@ -401,11 +418,6 @@ let players = [];
 let matchCounts = {};
 
 let latestWeek = 0;
-
-
-/*
-  Names in this set are excluded from scheduling.
-*/
 
 const excludedPlayers =
   new Set();
@@ -521,10 +533,6 @@ function processSpreadsheet() {
 
 
 
-    /* ------------------------------------------
-       Previous meetings
-    ------------------------------------------ */
-
     if (p1 && p2) {
 
       const key =
@@ -541,10 +549,6 @@ function processSpreadsheet() {
     }
 
 
-
-    /* ------------------------------------------
-       Latest week
-    ------------------------------------------ */
 
     for (
       const value
@@ -578,10 +582,6 @@ function processSpreadsheet() {
   }
 
 
-
-  /* ------------------------------------------
-     Latest ELO for each player
-  ------------------------------------------ */
 
   players = [];
 
@@ -745,10 +745,6 @@ function displayAvailabilityTable() {
 
 
 
-  /*
-    Add handlers to Remove / Restore buttons.
-  */
-
   document
     .querySelectorAll(
       ".remove-button"
@@ -808,10 +804,6 @@ function togglePlayer(
 }
 
 
-
-/* ============================================================
-   UPDATE PLAYER ROW
-============================================================ */
 
 function updatePlayerRow(
   playerName
@@ -886,10 +878,6 @@ async function generateSchedule() {
   try {
 
 
-    /* ------------------------------------------
-       League window
-    ------------------------------------------ */
-
     const leagueStart =
       parseMilitaryTime(
         document.getElementById(
@@ -930,10 +918,6 @@ async function generateSchedule() {
 
 
 
-    /* ------------------------------------------
-       Only active players
-    ------------------------------------------ */
-
     const activePlayers =
       players.filter(
         player =>
@@ -956,10 +940,6 @@ async function generateSchedule() {
     }
 
 
-
-    /* ------------------------------------------
-       Parse hard availability
-    ------------------------------------------ */
 
     const scheduledPlayers = [];
 
@@ -1030,10 +1010,6 @@ async function generateSchedule() {
 
 
 
-    /* ------------------------------------------
-       Build every feasible pair
-    ------------------------------------------ */
-
     const edges = [];
 
     const edgeLookup =
@@ -1059,10 +1035,6 @@ async function generateSchedule() {
         const b =
           scheduledPlayers[j];
 
-
-        /*
-          HARD TIME CONSTRAINT
-        */
 
         if (
           !overlapAvailability(
@@ -1134,10 +1106,6 @@ async function generateSchedule() {
 
 
 
-    /* ------------------------------------------
-       Optimization
-    ------------------------------------------ */
-
     showProgress(
       0,
       "Starting optimization..."
@@ -1193,10 +1161,6 @@ async function generateSchedule() {
 
 
 
-      /*
-        Let browser update progress.
-      */
-
       if (
         attempt % 20 === 0
       ) {
@@ -1235,9 +1199,15 @@ async function generateSchedule() {
 
 
 
-    /* ------------------------------------------
-       Convert matches to display objects
-    ------------------------------------------ */
+    if (!best) {
+
+      throw new Error(
+        "No feasible schedule found."
+      );
+
+    }
+
+
 
     const pairings =
       best.matches.map(
@@ -1298,20 +1268,8 @@ async function generateSchedule() {
 
 
 /* ============================================================
-   BUILD A THREE-MATCH CANDIDATE
+   BUILD CANDIDATE
 ============================================================ */
-
-/*
-
-Each player can have degree <= 3.
-
-We repeatedly select feasible matches,
-with players who still need matches
-receiving priority.
-
-A pair can appear only once in the new schedule.
-
-*/
 
 function createThreeMatchCandidate(
   players,
@@ -1334,10 +1292,6 @@ function createThreeMatchCandidate(
     [];
 
 
-  /*
-    Shuffle edge order slightly between attempts.
-  */
-
   const candidates =
     [...edges];
 
@@ -1348,11 +1302,6 @@ function createThreeMatchCandidate(
   );
 
 
-
-  /*
-    Keep trying to add matches until
-    nothing else can be added.
-  */
 
   while (true) {
 
@@ -1405,15 +1354,6 @@ function createThreeMatchCandidate(
 
 
 
-      /*
-        Players with fewer current matches
-        get strong priority.
-
-        This prevents the algorithm from
-        filling some people to 3 while
-        leaving others at 0 or 1.
-      */
-
       const needI =
         TARGET_MATCHES_PER_PLAYER
         -
@@ -1433,11 +1373,6 @@ function createThreeMatchCandidate(
           needJ
         );
 
-
-      /*
-        Random noise helps explore
-        alternative schedules.
-      */
 
       const noise =
         Math.random() * 100;
@@ -1542,37 +1477,6 @@ function createThreeMatchCandidate(
    LOCAL IMPROVEMENT
 ============================================================ */
 
-/*
-
-We try swapping opponents between two existing
-matches.
-
-Example:
-
-A-B
-C-D
-
-can become
-
-A-C
-B-D
-
-or
-
-A-D
-B-C
-
-if:
-
-1. both replacement matches satisfy availability,
-2. neither replacement creates a duplicate match,
-3. total cost improves.
-
-Because degrees stay unchanged, everyone keeps
-the same number of matches.
-
-*/
-
 function improveThreeMatchCandidate(
   candidate,
   players,
@@ -1613,10 +1517,6 @@ function improveThreeMatchCandidate(
           matches[y];
 
 
-        /*
-          Ignore matches sharing a player.
-        */
-
         const names =
           new Set([
             first.i,
@@ -1651,10 +1551,6 @@ function improveThreeMatchCandidate(
           second.cost;
 
 
-
-        /* ---------------------------------
-           A-C and B-D
-        ---------------------------------- */
 
         const ac =
           edgeLookup.get(
@@ -1704,10 +1600,6 @@ function improveThreeMatchCandidate(
         }
 
 
-
-        /* ---------------------------------
-           A-D and B-C
-        ---------------------------------- */
 
         const ad =
           edgeLookup.get(
@@ -1765,10 +1657,6 @@ function improveThreeMatchCandidate(
 
 
 
-  /*
-    Recalculate degrees just to be safe.
-  */
-
   candidate.degrees =
     calculateDegrees(
       candidate.matches,
@@ -1786,7 +1674,7 @@ function improveThreeMatchCandidate(
 
 
 /* ============================================================
-   CHECK DUPLICATE DURING SWAP
+   DUPLICATE CHECK
 ============================================================ */
 
 function pairExistsElsewhere(
@@ -1841,20 +1729,8 @@ function pairExistsElsewhere(
 
 
 /* ============================================================
-   EVALUATE SCHEDULE QUALITY
+   EVALUATE CANDIDATE
 ============================================================ */
-
-/*
-
-Priority:
-
-1. Minimize total missing matches.
-2. Minimize the worst individual deficit.
-3. Spread unavoidable deficits fairly.
-4. Maximize number of players with all 3 matches.
-5. Minimize ELO/rematch cost.
-
-*/
 
 function evaluateCandidate(
   candidate,
@@ -1964,12 +1840,6 @@ function isBetterThreeMatchSchedule(
     return true;
 
 
-
-  /*
-    First: get as close as possible to
-    3 matches per player overall.
-  */
-
   if (
     candidate.totalDeficit !==
     best.totalDeficit
@@ -1982,11 +1852,6 @@ function isBetterThreeMatchSchedule(
 
   }
 
-
-
-  /*
-    Avoid one person getting badly shorted.
-  */
 
   if (
     candidate.maxDeficit !==
@@ -2001,11 +1866,6 @@ function isBetterThreeMatchSchedule(
   }
 
 
-
-  /*
-    Spread unavoidable shortages.
-  */
-
   if (
     candidate.squaredDeficit !==
     best.squaredDeficit
@@ -2018,11 +1878,6 @@ function isBetterThreeMatchSchedule(
 
   }
 
-
-
-  /*
-    Prefer more players actually reaching 3.
-  */
 
   if (
     candidate.completePlayers !==
@@ -2037,11 +1892,6 @@ function isBetterThreeMatchSchedule(
   }
 
 
-
-  /*
-    Finally optimize ELO and rematches.
-  */
-
   return (
     candidate.cost <
     best.cost
@@ -2052,7 +1902,7 @@ function isBetterThreeMatchSchedule(
 
 
 /* ============================================================
-   CLONE BEST RESULT
+   CLONE CANDIDATE
 ============================================================ */
 
 function cloneCandidate(
@@ -2097,29 +1947,43 @@ function displaySchedule(
   scheduledPlayers
 ) {
 
+  /*
+    Add average ELO to each match.
+  */
+
+  pairings =
+    pairings.map(
+      match => ({
+
+        ...match,
+
+        averageElo:
+          (
+            match.player1.elo +
+            match.player2.elo
+          ) / 2
+
+      })
+    );
+
+
 
   /*
-    Strongest matches first,
-    purely for display.
+    Sort from lowest-rated match
+    to highest-rated match.
   */
 
   pairings.sort(
     (a,b) =>
-
-      Math.max(
-        b.player1.elo,
-        b.player2.elo
-      )
-
-      -
-
-      Math.max(
-        a.player1.elo,
-        a.player2.elo
-      )
+      a.averageElo -
+      b.averageElo
   );
 
 
+
+  /* ========================================================
+     COUNT MATCHES PER PLAYER
+  ======================================================== */
 
   const degrees =
     new Map();
@@ -2169,6 +2033,10 @@ function displaySchedule(
 
 
 
+  /* ========================================================
+     SUMMARY
+  ======================================================== */
+
   const totalDifference =
     pairings.reduce(
       (sum,match) =>
@@ -2187,7 +2055,6 @@ function displaySchedule(
       0;
 
 
-
   const complete =
     scheduledPlayers.filter(
       player =>
@@ -2198,14 +2065,12 @@ function displaySchedule(
     ).length;
 
 
-
   const weekText =
     latestWeek > 0
       ?
       latestWeek + 1
       :
       "?";
-
 
 
   document.getElementById(
@@ -2254,8 +2119,57 @@ function displaySchedule(
 
 
   /* ========================================================
-     MATCH TABLE
+     DISTRIBUTE MATCHES TO TABLES
   ======================================================== */
+
+  const tables = [
+    [],
+    [],
+    []
+  ];
+
+
+  /*
+    Lowest third -> Table 1
+    Middle third -> Table 2
+    Highest third -> Table 3
+  */
+
+  pairings.forEach(
+    (match,index) => {
+
+      const tableIndex =
+        Math.min(
+          2,
+          Math.floor(
+            index * 3 /
+            pairings.length
+          )
+        );
+
+
+      tables[
+        tableIndex
+      ].push(
+        match
+      );
+
+    }
+  );
+
+
+
+  /* ========================================================
+     THREE-COLUMN TABLE
+  ======================================================== */
+
+  const maxRows =
+    Math.max(
+      tables[0].length,
+      tables[1].length,
+      tables[2].length
+    );
+
 
   let html = `
 
@@ -2264,31 +2178,15 @@ function displaySchedule(
       <tr>
 
         <th>
-          Match
+          Table 1
         </th>
 
         <th>
-          Player 1
-        </th>
-
-        <th class="number">
-          ELO
+          Table 2
         </th>
 
         <th>
-          Player 2
-        </th>
-
-        <th class="number">
-          ELO
-        </th>
-
-        <th class="number">
-          ELO difference
-        </th>
-
-        <th>
-          Previous meetings
+          Table 3
         </th>
 
       </tr>
@@ -2300,65 +2198,101 @@ function displaySchedule(
 
 
 
-  pairings.forEach(
-    (match,index) => {
+  for (
+    let row = 0;
+    row < maxRows;
+    row++
+  ) {
 
-      html += `
+    html +=
+      "<tr>";
 
-        <tr>
 
-          <td>
-            ${index + 1}
+    for (
+      let table = 0;
+      table < 3;
+      table++
+    ) {
+
+      const match =
+        tables[table][row];
+
+
+      if (match) {
+
+        html += `
+
+          <td class="schedule-cell">
+
+            <div class="schedule-match">
+
+              <strong>
+
+                ${escapeHtml(
+                  match.player1.name
+                )}
+
+                vs
+
+                ${escapeHtml(
+                  match.player2.name
+                )}
+
+              </strong>
+
+              <br>
+
+              <span class="small">
+
+                ${Math.round(
+                  match.player1.elo
+                )}
+
+                vs
+
+                ${Math.round(
+                  match.player2.elo
+                )}
+
+                &nbsp;|&nbsp;
+
+                Δ
+                ${Math.round(
+                  match.difference
+                )}
+
+                &nbsp;|&nbsp;
+
+                Previous:
+                ${match.previous}
+
+              </span>
+
+            </div>
+
           </td>
+        `;
 
+      }
 
-          <td>
-            ${escapeHtml(
-              match.player1.name
-            )}
-          </td>
+      else {
 
+        html +=
+          "<td></td>";
 
-          <td class="number">
-            ${Math.round(
-              match.player1.elo
-            )}
-          </td>
-
-
-          <td>
-            ${escapeHtml(
-              match.player2.name
-            )}
-          </td>
-
-
-          <td class="number">
-            ${Math.round(
-              match.player2.elo
-            )}
-          </td>
-
-
-          <td class="number">
-            ${Math.round(
-              match.difference
-            )}
-          </td>
-
-
-          <td>
-            ${match.previous}
-          </td>
-
-        </tr>
-      `;
+      }
 
     }
-  );
 
 
-  html += "</tbody>";
+    html +=
+      "</tr>";
+
+  }
+
+
+  html +=
+    "</tbody>";
 
 
   document.getElementById(
@@ -2369,7 +2303,7 @@ function displaySchedule(
 
 
   /* ========================================================
-     FIND PLAYERS WITH FEWER THAN THREE
+     PLAYERS WITH FEWER THAN 3 MATCHES
   ======================================================== */
 
   const shortPlayers =
@@ -2380,7 +2314,6 @@ function displaySchedule(
         ) <
         TARGET_MATCHES_PER_PLAYER
     );
-
 
 
   if (
@@ -2426,10 +2359,9 @@ function displaySchedule(
 
         <span class="small">
 
-          This can happen because of the number
-          of active players or because the hard
-          availability constraints make three
-          compatible opponents impossible.
+          This may be caused by the number of
+          active players or by incompatible
+          hard availability constraints.
 
         </span>
 
@@ -2483,7 +2415,6 @@ function displaySchedule(
   `;
 
 
-
   for (
     const player
     of scheduledPlayers
@@ -2509,7 +2440,6 @@ function displaySchedule(
 
       }
 
-
       else if (
         match.player2.name ===
         player.name
@@ -2522,7 +2452,6 @@ function displaySchedule(
       }
 
     }
-
 
 
     const count =
@@ -2548,18 +2477,15 @@ function displaySchedule(
           )}
         </td>
 
-
         <td class="number">
           ${Math.round(
             player.elo
           )}
         </td>
 
-
         <td class="center ${countClass}">
           ${count}
         </td>
-
 
         <td>
           ${opponents
@@ -2573,7 +2499,6 @@ function displaySchedule(
     `;
 
   }
-
 
 
   summaryHtml +=
@@ -2590,7 +2515,7 @@ function displaySchedule(
 
 
 /* ============================================================
-   CALCULATE PLAYER DEGREES
+   CALCULATE DEGREES
 ============================================================ */
 
 function calculateDegrees(
@@ -2638,10 +2563,6 @@ function parseAvailability(
 ) {
 
 
-  /*
-    Blank = unrestricted
-  */
-
   if (!text) {
 
     return {
@@ -2673,11 +2594,6 @@ function parseAvailability(
       .trim();
 
 
-
-  /* --------------------------------------------------------
-     RANGE:
-     1830-2030
-  --------------------------------------------------------- */
 
   let range =
     cleaned.match(
@@ -2753,11 +2669,6 @@ function parseAvailability(
 
 
 
-  /* --------------------------------------------------------
-     EXACT:
-     1900
-  --------------------------------------------------------- */
-
   if (
     /^\d{3,4}$/.test(
       cleaned
@@ -2800,10 +2711,6 @@ function parseAvailability(
   }
 
 
-
-  /* --------------------------------------------------------
-     INEQUALITIES
-  --------------------------------------------------------- */
 
   const clauses =
     cleaned.match(
