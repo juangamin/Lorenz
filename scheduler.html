@@ -93,7 +93,7 @@ table {
 th,
 td {
   border-bottom: 1px solid #ddd;
-  padding: 9px 10px;
+  padding: 10px;
   text-align: left;
 }
 
@@ -134,24 +134,32 @@ th {
 .small {
   color: #666;
   font-size: 13px;
-  line-height: 1.5;
+  line-height: 1.45;
 }
 
 .incomplete {
   font-weight: bold;
 }
 
+.time-cell {
+  white-space: nowrap;
+  font-weight: bold;
+  width: 90px;
+}
+
 .schedule-cell {
   vertical-align: top;
-  min-width: 220px;
+  width: 30%;
 }
 
-.schedule-match {
-  margin-bottom: 12px;
+.match-main {
+  font-weight: bold;
 }
 
-.schedule-match:last-child {
-  margin-bottom: 0;
+.match-info {
+  color: #666;
+  font-size: 12px;
+  margin-top: 4px;
 }
 
 
@@ -205,10 +213,6 @@ th {
     padding: 7px 5px;
   }
 
-  .schedule-cell {
-    min-width: 150px;
-  }
-
 }
 
 </style>
@@ -220,8 +224,9 @@ th {
 <h1>Tilt Summer 2026</h1>
 
 <div class="subtitle">
-  Three matches per player, prioritizing similar ELO,
-  avoiding rematches, and respecting hard availability constraints
+  Three matches per player with ELO matching,
+  hard availability constraints, compact table use,
+  and reduced waiting time
 </div>
 
 
@@ -233,16 +238,11 @@ th {
 <div id="main" style="display:none">
 
 
-  <!-- =====================================================
-       SETTINGS
-  ====================================================== -->
-
   <div class="panel">
 
     <div class="controls">
 
       <label>
-
         Earliest league time
 
         <input
@@ -250,12 +250,10 @@ th {
           type="text"
           value="1800"
         >
-
       </label>
 
 
       <label>
-
         Latest league time
 
         <input
@@ -263,12 +261,10 @@ th {
           type="text"
           value="2200"
         >
-
       </label>
 
 
       <label>
-
         Rematch avoidance
 
         <select id="rematchPenalty">
@@ -281,10 +277,7 @@ th {
             Low
           </option>
 
-          <option
-            value="125"
-            selected
-          >
+          <option value="125" selected>
             Moderate
           </option>
 
@@ -306,27 +299,21 @@ th {
 
     <p class="small">
 
-      Each active player will be assigned
+      Each active player receives
       <strong>3 different opponents</strong>
       whenever possible.
 
-      Time restrictions are
-      <strong>hard constraints</strong>.
+      Each match is assumed to last
+      <strong>15 minutes</strong>.
+
+      Availability is entered in military time and is a
+      <strong>hard constraint</strong>.
 
       Examples:
-
       <strong>&lt;1900</strong>,
-
-      <strong>&lt;=1900</strong>,
-
-      <strong>&gt;1900</strong>,
-
       <strong>&gt;=1930</strong>,
-
       <strong>1830-2030</strong>,
-
       or
-
       <strong>&gt;=1800 &lt;2000</strong>.
 
       Leave blank for unrestricted availability.
@@ -350,19 +337,11 @@ th {
 
 
 
-  <!-- =====================================================
-       PLAYERS
-  ====================================================== -->
-
   <h2>Players and Availability</h2>
 
   <table id="availabilityTable"></table>
 
 
-
-  <!-- =====================================================
-       RESULTS
-  ====================================================== -->
 
   <h2>Proposed Schedule</h2>
 
@@ -371,6 +350,7 @@ th {
   <table id="scheduleTable"></table>
 
   <div id="incomplete"></div>
+
 
 
   <h2>Matches Per Player</h2>
@@ -395,15 +375,13 @@ const DATA_URL =
 
 const TARGET_MATCHES_PER_PLAYER = 3;
 
+const MATCH_MINUTES = 15;
 
-/*
-  More attempts = slightly better schedule,
-  but slower.
+const NUMBER_OF_TABLES = 3;
 
-  2500 should still remain responsive.
-*/
+const PAIRING_ATTEMPTS = 2200;
 
-const ATTEMPTS = 2500;
+const ROUND_ATTEMPTS = 1800;
 
 
 
@@ -425,73 +403,72 @@ const excludedPlayers =
 
 
 /* ============================================================
-   LOAD SPREADSHEET
+   LOAD DATA
 ============================================================ */
 
 fetch(DATA_URL)
 
-  .then(response => {
+.then(response => {
 
-    if (!response.ok) {
+  if (!response.ok)
+    throw new Error(
+      "HTTP " + response.status
+    );
 
-      throw new Error(
-        "HTTP " + response.status
-      );
+  return response.json();
 
-    }
+})
 
-    return response.json();
+.then(data => {
 
-  })
+  sheetData =
+    data;
 
+  processSpreadsheet();
 
-  .then(data => {
-
-    sheetData = data;
-
-    processSpreadsheet();
-
-    displayAvailabilityTable();
+  displayAvailabilityTable();
 
 
-    document.getElementById(
-      "status"
-    ).textContent =
-      data.length +
-      " spreadsheet rows loaded successfully.";
+  document.getElementById(
+    "status"
+  ).textContent =
+    data.length +
+    " spreadsheet rows loaded successfully.";
 
 
-    document.getElementById(
-      "main"
-    ).style.display =
-      "block";
+  document.getElementById(
+    "main"
+  ).style.display =
+    "block";
 
 
-    document
-      .getElementById(
-        "generateButton"
-      )
-      .addEventListener(
-        "click",
-        generateSchedule
-      );
+  document
+    .getElementById(
+      "generateButton"
+    )
+    .addEventListener(
+      "click",
+      generateSchedule
+    );
 
-  })
+})
+
+.catch(error => {
+
+  document.getElementById(
+    "status"
+  ).innerHTML =
+    "<strong>Could not load spreadsheet.</strong><br>" +
+    escapeHtml(
+      error.message
+    );
 
 
-  .catch(error => {
+  console.error(
+    error
+  );
 
-    document.getElementById(
-      "status"
-    ).innerHTML =
-
-      "<strong>Could not load spreadsheet.</strong><br>" +
-      escapeHtml(error.message);
-
-
-    console.error(error);
-
-  });
+});
 
 
 
@@ -505,12 +482,17 @@ function processSpreadsheet() {
     new Set();
 
 
-  matchCounts = {};
+  matchCounts =
+    {};
 
-  latestWeek = 0;
+  latestWeek =
+    0;
 
 
-  for (const row of sheetData) {
+  for (
+    const row
+    of sheetData
+  ) {
 
     const p1 =
       cleanName(
@@ -533,7 +515,10 @@ function processSpreadsheet() {
 
 
 
-    if (p1 && p2) {
+    if (
+      p1 &&
+      p2
+    ) {
 
       const key =
         pairKey(
@@ -543,8 +528,12 @@ function processSpreadsheet() {
 
 
       matchCounts[key] =
-        (matchCounts[key] || 0)
-        + 1;
+        (
+          matchCounts[key] ||
+          0
+        )
+        +
+        1;
 
     }
 
@@ -556,7 +545,8 @@ function processSpreadsheet() {
     ) {
 
       if (
-        typeof value !== "string"
+        typeof value !==
+        "string"
       )
         continue;
 
@@ -572,7 +562,9 @@ function processSpreadsheet() {
         latestWeek =
           Math.max(
             latestWeek,
-            Number(match[1])
+            Number(
+              match[1]
+            )
           );
 
       }
@@ -583,17 +575,25 @@ function processSpreadsheet() {
 
 
 
-  players = [];
+  players =
+    [];
 
 
-  for (const name of names) {
+  for (
+    const name
+    of names
+  ) {
 
-    let elo = null;
+    let elo =
+      null;
 
 
     for (
-      let i = sheetData.length - 1;
+      let i =
+        sheetData.length - 1;
+
       i >= 0;
+
       i--
     ) {
 
@@ -603,9 +603,12 @@ function processSpreadsheet() {
         );
 
 
-      if (value !== null) {
+      if (
+        value !== null
+      ) {
 
-        elo = value;
+        elo =
+          value;
 
         break;
 
@@ -614,13 +617,15 @@ function processSpreadsheet() {
     }
 
 
-    if (elo !== null) {
+    if (
+      elo !== null
+    ) {
 
       players.push({
 
-        name: name,
+        name,
 
-        elo: elo
+        elo
 
       });
 
@@ -632,7 +637,8 @@ function processSpreadsheet() {
 
   players.sort(
     (a,b) =>
-      b.elo - a.elo
+      b.elo -
+      a.elo
   );
 
 }
@@ -685,24 +691,23 @@ function displayAvailabilityTable() {
 
       html += `
 
-        <tr
-          id="${rowId(player.name)}"
-        >
+        <tr id="${rowId(player.name)}">
 
           <td>
             ${index + 1}
           </td>
 
-
           <td>
-            ${escapeHtml(player.name)}
+            ${escapeHtml(
+              player.name
+            )}
           </td>
-
 
           <td class="number">
-            ${Math.round(player.elo)}
+            ${Math.round(
+              player.elo
+            )}
           </td>
-
 
           <td>
 
@@ -714,7 +719,6 @@ function displayAvailabilityTable() {
             >
 
           </td>
-
 
           <td>
 
@@ -735,7 +739,8 @@ function displayAvailabilityTable() {
   );
 
 
-  html += "</tbody>";
+  html +=
+    "</tbody>";
 
 
   document.getElementById(
@@ -749,27 +754,26 @@ function displayAvailabilityTable() {
     .querySelectorAll(
       ".remove-button"
     )
-    .forEach(button => {
+    .forEach(
+      button => {
 
-      button.addEventListener(
-        "click",
-        () => {
+        button.addEventListener(
+          "click",
+          () =>
+            togglePlayer(
+              button.dataset.player
+            )
+        );
 
-          togglePlayer(
-            button.dataset.player
-          );
-
-        }
-      );
-
-    });
+      }
+    );
 
 }
 
 
 
 /* ============================================================
-   REMOVE / RESTORE PLAYER
+   REMOVE / RESTORE
 ============================================================ */
 
 function togglePlayer(
@@ -817,7 +821,9 @@ function updatePlayerRow(
 
   const row =
     document.getElementById(
-      rowId(playerName)
+      rowId(
+        playerName
+      )
     );
 
 
@@ -831,23 +837,15 @@ function updatePlayerRow(
   );
 
 
-  const input =
-    row.querySelector(
-      ".constraint-input"
-    );
-
-
-  input.disabled =
+  row.querySelector(
+    ".constraint-input"
+  ).disabled =
     removed;
 
 
-  const button =
-    row.querySelector(
-      ".remove-button"
-    );
-
-
-  button.textContent =
+  row.querySelector(
+    ".remove-button"
+  ).textContent =
     removed
       ? "Restore"
       : "Remove";
@@ -857,7 +855,7 @@ function updatePlayerRow(
 
 
 /* ============================================================
-   GENERATE SCHEDULE
+   GENERATE
 ============================================================ */
 
 async function generateSchedule() {
@@ -905,7 +903,7 @@ async function generateSchedule() {
     if (
       leagueStart === null ||
       leagueEnd === null ||
-      leagueEnd < leagueStart
+      leagueEnd <= leagueStart
     ) {
 
       alert(
@@ -941,7 +939,8 @@ async function generateSchedule() {
 
 
 
-    const scheduledPlayers = [];
+    const scheduledPlayers =
+      [];
 
 
     for (
@@ -977,15 +976,10 @@ async function generateSchedule() {
 
 
         alert(
-
           "Invalid time constraint for " +
-
           player.name +
-
           ": " +
-
           text
-
         );
 
 
@@ -1001,8 +995,7 @@ async function generateSchedule() {
         constraint:
           text,
 
-        availability:
-          availability
+        availability
 
       });
 
@@ -1010,7 +1003,13 @@ async function generateSchedule() {
 
 
 
-    const edges = [];
+    /* ======================================================
+       POSSIBLE PAIRS
+    ====================================================== */
+
+    const edges =
+      [];
+
 
     const edgeLookup =
       new Map();
@@ -1041,17 +1040,15 @@ async function generateSchedule() {
             a.availability,
             b.availability
           )
-        ) {
-
+        )
           continue;
-
-        }
 
 
 
         const eloDifference =
           Math.abs(
-            a.elo - b.elo
+            a.elo -
+            b.elo
           );
 
 
@@ -1067,25 +1064,21 @@ async function generateSchedule() {
         const cost =
           eloDifference
           +
-          rematchPenalty
-          *
+          rematchPenalty *
           previous;
 
 
         const edge = {
 
-          i: i,
+          i,
 
-          j: j,
+          j,
 
-          eloDifference:
-            eloDifference,
+          eloDifference,
 
-          previous:
-            previous,
+          previous,
 
-          cost:
-            cost
+          cost
 
         };
 
@@ -1096,7 +1089,10 @@ async function generateSchedule() {
 
 
         edgeLookup.set(
-          numericPairKey(i,j),
+          numericPairKey(
+            i,
+            j
+          ),
           edge
         );
 
@@ -1106,22 +1102,26 @@ async function generateSchedule() {
 
 
 
+    /* ======================================================
+       STAGE 1 — OPPONENTS
+    ====================================================== */
+
     showProgress(
       0,
-      "Starting optimization..."
+      "Choosing opponents..."
     );
 
 
     await letBrowserBreathe();
 
 
-    let best = null;
-
+    let best =
+      null;
 
 
     for (
       let attempt = 0;
-      attempt < ATTEMPTS;
+      attempt < PAIRING_ATTEMPTS;
       attempt++
     ) {
 
@@ -1162,25 +1162,23 @@ async function generateSchedule() {
 
 
       if (
-        attempt % 20 === 0
+        attempt % 20 ===
+        0
       ) {
 
         const percentage =
           Math.round(
-            100 *
+            55 *
             attempt /
-            ATTEMPTS
+            PAIRING_ATTEMPTS
           );
 
 
         showProgress(
-
           percentage,
-
-          "Searching schedules... " +
+          "Choosing opponents... " +
           percentage +
           "%"
-
         );
 
 
@@ -1192,17 +1190,44 @@ async function generateSchedule() {
 
 
 
-    showProgress(
-      100,
-      "Optimization complete."
-    );
-
-
-
     if (!best) {
 
       throw new Error(
-        "No feasible schedule found."
+        "Could not construct a schedule."
+      );
+
+    }
+
+
+
+    /* ======================================================
+       STAGE 2 — COMPACT TIME SCHEDULE
+    ====================================================== */
+
+    showProgress(
+      56,
+      "Packing matches into tables..."
+    );
+
+
+    await letBrowserBreathe();
+
+
+    const roundResult =
+      await optimizeCompactRounds(
+        best.matches,
+        scheduledPlayers,
+        leagueStart,
+        leagueEnd
+      );
+
+
+    if (
+      !roundResult
+    ) {
+
+      throw new Error(
+        "Could not fit these matches into the available time window."
       );
 
     }
@@ -1212,6 +1237,8 @@ async function generateSchedule() {
     const pairings =
       best.matches.map(
         edge => ({
+
+          edge,
 
           player1:
             scheduledPlayers[
@@ -1227,7 +1254,18 @@ async function generateSchedule() {
             edge.eloDifference,
 
           previous:
-            edge.previous
+            edge.previous,
+
+          averageElo:
+            (
+              scheduledPlayers[
+                edge.i
+              ].elo
+              +
+              scheduledPlayers[
+                edge.j
+              ].elo
+            ) / 2
 
         })
       );
@@ -1236,11 +1274,18 @@ async function generateSchedule() {
 
     displaySchedule(
       pairings,
-      scheduledPlayers
+      scheduledPlayers,
+      roundResult
     );
 
 
+    showProgress(
+      100,
+      "Schedule complete."
+    );
+
   }
+
 
   catch(error) {
 
@@ -1256,6 +1301,7 @@ async function generateSchedule() {
 
   }
 
+
   finally {
 
     button.disabled =
@@ -1268,7 +1314,7 @@ async function generateSchedule() {
 
 
 /* ============================================================
-   BUILD CANDIDATE
+   CREATE OPPONENT SET
 ============================================================ */
 
 function createThreeMatchCandidate(
@@ -1281,7 +1327,9 @@ function createThreeMatchCandidate(
 
 
   const degrees =
-    new Array(n).fill(0);
+    new Array(
+      n
+    ).fill(0);
 
 
   const usedPairs =
@@ -1298,7 +1346,8 @@ function createThreeMatchCandidate(
 
   candidates.sort(
     () =>
-      Math.random() - 0.5
+      Math.random() -
+      0.5
   );
 
 
@@ -1348,21 +1397,21 @@ function createThreeMatchCandidate(
 
 
       if (
-        usedPairs.has(key)
+        usedPairs.has(
+          key
+        )
       )
         continue;
 
 
 
       const needI =
-        TARGET_MATCHES_PER_PLAYER
-        -
+        TARGET_MATCHES_PER_PLAYER -
         degrees[i];
 
 
       const needJ =
-        TARGET_MATCHES_PER_PLAYER
-        -
+        TARGET_MATCHES_PER_PLAYER -
         degrees[j];
 
 
@@ -1375,14 +1424,13 @@ function createThreeMatchCandidate(
 
 
       const noise =
-        Math.random() * 100;
+        Math.random() *
+        100;
 
 
       const score =
-        edge.cost
-        -
-        fairnessBonus
-        +
+        edge.cost -
+        fairnessBonus +
         noise;
 
 
@@ -1437,11 +1485,9 @@ function createThreeMatchCandidate(
 
   const candidate = {
 
-    matches:
-      matches,
+    matches,
 
-    degrees:
-      degrees,
+    degrees,
 
     cost:
       0,
@@ -1474,7 +1520,7 @@ function createThreeMatchCandidate(
 
 
 /* ============================================================
-   LOCAL IMPROVEMENT
+   IMPROVE PAIRINGS
 ============================================================ */
 
 function improveThreeMatchCandidate(
@@ -1517,7 +1563,7 @@ function improveThreeMatchCandidate(
           matches[y];
 
 
-        const names =
+        const unique =
           new Set([
             first.i,
             first.j,
@@ -1527,10 +1573,9 @@ function improveThreeMatchCandidate(
 
 
         if (
-          names.size < 4
+          unique.size < 4
         )
           continue;
-
 
 
         const a =
@@ -1554,13 +1599,19 @@ function improveThreeMatchCandidate(
 
         const ac =
           edgeLookup.get(
-            numericPairKey(a,c)
+            numericPairKey(
+              a,
+              c
+            )
           );
 
 
         const bd =
           edgeLookup.get(
-            numericPairKey(b,d)
+            numericPairKey(
+              b,
+              d
+            )
           );
 
 
@@ -1579,7 +1630,8 @@ function improveThreeMatchCandidate(
             y,
             bd
           ) &&
-          ac.cost + bd.cost <
+          ac.cost +
+          bd.cost <
           currentCost
         ) {
 
@@ -1603,13 +1655,19 @@ function improveThreeMatchCandidate(
 
         const ad =
           edgeLookup.get(
-            numericPairKey(a,d)
+            numericPairKey(
+              a,
+              d
+            )
           );
 
 
         const bc =
           edgeLookup.get(
-            numericPairKey(b,c)
+            numericPairKey(
+              b,
+              c
+            )
           );
 
 
@@ -1628,7 +1686,8 @@ function improveThreeMatchCandidate(
             y,
             bc
           ) &&
-          ad.cost + bc.cost <
+          ad.cost +
+          bc.cost <
           currentCost
         ) {
 
@@ -1674,7 +1733,7 @@ function improveThreeMatchCandidate(
 
 
 /* ============================================================
-   DUPLICATE CHECK
+   DUPLICATE PAIR CHECK
 ============================================================ */
 
 function pairExistsElsewhere(
@@ -1713,11 +1772,8 @@ function pairExistsElsewhere(
         existing.i,
         existing.j
       ) === key
-    ) {
-
+    )
       return true;
-
-    }
 
   }
 
@@ -1729,7 +1785,7 @@ function pairExistsElsewhere(
 
 
 /* ============================================================
-   EVALUATE CANDIDATE
+   PAIRING QUALITY
 ============================================================ */
 
 function evaluateCandidate(
@@ -1770,8 +1826,7 @@ function evaluateCandidate(
   ) {
 
     const deficit =
-      TARGET_MATCHES_PER_PLAYER
-      -
+      TARGET_MATCHES_PER_PLAYER -
       degree;
 
 
@@ -1787,19 +1842,18 @@ function evaluateCandidate(
 
 
     squaredDeficit +=
-      deficit * deficit;
+      deficit *
+      deficit;
 
 
     if (
       degree ===
       TARGET_MATCHES_PER_PLAYER
-    ) {
-
+    )
       completePlayers++;
 
-    }
-
   }
+
 
 
   candidate.totalDeficit =
@@ -1827,10 +1881,6 @@ function evaluateCandidate(
 
 
 
-/* ============================================================
-   COMPARE CANDIDATES
-============================================================ */
-
 function isBetterThreeMatchSchedule(
   candidate,
   best
@@ -1843,53 +1893,41 @@ function isBetterThreeMatchSchedule(
   if (
     candidate.totalDeficit !==
     best.totalDeficit
-  ) {
-
+  )
     return (
       candidate.totalDeficit <
       best.totalDeficit
     );
 
-  }
-
 
   if (
     candidate.maxDeficit !==
     best.maxDeficit
-  ) {
-
+  )
     return (
       candidate.maxDeficit <
       best.maxDeficit
     );
 
-  }
-
 
   if (
     candidate.squaredDeficit !==
     best.squaredDeficit
-  ) {
-
+  )
     return (
       candidate.squaredDeficit <
       best.squaredDeficit
     );
 
-  }
-
 
   if (
     candidate.completePlayers !==
     best.completePlayers
-  ) {
-
+  )
     return (
       candidate.completePlayers >
       best.completePlayers
     );
-
-  }
 
 
   return (
@@ -1900,10 +1938,6 @@ function isBetterThreeMatchSchedule(
 }
 
 
-
-/* ============================================================
-   CLONE CANDIDATE
-============================================================ */
 
 function cloneCandidate(
   candidate
@@ -1939,29 +1973,417 @@ function cloneCandidate(
 
 
 /* ============================================================
-   DISPLAY SCHEDULE
+   COMPACT ROUND OPTIMIZER
+
+   Priorities:
+
+   1. Use the minimum feasible number of rounds.
+   2. No completely empty rounds.
+   3. Pack empty TABLE positions toward the END.
+   4. Minimize player waiting.
 ============================================================ */
 
-function displaySchedule(
-  pairings,
-  scheduledPlayers
+async function optimizeCompactRounds(
+  matches,
+  players,
+  leagueStart,
+  leagueEnd
+) {
+
+  const matchCount =
+    matches.length;
+
+
+  const theoreticalMinimum =
+    Math.ceil(
+      matchCount /
+      NUMBER_OF_TABLES
+    );
+
+
+  const maxPossibleRounds =
+    Math.floor(
+      (
+        leagueEnd -
+        leagueStart
+      ) /
+      MATCH_MINUTES
+    ) + 1;
+
+
+  /*
+    Try the theoretical minimum first.
+
+    Only increase the number of rounds if
+    availability/player conflicts make the
+    more compact schedule impossible.
+  */
+
+  for (
+    let roundCount =
+      theoreticalMinimum;
+
+    roundCount <=
+      maxPossibleRounds;
+
+    roundCount++
+  ) {
+
+
+    /*
+      Generate a packed capacity profile.
+
+      Examples:
+
+      31 matches / 11 rounds:
+
+      3,3,3,3,3,3,3,3,3,3,1
+
+      31 matches / 12 rounds:
+
+      3,3,3,3,3,3,3,3,3,2,1,1
+
+      So empty table positions are always
+      pushed toward the END of the evening.
+    */
+
+    const capacities =
+      createPackedCapacities(
+        matchCount,
+        roundCount
+      );
+
+
+    if (!capacities)
+      continue;
+
+
+
+    const latestStart =
+      leagueEnd -
+      (
+        roundCount - 1
+      ) *
+      MATCH_MINUTES;
+
+
+    let bestForRoundCount =
+      null;
+
+
+
+    /*
+      Try every possible starting time
+      for this compact block.
+    */
+
+    for (
+      let blockStart =
+        leagueStart;
+
+      blockStart <=
+        latestStart;
+
+      blockStart +=
+        MATCH_MINUTES
+    ) {
+
+
+      const roundTimes =
+        [];
+
+
+      for (
+        let r = 0;
+        r < roundCount;
+        r++
+      ) {
+
+        roundTimes.push(
+          blockStart +
+          r *
+          MATCH_MINUTES
+        );
+
+      }
+
+
+
+      for (
+        let attempt = 0;
+        attempt < ROUND_ATTEMPTS;
+        attempt++
+      ) {
+
+        const candidate =
+          createPackedRoundCandidate(
+            matches,
+            players,
+            roundTimes,
+            capacities
+          );
+
+
+        /*
+          Every selected match must
+          actually be placed.
+        */
+
+        if (
+          candidate.unscheduled.length
+          > 0
+        )
+          continue;
+
+
+
+        /*
+          Each round must contain EXACTLY
+          the target number of matches.
+
+          This is what eliminates scattered
+          empty table cells.
+        */
+
+        let correctCapacity =
+          true;
+
+
+        for (
+          let r = 0;
+          r < capacities.length;
+          r++
+        ) {
+
+          if (
+            candidate.rounds[r].length
+            !==
+            capacities[r]
+          ) {
+
+            correctCapacity =
+              false;
+
+            break;
+
+          }
+
+        }
+
+
+        if (
+          !correctCapacity
+        )
+          continue;
+
+
+
+        evaluateRoundCandidate(
+          candidate,
+          players.length
+        );
+
+
+        if (
+          isBetterPackedRoundSchedule(
+            candidate,
+            bestForRoundCount
+          )
+        ) {
+
+          bestForRoundCount =
+            cloneRoundCandidate(
+              candidate
+            );
+
+        }
+
+
+
+        if (
+          attempt % 35 === 0
+        ) {
+
+          await letBrowserBreathe();
+
+        }
+
+      }
+
+    }
+
+
+
+    /*
+      CRITICAL:
+
+      As soon as we find any valid schedule
+      at this round count, stop.
+
+      Therefore the number of rounds is
+      guaranteed to be the minimum feasible.
+    */
+
+    if (
+      bestForRoundCount
+    ) {
+
+      return bestForRoundCount;
+
+    }
+
+  }
+
+
+  return null;
+
+}
+
+
+
+/* ============================================================
+   PACKED ROUND CAPACITIES
+============================================================ */
+
+function createPackedCapacities(
+  matchCount,
+  roundCount
 ) {
 
   /*
-    Add average ELO to each match.
+    Every used round must contain
+    at least one match.
   */
 
-  pairings =
-    pairings.map(
-      match => ({
+  if (
+    matchCount <
+    roundCount
+  )
+    return null;
 
-        ...match,
 
-        averageElo:
-          (
-            match.player1.elo +
-            match.player2.elo
-          ) / 2
+  if (
+    matchCount >
+    roundCount *
+    NUMBER_OF_TABLES
+  )
+    return null;
+
+
+  const capacities =
+    new Array(
+      roundCount
+    ).fill(1);
+
+
+  let remaining =
+    matchCount -
+    roundCount;
+
+
+  /*
+    Fill earlier rounds first.
+
+    This gives a pattern like
+
+    3,3,3,...,2,1,1
+
+    rather than
+
+    3,2,3,1,3,...
+
+    so table gaps never appear in the
+    middle of the schedule.
+  */
+
+  for (
+    let r = 0;
+    r < roundCount;
+    r++
+  ) {
+
+    const extra =
+      Math.min(
+        NUMBER_OF_TABLES - 1,
+        remaining
+      );
+
+
+    capacities[r] +=
+      extra;
+
+
+    remaining -=
+      extra;
+
+
+    if (
+      remaining === 0
+    )
+      break;
+
+  }
+
+
+  return capacities;
+
+}
+
+
+
+/* ============================================================
+   CREATE PACKED ROUND CANDIDATE
+============================================================ */
+
+function createPackedRoundCandidate(
+  matches,
+  players,
+  roundTimes,
+  capacities
+) {
+
+  const rounds =
+    Array.from(
+      {
+        length:
+          roundTimes.length
+      },
+      () => []
+    );
+
+
+  const playerRounds =
+    Array.from(
+      {
+        length:
+          players.length
+      },
+      () => []
+    );
+
+
+  const unscheduled =
+    [];
+
+
+
+  /*
+    Determine the allowed rounds for
+    each match.
+  */
+
+  const ordered =
+    matches.map(
+      edge => ({
+
+        edge,
+
+        allowed:
+          allowedRoundsForEdge(
+            edge,
+            players,
+            roundTimes
+          )
 
       })
     );
@@ -1969,20 +2391,577 @@ function displaySchedule(
 
 
   /*
-    Sort from lowest-rated match
-    to highest-rated match.
+    Most constrained matches first.
   */
 
-  pairings.sort(
-    (a,b) =>
-      a.averageElo -
-      b.averageElo
+  ordered.sort(
+    (a,b) => {
+
+      const diff =
+        a.allowed.length -
+        b.allowed.length;
+
+
+      if (
+        diff !== 0
+      )
+        return diff;
+
+
+      return (
+        Math.random() -
+        0.5
+      );
+
+    }
   );
 
 
 
+  for (
+    const item
+    of ordered
+  ) {
+
+    const edge =
+      item.edge;
+
+
+    const choices =
+      [];
+
+
+    for (
+      const round
+      of item.allowed
+    ) {
+
+
+      /*
+        Respect exact target capacity.
+      */
+
+      if (
+        rounds[round].length >=
+        capacities[round]
+      )
+        continue;
+
+
+
+      /*
+        Same player cannot play twice
+        simultaneously.
+      */
+
+      if (
+        playerRounds[
+          edge.i
+        ].includes(
+          round
+        )
+      )
+        continue;
+
+
+      if (
+        playerRounds[
+          edge.j
+        ].includes(
+          round
+        )
+      )
+        continue;
+
+
+
+      const waitingIncrease =
+        incrementalWaitingCost(
+          playerRounds[
+            edge.i
+          ],
+          round
+        )
+        +
+        incrementalWaitingCost(
+          playerRounds[
+            edge.j
+          ],
+          round
+        );
+
+
+
+      /*
+        Prefer rounds that still need
+        several matches so the packed
+        capacity profile can actually
+        be completed.
+      */
+
+      const remainingCapacity =
+        capacities[round] -
+        rounds[round].length;
+
+
+
+      const score =
+        waitingIncrease *
+        30
+        -
+        remainingCapacity *
+        4
+        +
+        Math.random() *
+        2;
+
+
+
+      choices.push({
+
+        round,
+
+        score
+
+      });
+
+    }
+
+
+
+    if (
+      choices.length === 0
+    ) {
+
+      unscheduled.push(
+        edge
+      );
+
+      continue;
+
+    }
+
+
+
+    choices.sort(
+      (a,b) =>
+        a.score -
+        b.score
+    );
+
+
+    /*
+      Mostly choose the best placement,
+      but allow small exploration.
+    */
+
+    let selected =
+      choices[0];
+
+
+    if (
+      choices.length > 1 &&
+      Math.random() <
+      0.10
+    ) {
+
+      selected =
+        choices[1];
+
+    }
+
+
+
+    const round =
+      selected.round;
+
+
+    rounds[
+      round
+    ].push(
+      edge
+    );
+
+
+    playerRounds[
+      edge.i
+    ].push(
+      round
+    );
+
+
+    playerRounds[
+      edge.j
+    ].push(
+      round
+    );
+
+  }
+
+
+
+  return {
+
+    rounds,
+
+    roundTimes,
+
+    playerRounds,
+
+    unscheduled,
+
+    capacities,
+
+    waitCost:
+      Infinity
+
+  };
+
+}
+
+
+
+/* ============================================================
+   ALLOWED ROUNDS
+============================================================ */
+
+function allowedRoundsForEdge(
+  edge,
+  players,
+  roundTimes
+) {
+
+  const a =
+    players[
+      edge.i
+    ];
+
+
+  const b =
+    players[
+      edge.j
+    ];
+
+
+  const allowed =
+    [];
+
+
+  roundTimes.forEach(
+    (time,index) => {
+
+      if (
+        timeFitsAvailability(
+          time,
+          a.availability
+        )
+        &&
+        timeFitsAvailability(
+          time,
+          b.availability
+        )
+      ) {
+
+        allowed.push(
+          index
+        );
+
+      }
+
+    }
+  );
+
+
+  return allowed;
+
+}
+
+
+
+/* ============================================================
+   AVAILABILITY AT A PARTICULAR START TIME
+============================================================ */
+
+function timeFitsAvailability(
+  time,
+  availability
+) {
+
+  if (
+    time <
+    availability.min
+  )
+    return false;
+
+
+  if (
+    time >
+    availability.max
+  )
+    return false;
+
+
+  if (
+    time ===
+      availability.min
+    &&
+    !availability.minInclusive
+  )
+    return false;
+
+
+  if (
+    time ===
+      availability.max
+    &&
+    !availability.maxInclusive
+  )
+    return false;
+
+
+  return true;
+
+}
+
+
+
+/* ============================================================
+   WAITING PENALTY
+============================================================ */
+
+function waitingCostForRounds(
+  rounds
+) {
+
+  if (
+    rounds.length <=
+    1
+  )
+    return 0;
+
+
+  const sorted =
+    [...rounds].sort(
+      (a,b) =>
+        a-b
+    );
+
+
+  let cost =
+    0;
+
+
+  for (
+    let i = 1;
+    i < sorted.length;
+    i++
+  ) {
+
+    cost +=
+      Math.max(
+        0,
+        sorted[i] -
+        sorted[i-1] -
+        1
+      );
+
+  }
+
+
+  return cost;
+
+}
+
+
+
+/* ============================================================
+   INCREMENTAL WAIT COST
+============================================================ */
+
+function incrementalWaitingCost(
+  existingRounds,
+  newRound
+) {
+
+  const before =
+    waitingCostForRounds(
+      existingRounds
+    );
+
+
+  const after =
+    waitingCostForRounds(
+      [
+        ...existingRounds,
+        newRound
+      ]
+    );
+
+
+  return (
+    after -
+    before
+  );
+
+}
+
+
+
+/* ============================================================
+   EVALUATE ROUND SCHEDULE
+============================================================ */
+
+function evaluateRoundCandidate(
+  candidate,
+  playerCount
+) {
+
+  let waitCost =
+    0;
+
+
+  for (
+    let i = 0;
+    i < playerCount;
+    i++
+  ) {
+
+    waitCost +=
+      waitingCostForRounds(
+        candidate.playerRounds[i]
+      );
+
+  }
+
+
+  candidate.waitCost =
+    waitCost;
+
+}
+
+
+
+/* ============================================================
+   COMPARE PACKED SCHEDULES
+
+   Number of rounds is already fixed here.
+
+   Soft objective:
+   minimize waiting.
+
+   Tie:
+   earlier start wins.
+============================================================ */
+
+function isBetterPackedRoundSchedule(
+  candidate,
+  best
+) {
+
+  if (!best)
+    return true;
+
+
+  if (
+    candidate.waitCost !==
+    best.waitCost
+  ) {
+
+    return (
+      candidate.waitCost <
+      best.waitCost
+    );
+
+  }
+
+
+  return (
+    candidate.roundTimes[0]
+    <
+    best.roundTimes[0]
+  );
+
+}
+
+
+
+/* ============================================================
+   CLONE ROUND SCHEDULE
+============================================================ */
+
+function cloneRoundCandidate(
+  candidate
+) {
+
+  return {
+
+    rounds:
+      candidate.rounds.map(
+        round =>
+          [...round]
+      ),
+
+    roundTimes:
+      [...candidate.roundTimes],
+
+    playerRounds:
+      candidate.playerRounds.map(
+        rounds =>
+          [...rounds]
+      ),
+
+    unscheduled:
+      [...candidate.unscheduled],
+
+    capacities:
+      candidate.capacities
+        ?
+        [...candidate.capacities]
+        :
+        null,
+
+    waitCost:
+      candidate.waitCost
+
+  };
+
+}
+
+
+
+/* ============================================================
+   DISPLAY SCHEDULE
+============================================================ */
+
+function displaySchedule(
+  pairings,
+  scheduledPlayers,
+  roundResult
+) {
+
+  const edgeToPair =
+    new Map();
+
+
+  for (
+    const pairing
+    of pairings
+  ) {
+
+    edgeToPair.set(
+      numericPairKey(
+        pairing.edge.i,
+        pairing.edge.j
+      ),
+      pairing
+    );
+
+  }
+
+
+
   /* ========================================================
-     COUNT MATCHES PER PLAYER
+     PLAYER COUNTS
   ======================================================== */
 
   const degrees =
@@ -2009,50 +2988,38 @@ function displaySchedule(
   ) {
 
     degrees.set(
-
       match.player1.name,
-
       degrees.get(
         match.player1.name
       ) + 1
-
     );
 
 
     degrees.set(
-
       match.player2.name,
-
       degrees.get(
         match.player2.name
       ) + 1
-
     );
 
   }
 
 
 
-  /* ========================================================
-     SUMMARY
-  ======================================================== */
-
-  const totalDifference =
-    pairings.reduce(
-      (sum,match) =>
-        sum +
-        match.difference,
-      0
-    );
-
-
   const averageDifference =
     pairings.length
       ?
-      totalDifference /
+      pairings.reduce(
+        (sum,match) =>
+          sum +
+          match.difference,
+        0
+      )
+      /
       pairings.length
       :
       0;
+
 
 
   const complete =
@@ -2060,9 +3027,11 @@ function displaySchedule(
       player =>
         degrees.get(
           player.name
-        ) ===
+        )
+        ===
         TARGET_MATCHES_PER_PLAYER
     ).length;
+
 
 
   const weekText =
@@ -2071,6 +3040,35 @@ function displaySchedule(
       latestWeek + 1
       :
       "?";
+
+
+  const startTime =
+    roundResult.roundTimes[
+      0
+    ];
+
+
+  const lastStart =
+    roundResult.roundTimes[
+      roundResult.roundTimes.length -
+      1
+    ];
+
+
+  const finishTime =
+    lastStart +
+    MATCH_MINUTES;
+
+
+  const totalCapacity =
+    roundResult.rounds.length *
+    NUMBER_OF_TABLES;
+
+
+  const unavoidableEmptySlots =
+    totalCapacity -
+    pairings.length;
+
 
 
   document.getElementById(
@@ -2113,69 +3111,58 @@ function displaySchedule(
         ${averageDifference.toFixed(1)}
       </strong>
 
+      <br>
+
+      Time:
+      <strong>
+        ${formatRegularTime(startTime)}
+        –
+        ${formatRegularTime(finishTime)}
+      </strong>
+
+      <br>
+
+      15-minute rounds:
+      <strong>
+        ${roundResult.rounds.length}
+      </strong>
+
+      <br>
+
+      Unused table slots:
+      <strong>
+        ${unavoidableEmptySlots}
+      </strong>
+
+      <br>
+
+      Player waiting score:
+      <strong>
+        ${roundResult.waitCost}
+      </strong>
+
+      <span class="small">
+        (lower is better)
+      </span>
+
     </div>
   `;
 
 
 
   /* ========================================================
-     DISTRIBUTE MATCHES TO TABLES
+     SCHEDULE TABLE
   ======================================================== */
-
-  const tables = [
-    [],
-    [],
-    []
-  ];
-
-
-  /*
-    Lowest third -> Table 1
-    Middle third -> Table 2
-    Highest third -> Table 3
-  */
-
-  pairings.forEach(
-    (match,index) => {
-
-      const tableIndex =
-        Math.min(
-          2,
-          Math.floor(
-            index * 3 /
-            pairings.length
-          )
-        );
-
-
-      tables[
-        tableIndex
-      ].push(
-        match
-      );
-
-    }
-  );
-
-
-
-  /* ========================================================
-     THREE-COLUMN TABLE
-  ======================================================== */
-
-  const maxRows =
-    Math.max(
-      tables[0].length,
-      tables[1].length,
-      tables[2].length
-    );
-
 
   let html = `
 
     <thead>
 
       <tr>
+
+        <th>
+          Time
+        </th>
 
         <th>
           Table 1
@@ -2199,13 +3186,73 @@ function displaySchedule(
 
 
   for (
-    let row = 0;
-    row < maxRows;
-    row++
+    let roundIndex = 0;
+    roundIndex <
+      roundResult.rounds.length;
+    roundIndex++
   ) {
+
+    const edges =
+      roundResult.rounds[
+        roundIndex
+      ];
+
+
+    const matches =
+      edges
+
+        .map(
+          edge =>
+            edgeToPair.get(
+              numericPairKey(
+                edge.i,
+                edge.j
+              )
+            )
+        )
+
+        .filter(
+          Boolean
+        );
+
+
+
+    /*
+      Highest average ELO first.
+
+      TABLE 1 = highest-rated
+      TABLE 2 = middle
+      TABLE 3 = lowest
+    */
+
+    matches.sort(
+      (a,b) =>
+        b.averageElo -
+        a.averageElo
+    );
+
+
 
     html +=
       "<tr>";
+
+
+
+    /* TIME — DISPLAYED IN REGULAR TIME */
+
+    html += `
+
+      <td class="time-cell">
+
+        ${formatRegularTime(
+          roundResult.roundTimes[
+            roundIndex
+          ]
+        )}
+
+      </td>
+    `;
+
 
 
     for (
@@ -2215,72 +3262,69 @@ function displaySchedule(
     ) {
 
       const match =
-        tables[table][row];
+        matches[
+          table
+        ];
 
 
-      if (match) {
-
-        html += `
-
-          <td class="schedule-cell">
-
-            <div class="schedule-match">
-
-              <strong>
-
-                ${escapeHtml(
-                  match.player1.name
-                )}
-
-                vs
-
-                ${escapeHtml(
-                  match.player2.name
-                )}
-
-              </strong>
-
-              <br>
-
-              <span class="small">
-
-                ${Math.round(
-                  match.player1.elo
-                )}
-
-                vs
-
-                ${Math.round(
-                  match.player2.elo
-                )}
-
-                &nbsp;|&nbsp;
-
-                Δ
-                ${Math.round(
-                  match.difference
-                )}
-
-                &nbsp;|&nbsp;
-
-                Previous:
-                ${match.previous}
-
-              </span>
-
-            </div>
-
-          </td>
-        `;
-
-      }
-
-      else {
+      if (!match) {
 
         html +=
           "<td></td>";
 
+        continue;
+
       }
+
+
+
+      html += `
+
+        <td class="schedule-cell">
+
+          <div class="match-main">
+
+            ${escapeHtml(
+              match.player1.name
+            )}
+
+            vs
+
+            ${escapeHtml(
+              match.player2.name
+            )}
+
+          </div>
+
+
+          <div class="match-info">
+
+            ${Math.round(
+              match.player1.elo
+            )}
+
+            vs
+
+            ${Math.round(
+              match.player2.elo
+            )}
+
+            &nbsp; | &nbsp;
+
+            Δ
+            ${Math.round(
+              match.difference
+            )}
+
+            &nbsp; | &nbsp;
+
+            Previous:
+            ${match.previous}
+
+          </div>
+
+        </td>
+      `;
 
     }
 
@@ -2289,6 +3333,7 @@ function displaySchedule(
       "</tr>";
 
   }
+
 
 
   html +=
@@ -2303,7 +3348,7 @@ function displaySchedule(
 
 
   /* ========================================================
-     PLAYERS WITH FEWER THAN 3 MATCHES
+     PLAYERS WITH < 3 MATCHES
   ======================================================== */
 
   const shortPlayers =
@@ -2311,7 +3356,8 @@ function displaySchedule(
       player =>
         degrees.get(
           player.name
-        ) <
+        )
+        <
         TARGET_MATCHES_PER_PLAYER
     );
 
@@ -2335,35 +3381,19 @@ function displaySchedule(
         ${shortPlayers
           .map(
             player =>
-
               escapeHtml(
                 player.name
               )
-
               +
-
-              " (" +
-
+              " ("
+              +
               degrees.get(
                 player.name
               )
-
               +
-
               " matches)"
-
           )
           .join(", ")}
-
-        <br><br>
-
-        <span class="small">
-
-          This may be caused by the number of
-          active players or by incompatible
-          hard availability constraints.
-
-        </span>
 
       </div>
     `;
@@ -2382,7 +3412,7 @@ function displaySchedule(
 
 
   /* ========================================================
-     PLAYER-BY-PLAYER SUMMARY
+     PLAYER SUMMARY
   ======================================================== */
 
   let summaryHtml = `
@@ -2407,6 +3437,10 @@ function displaySchedule(
           Opponents
         </th>
 
+        <th>
+          Match times
+        </th>
+
       </tr>
 
     </thead>
@@ -2415,90 +3449,117 @@ function displaySchedule(
   `;
 
 
-  for (
-    const player
-    of scheduledPlayers
-  ) {
 
-    const opponents =
-      [];
+  scheduledPlayers.forEach(
+    (player,index) => {
+
+      const opponents =
+        [];
 
 
-    for (
-      const match
-      of pairings
-    ) {
-
-      if (
-        match.player1.name ===
-        player.name
+      for (
+        const match
+        of pairings
       ) {
 
-        opponents.push(
-          match.player2.name
-        );
+        if (
+          match.player1.name ===
+          player.name
+        ) {
+
+          opponents.push(
+            match.player2.name
+          );
+
+        }
+
+        else if (
+          match.player2.name ===
+          player.name
+        ) {
+
+          opponents.push(
+            match.player1.name
+          );
+
+        }
 
       }
 
-      else if (
-        match.player2.name ===
-        player.name
-      ) {
 
-        opponents.push(
-          match.player1.name
+
+      const playerTimes =
+        [...roundResult.playerRounds[index]]
+
+        .sort(
+          (a,b) =>
+            a-b
+        )
+
+        .map(
+          round =>
+            formatRegularTime(
+              roundResult.roundTimes[
+                round
+              ]
+            )
         );
 
-      }
+
+
+      const countClass =
+        opponents.length <
+        TARGET_MATCHES_PER_PLAYER
+          ?
+          "incomplete"
+          :
+          "";
+
+
+
+      summaryHtml += `
+
+        <tr>
+
+          <td>
+            ${escapeHtml(
+              player.name
+            )}
+          </td>
+
+          <td class="number">
+            ${Math.round(
+              player.elo
+            )}
+          </td>
+
+          <td class="center ${countClass}">
+            ${opponents.length}
+          </td>
+
+          <td>
+
+            ${opponents
+              .map(
+                escapeHtml
+              )
+              .join(", ")}
+
+          </td>
+
+          <td>
+
+            ${playerTimes.join(
+              ", "
+            )}
+
+          </td>
+
+        </tr>
+      `;
 
     }
-
-
-    const count =
-      opponents.length;
-
-
-    const countClass =
-      count <
-      TARGET_MATCHES_PER_PLAYER
-        ?
-        "incomplete"
-        :
-        "";
-
-
-    summaryHtml += `
-
-      <tr>
-
-        <td>
-          ${escapeHtml(
-            player.name
-          )}
-        </td>
-
-        <td class="number">
-          ${Math.round(
-            player.elo
-          )}
-        </td>
-
-        <td class="center ${countClass}">
-          ${count}
-        </td>
-
-        <td>
-          ${opponents
-            .map(
-              escapeHtml
-            )
-            .join(", ")}
-        </td>
-
-      </tr>
-    `;
-
-  }
+  );
 
 
   summaryHtml +=
@@ -2515,7 +3576,7 @@ function displaySchedule(
 
 
 /* ============================================================
-   CALCULATE DEGREES
+   DEGREE
 ============================================================ */
 
 function calculateDegrees(
@@ -2562,7 +3623,6 @@ function parseAvailability(
   leagueEnd
 ) {
 
-
   if (!text) {
 
     return {
@@ -2595,6 +3655,8 @@ function parseAvailability(
 
 
 
+  /* RANGE */
+
   let range =
     cleaned.match(
       /^(\d{3,4})\s*-\s*(\d{3,4})$/
@@ -2619,11 +3681,8 @@ function parseAvailability(
       low === null ||
       high === null ||
       high < low
-    ) {
-
+    )
       return null;
-
-    }
 
 
     const min =
@@ -2642,23 +3701,18 @@ function parseAvailability(
 
     if (
       min > max
-    ) {
-
+    )
       return null;
-
-    }
 
 
     return {
 
-      min:
-        min,
+      min,
 
       minInclusive:
         true,
 
-      max:
-        max,
+      max,
 
       maxInclusive:
         true
@@ -2668,6 +3722,8 @@ function parseAvailability(
   }
 
 
+
+  /* EXACT */
 
   if (
     /^\d{3,4}$/.test(
@@ -2685,11 +3741,8 @@ function parseAvailability(
       exact === null ||
       exact < leagueStart ||
       exact > leagueEnd
-    ) {
-
+    )
       return null;
-
-    }
 
 
     return {
@@ -2712,6 +3765,8 @@ function parseAvailability(
 
 
 
+  /* INEQUALITIES */
+
   const clauses =
     cleaned.match(
       /(<=|>=|<|>)\s*\d{3,4}/g
@@ -2722,21 +3777,17 @@ function parseAvailability(
     return null;
 
 
-
   const residue =
     cleaned
-
       .replace(
         /(<=|>=|<|>)\s*\d{3,4}/g,
         ""
       )
-
       .trim();
 
 
   if (residue)
     return null;
-
 
 
   let min =
@@ -2869,11 +3920,8 @@ function parseAvailability(
 
   if (
     min > max
-  ) {
-
+  )
     return null;
-
-  }
 
 
 
@@ -2883,27 +3931,20 @@ function parseAvailability(
       !minInclusive ||
       !maxInclusive
     )
-  ) {
-
+  )
     return null;
-
-  }
 
 
 
   return {
 
-    min:
-      min,
+    min,
 
-    minInclusive:
-      minInclusive,
+    minInclusive,
 
-    max:
-      max,
+    max,
 
-    maxInclusive:
-      maxInclusive
+    maxInclusive
 
   };
 
@@ -2936,53 +3977,37 @@ function overlapAvailability(
 
   if (
     start < end
-  ) {
-
+  )
     return true;
-
-  }
 
 
   if (
     start > end
-  ) {
-
+  )
     return false;
-
-  }
 
 
 
   const aIncludes =
-
     (
-      start > a.min
-      ||
+      start > a.min ||
       a.minInclusive
     )
-
     &&
-
     (
-      start < a.max
-      ||
+      start < a.max ||
       a.maxInclusive
     );
 
 
   const bIncludes =
-
     (
-      start > b.min
-      ||
+      start > b.min ||
       b.minInclusive
     )
-
     &&
-
     (
-      start < b.max
-      ||
+      start < b.max ||
       b.maxInclusive
     );
 
@@ -2997,7 +4022,7 @@ function overlapAvailability(
 
 
 /* ============================================================
-   MILITARY TIME
+   MILITARY TIME INPUT
 ============================================================ */
 
 function parseMilitaryTime(
@@ -3017,12 +4042,8 @@ function parseMilitaryTime(
     !/^\d{3,4}$/.test(
       string
     )
-  ) {
-
+  )
     return null;
-
-  }
-
 
 
   const padded =
@@ -3055,16 +4076,65 @@ function parseMilitaryTime(
     hour > 23 ||
     minute < 0 ||
     minute > 59
-  ) {
-
+  )
     return null;
-
-  }
 
 
   return (
     hour * 60 +
     minute
+  );
+
+}
+
+
+
+/* ============================================================
+   REGULAR-TIME DISPLAY
+============================================================ */
+
+function formatRegularTime(
+  minutes
+) {
+
+  let hour24 =
+    Math.floor(
+      minutes / 60
+    );
+
+
+  const minute =
+    minutes % 60;
+
+
+  const suffix =
+    hour24 >= 12
+      ? "PM"
+      : "AM";
+
+
+  let hour12 =
+    hour24 % 12;
+
+
+  if (
+    hour12 === 0
+  )
+    hour12 =
+      12;
+
+
+  return (
+    hour12 +
+    ":" +
+    String(minute)
+      .padStart(
+        2,
+        "0"
+      )
+    +
+    " " +
+    suffix
   );
 
 }
@@ -3089,7 +4159,8 @@ function showProgress(
   document.getElementById(
     "progressBar"
   ).style.width =
-    percentage + "%";
+    percentage +
+    "%";
 
 
   document.getElementById(
@@ -3185,11 +4256,8 @@ function cleanName(
   if (
     value === undefined ||
     value === null
-  ) {
-
+  )
     return null;
-
-  }
 
 
   const text =
@@ -3200,11 +4268,8 @@ function cleanName(
   if (
     !text ||
     text === "#N/A"
-  ) {
-
+  )
     return null;
-
-  }
 
 
   return text;
@@ -3221,11 +4286,8 @@ function parseNumber(
     value === undefined ||
     value === null ||
     value === ""
-  ) {
-
+  )
     return null;
-
-  }
 
 
   const number =
@@ -3262,11 +4324,8 @@ function findPlayerInput(
     if (
       input.dataset.player ===
       playerName
-    ) {
-
+    )
       return input;
-
-    }
 
   }
 
@@ -3300,7 +4359,9 @@ function rowId(
 
   return (
     "player-row-" +
-    simpleHash(playerName)
+    simpleHash(
+      playerName
+    )
   );
 
 }
@@ -3334,7 +4395,9 @@ function simpleHash(
         hash
       )
       +
-      text.charCodeAt(i);
+      text.charCodeAt(
+        i
+      );
 
 
     hash |=
@@ -3344,7 +4407,9 @@ function simpleHash(
 
 
   return String(
-    Math.abs(hash)
+    Math.abs(
+      hash
+    )
   );
 
 }
@@ -3399,5 +4464,4 @@ function escapeAttribute(
 </script>
 
 </body>
-
 </html>
