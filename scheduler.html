@@ -1,0 +1,2695 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+
+<title>Tilt Summer 2026 Scheduler</title>
+
+<style>
+
+body {
+  font-family: Arial, sans-serif;
+  max-width: 1200px;
+  margin: 35px auto;
+  padding: 0 20px 60px;
+}
+
+h1 {
+  margin-bottom: 4px;
+}
+
+h2 {
+  margin-top: 35px;
+}
+
+.subtitle {
+  color: #666;
+  margin-bottom: 22px;
+}
+
+.panel {
+  background: #f5f5f5;
+  border-radius: 10px;
+  padding: 18px;
+  margin: 18px 0;
+}
+
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px 25px;
+  align-items: end;
+}
+
+label {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+input,
+select {
+  font-size: 15px;
+  padding: 7px 9px;
+}
+
+input[type="text"] {
+  width: 160px;
+}
+
+button {
+  padding: 10px 18px;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 12px;
+}
+
+th,
+td {
+  border-bottom: 1px solid #ddd;
+  padding: 9px 10px;
+  text-align: left;
+}
+
+th {
+  background: #f1f1f1;
+}
+
+.number {
+  text-align: right;
+}
+
+.constraint-input {
+  width: 170px;
+}
+
+.invalid {
+  background: #ffdede;
+}
+
+.good {
+  background: #eaf5ea;
+  border-radius: 8px;
+  padding: 14px 16px;
+  margin-top: 15px;
+}
+
+.warning {
+  background: #fff3cd;
+  border-radius: 8px;
+  padding: 14px 16px;
+  margin-top: 15px;
+}
+
+.small {
+  color: #666;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+
+/* -----------------------------
+   Progress bar
+----------------------------- */
+
+#progressArea {
+  display: none;
+  margin-top: 20px;
+}
+
+.progressOuter {
+  width: 100%;
+  height: 22px;
+  background: #ddd;
+  border-radius: 11px;
+  overflow: hidden;
+}
+
+#progressBar {
+  width: 0%;
+  height: 100%;
+  background: #555;
+  transition: width 0.08s linear;
+}
+
+#progressText {
+  margin-top: 7px;
+  font-size: 14px;
+  color: #555;
+}
+
+
+/* Mobile */
+
+@media (max-width: 700px) {
+
+  body {
+    padding: 0 10px 40px;
+  }
+
+  table {
+    font-size: 13px;
+  }
+
+  th,
+  td {
+    padding: 7px 5px;
+  }
+
+}
+
+</style>
+</head>
+
+<body>
+
+<h1>Tilt Summer 2026</h1>
+
+<div class="subtitle">
+  Next-week matchmaking based on ELO similarity,
+  previous meetings, and hard availability constraints
+</div>
+
+
+<div id="status">
+  Loading live spreadsheet...
+</div>
+
+
+<div id="main" style="display:none">
+
+
+  <!-- ======================================================
+       SETTINGS
+  ======================================================= -->
+
+  <div class="panel">
+
+    <div class="controls">
+
+      <label>
+        Earliest league time
+
+        <input
+          id="startTime"
+          type="text"
+          value="1800"
+        >
+      </label>
+
+
+      <label>
+        Latest league time
+
+        <input
+          id="endTime"
+          type="text"
+          value="2200"
+        >
+      </label>
+
+
+      <label>
+        Rematch avoidance
+
+        <select id="rematchPenalty">
+
+          <option value="0">
+            None
+          </option>
+
+          <option value="50">
+            Low
+          </option>
+
+          <option
+            value="125"
+            selected
+          >
+            Moderate
+          </option>
+
+          <option value="250">
+            Strong
+          </option>
+
+        </select>
+      </label>
+
+
+      <button id="generateButton">
+        Generate Schedule
+      </button>
+
+    </div>
+
+
+    <p class="small">
+
+      Time restrictions are
+      <strong>hard constraints</strong>.
+
+      Examples:
+
+      <strong>&lt;1900</strong>,
+
+      <strong>&lt;=1900</strong>,
+
+      <strong>&gt;1900</strong>,
+
+      <strong>&gt;=1930</strong>,
+
+      <strong>1830-2030</strong>,
+
+      or
+
+      <strong>&gt;=1800 &lt;2000</strong>.
+
+      Leave the box blank if the player has no restriction.
+
+    </p>
+
+
+    <div id="progressArea">
+
+      <div class="progressOuter">
+
+        <div id="progressBar"></div>
+
+      </div>
+
+      <div id="progressText">
+        Preparing...
+      </div>
+
+    </div>
+
+  </div>
+
+
+
+  <!-- ======================================================
+       AVAILABILITY
+  ======================================================= -->
+
+  <h2>Player Availability</h2>
+
+  <table id="availabilityTable"></table>
+
+
+
+  <!-- ======================================================
+       RESULT
+  ======================================================= -->
+
+  <h2>Proposed Schedule</h2>
+
+  <div id="summary"></div>
+
+  <table id="scheduleTable"></table>
+
+  <div id="unmatched"></div>
+
+</div>
+
+
+
+<script>
+
+/* ============================================================
+   SPREADSHEET
+============================================================ */
+
+const DATA_URL =
+  "https://opensheet.elk.sh/" +
+  "1hDSENodpAjdOQudeX0HbAXauWn6KMPiK7lkj50Q-uug/" +
+  "Summer%202026";
+
+
+let sheetData = [];
+
+let players = [];
+
+let matchCounts = {};
+
+let latestWeek = 0;
+
+
+
+/* ============================================================
+   LOAD DATA
+============================================================ */
+
+fetch(DATA_URL)
+
+  .then(response => {
+
+    if (!response.ok) {
+
+      throw new Error(
+        "HTTP " + response.status
+      );
+
+    }
+
+    return response.json();
+
+  })
+
+  .then(data => {
+
+    sheetData = data;
+
+    processSpreadsheet();
+
+    displayAvailabilityTable();
+
+
+    document.getElementById(
+      "status"
+    ).textContent =
+      data.length +
+      " spreadsheet rows loaded successfully.";
+
+
+    document.getElementById(
+      "main"
+    ).style.display =
+      "block";
+
+
+    document
+      .getElementById(
+        "generateButton"
+      )
+      .addEventListener(
+        "click",
+        generateSchedule
+      );
+
+  })
+
+  .catch(error => {
+
+    document.getElementById(
+      "status"
+    ).innerHTML =
+
+      "<strong>Could not load spreadsheet.</strong><br>" +
+      escapeHtml(error.message);
+
+    console.error(error);
+
+  });
+
+
+
+/* ============================================================
+   PROCESS SPREADSHEET
+============================================================ */
+
+function processSpreadsheet() {
+
+  const names =
+    new Set();
+
+
+  matchCounts = {};
+
+  latestWeek = 0;
+
+
+  for (const row of sheetData) {
+
+    const p1 =
+      cleanName(
+        row["Player 1"]
+      );
+
+    const p2 =
+      cleanName(
+        row["Player 2"]
+      );
+
+
+    if (p1)
+      names.add(p1);
+
+    if (p2)
+      names.add(p2);
+
+
+
+    /* Count previous meetings */
+
+    if (p1 && p2) {
+
+      const key =
+        pairKey(
+          p1,
+          p2
+        );
+
+
+      matchCounts[key] =
+        (matchCounts[key] || 0)
+        + 1;
+
+    }
+
+
+
+    /* Find latest week */
+
+    for (
+      const value
+      of Object.values(row)
+    ) {
+
+      if (
+        typeof value !== "string"
+      )
+        continue;
+
+
+      const match =
+        value.match(
+          /^Week\s*(\d+)$/i
+        );
+
+
+      if (match) {
+
+        latestWeek =
+          Math.max(
+            latestWeek,
+            Number(match[1])
+          );
+
+      }
+
+    }
+
+  }
+
+
+
+  /* -----------------------------------------
+     Get latest ELO for every player
+  ------------------------------------------ */
+
+  players = [];
+
+
+  for (const name of names) {
+
+    let elo = null;
+
+
+    for (
+      let i = sheetData.length - 1;
+      i >= 0;
+      i--
+    ) {
+
+      const value =
+        parseNumber(
+          sheetData[i][name]
+        );
+
+
+      if (value !== null) {
+
+        elo = value;
+
+        break;
+
+      }
+
+    }
+
+
+    if (elo !== null) {
+
+      players.push({
+
+        name: name,
+
+        elo: elo
+
+      });
+
+    }
+
+  }
+
+
+  players.sort(
+    (a,b) =>
+      b.elo - a.elo
+  );
+
+}
+
+
+
+/* ============================================================
+   DISPLAY AVAILABILITY TABLE
+============================================================ */
+
+function displayAvailabilityTable() {
+
+  let html = `
+
+    <thead>
+
+      <tr>
+
+        <th>Rank</th>
+
+        <th>Player</th>
+
+        <th class="number">
+          ELO
+        </th>
+
+        <th>
+          Time constraint
+        </th>
+
+      </tr>
+
+    </thead>
+
+
+    <tbody>
+  `;
+
+
+  players.forEach(
+    (player,index) => {
+
+      html += `
+
+        <tr>
+
+          <td>
+            ${index + 1}
+          </td>
+
+
+          <td>
+            ${escapeHtml(player.name)}
+          </td>
+
+
+          <td class="number">
+            ${Math.round(player.elo)}
+          </td>
+
+
+          <td>
+
+            <input
+
+              type="text"
+
+              class="constraint-input"
+
+              data-player="${escapeAttribute(player.name)}"
+
+              placeholder="e.g. <1900"
+
+            >
+
+          </td>
+
+        </tr>
+      `;
+
+    }
+  );
+
+
+  html += "</tbody>";
+
+
+  document.getElementById(
+    "availabilityTable"
+  ).innerHTML =
+    html;
+
+}
+
+
+
+/* ============================================================
+   GENERATE SCHEDULE
+============================================================ */
+
+async function generateSchedule() {
+
+  clearValidation();
+
+
+  const button =
+    document.getElementById(
+      "generateButton"
+    );
+
+
+  button.disabled = true;
+
+
+
+  try {
+
+
+    /* -----------------------------------------
+       League time
+    ------------------------------------------ */
+
+    const leagueStart =
+      parseMilitaryTime(
+        document.getElementById(
+          "startTime"
+        ).value
+      );
+
+
+    const leagueEnd =
+      parseMilitaryTime(
+        document.getElementById(
+          "endTime"
+        ).value
+      );
+
+
+    const rematchPenalty =
+      Number(
+        document.getElementById(
+          "rematchPenalty"
+        ).value
+      );
+
+
+    if (
+      leagueStart === null ||
+      leagueEnd === null ||
+      leagueEnd < leagueStart
+    ) {
+
+      alert(
+        "Please enter a valid league time window."
+      );
+
+      return;
+
+    }
+
+
+
+    /* -----------------------------------------
+       Parse player constraints
+    ------------------------------------------ */
+
+    const scheduledPlayers = [];
+
+
+    for (
+      const player
+      of players
+    ) {
+
+      const input =
+        findPlayerInput(
+          player.name
+        );
+
+
+      const text =
+        input.value.trim();
+
+
+      const availability =
+        parseAvailability(
+
+          text,
+
+          leagueStart,
+
+          leagueEnd
+
+        );
+
+
+      if (
+        availability === null
+      ) {
+
+        input.classList.add(
+          "invalid"
+        );
+
+
+        alert(
+
+          "Invalid time constraint for " +
+
+          player.name +
+
+          ": " +
+
+          text
+
+        );
+
+
+        return;
+
+      }
+
+
+      scheduledPlayers.push({
+
+        ...player,
+
+        constraint:
+          text,
+
+        availability:
+          availability
+
+      });
+
+    }
+
+
+
+    /* -----------------------------------------
+       Build feasible match graph
+    ------------------------------------------ */
+
+    const edges = [];
+
+    const edgeLookup =
+      new Map();
+
+
+    for (
+      let i = 0;
+      i < scheduledPlayers.length;
+      i++
+    ) {
+
+      for (
+        let j = i + 1;
+        j < scheduledPlayers.length;
+        j++
+      ) {
+
+        const a =
+          scheduledPlayers[i];
+
+        const b =
+          scheduledPlayers[j];
+
+
+        /* HARD availability */
+
+        if (
+          !overlapAvailability(
+            a.availability,
+            b.availability
+          )
+        ) {
+
+          continue;
+
+        }
+
+
+        const eloDifference =
+          Math.abs(
+            a.elo - b.elo
+          );
+
+
+        const previous =
+          matchCounts[
+            pairKey(
+              a.name,
+              b.name
+            )
+          ] || 0;
+
+
+        const cost =
+          eloDifference
+          +
+          rematchPenalty
+          *
+          previous;
+
+
+        const edge = {
+
+          i: i,
+
+          j: j,
+
+          eloDifference:
+            eloDifference,
+
+          previous:
+            previous,
+
+          cost:
+            cost
+
+        };
+
+
+        edges.push(edge);
+
+
+        edgeLookup.set(
+          numericPairKey(i,j),
+          edge
+        );
+
+      }
+
+    }
+
+
+
+    /* -----------------------------------------
+       Start progress display
+    ------------------------------------------ */
+
+    showProgress(
+      0,
+      "Starting optimization..."
+    );
+
+
+    /*
+      Number of independent schedule attempts.
+
+      More attempts = slightly better chance of
+      finding the best arrangement, but slower.
+
+      1500 is plenty for a small league.
+    */
+
+    const ATTEMPTS = 1500;
+
+
+    let best = null;
+
+
+
+    /* -----------------------------------------
+       RANDOMIZED OPTIMIZATION
+    ------------------------------------------ */
+
+    for (
+      let attempt = 0;
+      attempt < ATTEMPTS;
+      attempt++
+    ) {
+
+
+      const candidate =
+        createCandidateSchedule(
+
+          scheduledPlayers,
+
+          edgeLookup
+
+        );
+
+
+      improveCandidate(
+
+        candidate,
+
+        scheduledPlayers,
+
+        edgeLookup
+
+      );
+
+
+      if (
+        isBetterSchedule(
+          candidate,
+          best
+        )
+      ) {
+
+        best =
+          candidate;
+
+      }
+
+
+
+      /*
+        Every 15 iterations:
+        update progress and give browser
+        a chance to redraw/respond.
+      */
+
+      if (
+        attempt % 15 === 0
+      ) {
+
+        const percentage =
+
+          Math.round(
+            100 *
+            attempt /
+            ATTEMPTS
+          );
+
+
+        showProgress(
+
+          percentage,
+
+          "Searching schedules... " +
+          percentage +
+          "%"
+
+        );
+
+
+        await letBrowserBreathe();
+
+      }
+
+    }
+
+
+
+    showProgress(
+      100,
+      "Optimization complete."
+    );
+
+
+
+    /* -----------------------------------------
+       Convert result
+    ------------------------------------------ */
+
+    const pairings =
+      best.matches.map(
+        edge => ({
+
+          player1:
+            scheduledPlayers[
+              edge.i
+            ],
+
+          player2:
+            scheduledPlayers[
+              edge.j
+            ],
+
+          difference:
+            edge.eloDifference,
+
+          previous:
+            edge.previous
+
+        })
+      );
+
+
+    const unmatched =
+      best.unmatched.map(
+        index =>
+          scheduledPlayers[index]
+      );
+
+
+    displaySchedule(
+
+      pairings,
+
+      unmatched
+
+    );
+
+
+  }
+
+  catch(error) {
+
+    console.error(error);
+
+    alert(
+      "Scheduler error: " +
+      error.message
+    );
+
+  }
+
+  finally {
+
+    button.disabled =
+      false;
+
+  }
+
+}
+
+
+
+/* ============================================================
+   RANDOMIZED SCHEDULER
+============================================================ */
+
+/*
+
+This intentionally does NOT search every theoretical
+schedule.
+
+Instead it repeatedly constructs good schedules using
+different randomized choices.
+
+That makes computation predictable and keeps the
+browser responsive.
+
+Priority:
+
+1. Match as many people as possible.
+2. Minimize total ELO/rematch cost.
+
+*/
+
+function createCandidateSchedule(
+  scheduledPlayers,
+  edgeLookup
+) {
+
+  const n =
+    scheduledPlayers.length;
+
+
+  const remaining =
+    new Set();
+
+
+  for (
+    let i = 0;
+    i < n;
+    i++
+  ) {
+
+    remaining.add(i);
+
+  }
+
+
+  const matches = [];
+
+
+
+  /*
+    Players with fewer compatible choices should
+    generally be handled earlier.
+
+    Random noise means each attempt explores a
+    slightly different schedule.
+  */
+
+  const order =
+    [...remaining];
+
+
+  order.sort(
+    (a,b) => {
+
+      const da =
+        countPossibleOpponents(
+          a,
+          remaining,
+          edgeLookup
+        );
+
+
+      const db =
+        countPossibleOpponents(
+          b,
+          remaining,
+          edgeLookup
+        );
+
+
+      return (
+        da - db
+        +
+        (Math.random() - 0.5) * 2
+      );
+
+    }
+  );
+
+
+
+  for (
+    const player
+    of order
+  ) {
+
+    if (
+      !remaining.has(player)
+    )
+      continue;
+
+
+    const options = [];
+
+
+    for (
+      const opponent
+      of remaining
+    ) {
+
+      if (
+        opponent === player
+      )
+        continue;
+
+
+      const edge =
+        edgeLookup.get(
+          numericPairKey(
+            player,
+            opponent
+          )
+        );
+
+
+      if (edge)
+        options.push(edge);
+
+    }
+
+
+
+    if (
+      options.length === 0
+    ) {
+
+      remaining.delete(
+        player
+      );
+
+      continue;
+
+    }
+
+
+
+    /*
+      Prefer cheap matches but don't always
+      select exactly the cheapest one.
+
+      This is important because the cheapest
+      immediate match may create a terrible
+      final schedule.
+    */
+
+    options.sort(
+      (a,b) =>
+        a.cost - b.cost
+    );
+
+
+    const choiceCount =
+      Math.min(
+        4,
+        options.length
+      );
+
+
+    /*
+      Strong bias toward first few choices.
+    */
+
+    const r =
+      Math.random();
+
+
+    let choiceIndex;
+
+
+    if (r < 0.55)
+      choiceIndex = 0;
+
+    else if (
+      r < 0.80 &&
+      choiceCount > 1
+    )
+      choiceIndex = 1;
+
+    else
+      choiceIndex =
+        Math.floor(
+          Math.random()
+          *
+          choiceCount
+        );
+
+
+    const edge =
+      options[
+        choiceIndex
+      ];
+
+
+    matches.push(edge);
+
+
+    remaining.delete(
+      edge.i
+    );
+
+    remaining.delete(
+      edge.j
+    );
+
+  }
+
+
+
+  const unmatched =
+    [...remaining];
+
+
+  return {
+
+    matches:
+      matches,
+
+    unmatched:
+      unmatched,
+
+    cost:
+      totalCost(matches)
+
+  };
+
+}
+
+
+
+/* ============================================================
+   LOCAL IMPROVEMENT
+============================================================ */
+
+/*
+
+After building a schedule, try swapping opponents
+between two matches.
+
+Example:
+
+A-B
+C-D
+
+Try:
+
+A-C and B-D
+
+or:
+
+A-D and B-C
+
+if both new matches satisfy the hard time
+constraints.
+
+*/
+
+function improveCandidate(
+  candidate,
+  players,
+  edgeLookup
+) {
+
+  const matches =
+    candidate.matches;
+
+
+  /*
+    Multiple passes.
+  */
+
+  for (
+    let pass = 0;
+    pass < 5;
+    pass++
+  ) {
+
+    let changed =
+      false;
+
+
+    for (
+      let x = 0;
+      x < matches.length;
+      x++
+    ) {
+
+      for (
+        let y = x + 1;
+        y < matches.length;
+        y++
+      ) {
+
+        const first =
+          matches[x];
+
+        const second =
+          matches[y];
+
+
+        const a =
+          first.i;
+
+        const b =
+          first.j;
+
+        const c =
+          second.i;
+
+        const d =
+          second.j;
+
+
+        const currentCost =
+          first.cost +
+          second.cost;
+
+
+
+        /* Swap type 1:
+           A-C and B-D
+        */
+
+        const ac =
+          edgeLookup.get(
+            numericPairKey(a,c)
+          );
+
+        const bd =
+          edgeLookup.get(
+            numericPairKey(b,d)
+          );
+
+
+        if (
+          ac &&
+          bd &&
+          ac.cost + bd.cost <
+          currentCost
+        ) {
+
+          matches[x] =
+            ac;
+
+          matches[y] =
+            bd;
+
+          changed =
+            true;
+
+          continue;
+
+        }
+
+
+
+        /* Swap type 2:
+           A-D and B-C
+        */
+
+        const ad =
+          edgeLookup.get(
+            numericPairKey(a,d)
+          );
+
+        const bc =
+          edgeLookup.get(
+            numericPairKey(b,c)
+          );
+
+
+        if (
+          ad &&
+          bc &&
+          ad.cost + bc.cost <
+          currentCost
+        ) {
+
+          matches[x] =
+            ad;
+
+          matches[y] =
+            bc;
+
+          changed =
+            true;
+
+        }
+
+      }
+
+    }
+
+
+    if (!changed)
+      break;
+
+  }
+
+
+  candidate.cost =
+    totalCost(
+      candidate.matches
+    );
+
+}
+
+
+
+/* ============================================================
+   COMPARE SCHEDULES
+============================================================ */
+
+function isBetterSchedule(
+  candidate,
+  best
+) {
+
+  if (!best)
+    return true;
+
+
+  /*
+    Most matches wins.
+  */
+
+  if (
+    candidate.matches.length >
+    best.matches.length
+  ) {
+
+    return true;
+
+  }
+
+
+  if (
+    candidate.matches.length <
+    best.matches.length
+  ) {
+
+    return false;
+
+  }
+
+
+  /*
+    Same number of matches:
+    lower total cost wins.
+  */
+
+  return (
+    candidate.cost <
+    best.cost
+  );
+
+}
+
+
+
+/* ============================================================
+   COUNT AVAILABLE OPPONENTS
+============================================================ */
+
+function countPossibleOpponents(
+  player,
+  remaining,
+  edgeLookup
+) {
+
+  let count = 0;
+
+
+  for (
+    const opponent
+    of remaining
+  ) {
+
+    if (
+      opponent === player
+    )
+      continue;
+
+
+    if (
+      edgeLookup.has(
+        numericPairKey(
+          player,
+          opponent
+        )
+      )
+    ) {
+
+      count++;
+
+    }
+
+  }
+
+
+  return count;
+
+}
+
+
+
+/* ============================================================
+   DISPLAY SCHEDULE
+============================================================ */
+
+function displaySchedule(
+  pairings,
+  unmatched
+) {
+
+
+  pairings.sort(
+    (a,b) =>
+
+      Math.max(
+        b.player1.elo,
+        b.player2.elo
+      )
+
+      -
+
+      Math.max(
+        a.player1.elo,
+        a.player2.elo
+      )
+  );
+
+
+  const totalDifference =
+    pairings.reduce(
+      (sum,match) =>
+        sum +
+        match.difference,
+      0
+    );
+
+
+  const averageDifference =
+
+    pairings.length
+
+      ?
+
+      totalDifference /
+      pairings.length
+
+      :
+
+      0;
+
+
+
+  const weekText =
+
+    latestWeek > 0
+
+      ?
+
+      latestWeek + 1
+
+      :
+
+      "?";
+
+
+
+  document.getElementById(
+    "summary"
+  ).innerHTML = `
+
+    <div class="good">
+
+      <strong>
+        Proposed Week ${weekText}
+      </strong>
+
+      <br><br>
+
+
+      Matches:
+      <strong>
+        ${pairings.length}
+      </strong>
+
+      <br>
+
+
+      Players scheduled:
+      <strong>
+        ${pairings.length * 2}
+      </strong>
+
+      <br>
+
+
+      Average ELO difference:
+      <strong>
+        ${averageDifference.toFixed(1)}
+      </strong>
+
+    </div>
+  `;
+
+
+
+  let html = `
+
+    <thead>
+
+      <tr>
+
+        <th>
+          Match
+        </th>
+
+        <th>
+          Player 1
+        </th>
+
+        <th class="number">
+          ELO
+        </th>
+
+        <th>
+          Player 2
+        </th>
+
+        <th class="number">
+          ELO
+        </th>
+
+        <th class="number">
+          ELO difference
+        </th>
+
+        <th>
+          Previous meetings
+        </th>
+
+      </tr>
+
+    </thead>
+
+
+    <tbody>
+  `;
+
+
+
+  pairings.forEach(
+    (match,index) => {
+
+      html += `
+
+        <tr>
+
+          <td>
+            ${index + 1}
+          </td>
+
+
+          <td>
+            ${escapeHtml(
+              match.player1.name
+            )}
+          </td>
+
+
+          <td class="number">
+            ${Math.round(
+              match.player1.elo
+            )}
+          </td>
+
+
+          <td>
+            ${escapeHtml(
+              match.player2.name
+            )}
+          </td>
+
+
+          <td class="number">
+            ${Math.round(
+              match.player2.elo
+            )}
+          </td>
+
+
+          <td class="number">
+            ${Math.round(
+              match.difference
+            )}
+          </td>
+
+
+          <td>
+            ${match.previous}
+          </td>
+
+        </tr>
+      `;
+
+    }
+  );
+
+
+  html += "</tbody>";
+
+
+  document.getElementById(
+    "scheduleTable"
+  ).innerHTML =
+    html;
+
+
+
+  if (
+    unmatched.length
+  ) {
+
+    document.getElementById(
+      "unmatched"
+    ).innerHTML = `
+
+      <div class="warning">
+
+        <strong>
+          Unmatched:
+        </strong>
+
+        ${unmatched
+          .map(
+            player =>
+              escapeHtml(
+                player.name
+              )
+          )
+          .join(", ")}
+
+
+        <br><br>
+
+
+        <span class="small">
+
+          A player may be unmatched because
+          there is an odd number of players,
+          or because the hard time constraints
+          make a complete pairing impossible.
+
+        </span>
+
+      </div>
+    `;
+
+  }
+
+  else {
+
+    document.getElementById(
+      "unmatched"
+    ).innerHTML =
+      "";
+
+  }
+
+}
+
+
+
+/* ============================================================
+   PROGRESS BAR
+============================================================ */
+
+function showProgress(
+  percentage,
+  text
+) {
+
+  const area =
+    document.getElementById(
+      "progressArea"
+    );
+
+
+  area.style.display =
+    "block";
+
+
+  document.getElementById(
+    "progressBar"
+  ).style.width =
+    percentage + "%";
+
+
+  document.getElementById(
+    "progressText"
+  ).textContent =
+    text;
+
+}
+
+
+
+/*
+  Let the browser repaint.
+
+  This is what prevents the page from being
+  marked "not responding".
+*/
+
+function letBrowserBreathe() {
+
+  return new Promise(
+    resolve =>
+      setTimeout(
+        resolve,
+        0
+      )
+  );
+
+}
+
+
+
+/* ============================================================
+   TIME CONSTRAINT PARSER
+============================================================ */
+
+function parseAvailability(
+  text,
+  leagueStart,
+  leagueEnd
+) {
+
+
+  /* Blank = unrestricted */
+
+  if (!text) {
+
+    return {
+
+      min:
+        leagueStart,
+
+      minInclusive:
+        true,
+
+      max:
+        leagueEnd,
+
+      maxInclusive:
+        true
+
+    };
+
+  }
+
+
+  const cleaned =
+    text
+      .replace(
+        /\s+/g,
+        " "
+      )
+      .trim();
+
+
+
+  /* --------------------------------------------------------
+     RANGE
+
+     1830-2030
+  --------------------------------------------------------- */
+
+  let range =
+    cleaned.match(
+      /^(\d{3,4})\s*-\s*(\d{3,4})$/
+    );
+
+
+  if (range) {
+
+    const low =
+      parseMilitaryTime(
+        range[1]
+      );
+
+
+    const high =
+      parseMilitaryTime(
+        range[2]
+      );
+
+
+    if (
+      low === null ||
+      high === null ||
+      high < low
+    ) {
+
+      return null;
+
+    }
+
+
+    const min =
+      Math.max(
+        leagueStart,
+        low
+      );
+
+
+    const max =
+      Math.min(
+        leagueEnd,
+        high
+      );
+
+
+    if (
+      min > max
+    ) {
+
+      return null;
+
+    }
+
+
+    return {
+
+      min:
+        min,
+
+      minInclusive:
+        true,
+
+      max:
+        max,
+
+      maxInclusive:
+        true
+
+    };
+
+  }
+
+
+
+  /* --------------------------------------------------------
+     EXACT TIME
+
+     1900
+  --------------------------------------------------------- */
+
+  if (
+    /^\d{3,4}$/.test(
+      cleaned
+    )
+  ) {
+
+    const exact =
+      parseMilitaryTime(
+        cleaned
+      );
+
+
+    if (
+      exact === null ||
+      exact < leagueStart ||
+      exact > leagueEnd
+    ) {
+
+      return null;
+
+    }
+
+
+    return {
+
+      min:
+        exact,
+
+      minInclusive:
+        true,
+
+      max:
+        exact,
+
+      maxInclusive:
+        true
+
+    };
+
+  }
+
+
+
+  /* --------------------------------------------------------
+     INEQUALITIES
+
+     <1900
+
+     >=1800 <2000
+  --------------------------------------------------------- */
+
+  const clauses =
+    cleaned.match(
+      /(<=|>=|<|>)\s*\d{3,4}/g
+    );
+
+
+  if (!clauses)
+    return null;
+
+
+
+  const residue =
+    cleaned
+
+      .replace(
+        /(<=|>=|<|>)\s*\d{3,4}/g,
+        ""
+      )
+
+      .trim();
+
+
+  if (residue)
+    return null;
+
+
+
+  let min =
+    leagueStart;
+
+  let max =
+    leagueEnd;
+
+
+  let minInclusive =
+    true;
+
+  let maxInclusive =
+    true;
+
+
+
+  for (
+    const clause
+    of clauses
+  ) {
+
+    const match =
+      clause.match(
+        /^(<=|>=|<|>)\s*(\d{3,4})$/
+      );
+
+
+    if (!match)
+      return null;
+
+
+    const operator =
+      match[1];
+
+
+    const time =
+      parseMilitaryTime(
+        match[2]
+      );
+
+
+    if (
+      time === null
+    )
+      return null;
+
+
+
+    if (
+      operator === ">"
+    ) {
+
+      if (
+        time >= min
+      ) {
+
+        min =
+          time;
+
+        minInclusive =
+          false;
+
+      }
+
+    }
+
+
+    else if (
+      operator === ">="
+    ) {
+
+      if (
+        time > min
+      ) {
+
+        min =
+          time;
+
+        minInclusive =
+          true;
+
+      }
+
+    }
+
+
+    else if (
+      operator === "<"
+    ) {
+
+      if (
+        time <= max
+      ) {
+
+        max =
+          time;
+
+        maxInclusive =
+          false;
+
+      }
+
+    }
+
+
+    else if (
+      operator === "<="
+    ) {
+
+      if (
+        time < max
+      ) {
+
+        max =
+          time;
+
+        maxInclusive =
+          true;
+
+      }
+
+    }
+
+  }
+
+
+
+  if (
+    min > max
+  ) {
+
+    return null;
+
+  }
+
+
+  if (
+    min === max &&
+    (
+      !minInclusive ||
+      !maxInclusive
+    )
+  ) {
+
+    return null;
+
+  }
+
+
+  return {
+
+    min:
+      min,
+
+    minInclusive:
+      minInclusive,
+
+    max:
+      max,
+
+    maxInclusive:
+      maxInclusive
+
+  };
+
+}
+
+
+
+/* ============================================================
+   CHECK AVAILABILITY OVERLAP
+============================================================ */
+
+function overlapAvailability(
+  a,
+  b
+) {
+
+  const start =
+    Math.max(
+      a.min,
+      b.min
+    );
+
+
+  const end =
+    Math.min(
+      a.max,
+      b.max
+    );
+
+
+  if (
+    start < end
+  ) {
+
+    return true;
+
+  }
+
+
+  if (
+    start > end
+  ) {
+
+    return false;
+
+  }
+
+
+
+  /*
+    They touch at exactly one time.
+  */
+
+  const aIncludes =
+
+    (
+      start > a.min
+      ||
+      a.minInclusive
+    )
+
+    &&
+
+    (
+      start < a.max
+      ||
+      a.maxInclusive
+    );
+
+
+  const bIncludes =
+
+    (
+      start > b.min
+      ||
+      b.minInclusive
+    )
+
+    &&
+
+    (
+      start < b.max
+      ||
+      b.maxInclusive
+    );
+
+
+  return (
+    aIncludes &&
+    bIncludes
+  );
+
+}
+
+
+
+/* ============================================================
+   MILITARY TIME
+============================================================ */
+
+function parseMilitaryTime(
+  value
+) {
+
+  const string =
+    String(value)
+      .trim()
+      .replace(
+        ":",
+        ""
+      );
+
+
+  if (
+    !/^\d{3,4}$/.test(
+      string
+    )
+  ) {
+
+    return null;
+
+  }
+
+
+  const padded =
+    string.padStart(
+      4,
+      "0"
+    );
+
+
+  const hour =
+    Number(
+      padded.slice(
+        0,
+        2
+      )
+    );
+
+
+  const minute =
+    Number(
+      padded.slice(
+        2,
+        4
+      )
+    );
+
+
+  if (
+    hour < 0 ||
+    hour > 23 ||
+    minute < 0 ||
+    minute > 59
+  ) {
+
+    return null;
+
+  }
+
+
+  return (
+    hour * 60 +
+    minute
+  );
+
+}
+
+
+
+/* ============================================================
+   SCHEDULER HELPERS
+============================================================ */
+
+function totalCost(
+  matches
+) {
+
+  return matches.reduce(
+    (sum,edge) =>
+      sum +
+      edge.cost,
+    0
+  );
+
+}
+
+
+
+function numericPairKey(
+  a,
+  b
+) {
+
+  if (
+    a > b
+  ) {
+
+    const temp =
+      a;
+
+    a =
+      b;
+
+    b =
+      temp;
+
+  }
+
+
+  return (
+    a +
+    "|||" +
+    b
+  );
+
+}
+
+
+
+function pairKey(
+  a,
+  b
+) {
+
+  return [a,b]
+    .sort()
+    .join("|||");
+
+}
+
+
+
+/* ============================================================
+   GENERAL HELPERS
+============================================================ */
+
+function cleanName(
+  value
+) {
+
+  if (
+    value === undefined ||
+    value === null
+  ) {
+
+    return null;
+
+  }
+
+
+  const text =
+    String(value)
+      .trim();
+
+
+  if (
+    !text ||
+    text === "#N/A"
+  ) {
+
+    return null;
+
+  }
+
+
+  return text;
+
+}
+
+
+
+function parseNumber(
+  value
+) {
+
+  if (
+    value === undefined ||
+    value === null ||
+    value === ""
+  ) {
+
+    return null;
+
+  }
+
+
+  const number =
+    Number(value);
+
+
+  return Number.isFinite(
+    number
+  )
+    ?
+    number
+    :
+    null;
+
+}
+
+
+
+function findPlayerInput(
+  playerName
+) {
+
+  const inputs =
+    document.querySelectorAll(
+      ".constraint-input"
+    );
+
+
+  for (
+    const input
+    of inputs
+  ) {
+
+    if (
+      input.dataset.player ===
+      playerName
+    ) {
+
+      return input;
+
+    }
+
+  }
+
+
+  return null;
+
+}
+
+
+
+function clearValidation() {
+
+  document
+    .querySelectorAll(
+      ".constraint-input"
+    )
+    .forEach(
+      input =>
+        input.classList.remove(
+          "invalid"
+        )
+    );
+
+}
+
+
+
+function escapeHtml(
+  value
+) {
+
+  return String(value)
+
+    .replaceAll(
+      "&",
+      "&amp;"
+    )
+
+    .replaceAll(
+      "<",
+      "&lt;"
+    )
+
+    .replaceAll(
+      ">",
+      "&gt;"
+    )
+
+    .replaceAll(
+      '"',
+      "&quot;"
+    )
+
+    .replaceAll(
+      "'",
+      "&#039;"
+    );
+
+}
+
+
+
+function escapeAttribute(
+  value
+) {
+
+  return escapeHtml(
+    value
+  );
+
+}
+
+</script>
+
+</body>
+</html>
