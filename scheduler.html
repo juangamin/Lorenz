@@ -195,6 +195,73 @@ th {
 
 
 /* =========================================================
+   SEASON MEETING MATRIX
+========================================================= */
+
+.meeting-matrix-wrap {
+  overflow-x: auto;
+  margin-top: 12px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  max-height: 750px;
+}
+
+.meeting-matrix {
+  width: max-content;
+  min-width: 100%;
+  margin-top: 0;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+.meeting-matrix th,
+.meeting-matrix td {
+  min-width: 55px;
+  padding: 8px 10px;
+  text-align: center;
+  white-space: nowrap;
+  border-right: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
+}
+
+.meeting-matrix thead th {
+  background: #f1f1f1;
+  position: sticky;
+  top: 0;
+  z-index: 2;
+}
+
+.meeting-matrix .matrix-row-name {
+  position: sticky;
+  left: 0;
+  background: #f7f7f7;
+  text-align: left;
+  font-weight: bold;
+  z-index: 1;
+}
+
+.meeting-matrix .matrix-corner {
+  position: sticky;
+  left: 0;
+  z-index: 3;
+  background: #f1f1f1;
+}
+
+.meeting-matrix .matrix-diagonal {
+  background: #eee;
+  color: #999;
+}
+
+.meeting-matrix .matrix-zero {
+  color: #bbb;
+}
+
+.meeting-matrix .matrix-many {
+  font-weight: bold;
+}
+
+
+/* =========================================================
    MOBILE
 ========================================================= */
 
@@ -357,6 +424,24 @@ th {
 
   <table id="playerSummaryTable"></table>
 
+
+
+  <h2>Matches Played This Season</h2>
+
+  <p class="small">
+    Each cell shows how many times the two players have played
+    each other during Summer 2026.
+  </p>
+
+  <div class="meeting-matrix-wrap">
+
+    <table
+      id="meetingMatrix"
+      class="meeting-matrix"
+    ></table>
+
+  </div>
+
 </div>
 
 
@@ -427,6 +512,8 @@ fetch(DATA_URL)
   processSpreadsheet();
 
   displayAvailabilityTable();
+
+  buildMeetingMatrix();
 
 
   document.getElementById(
@@ -3434,6 +3521,229 @@ function displaySchedule(
     "playerSummaryTable"
   ).innerHTML =
     summaryHtml;
+
+}
+
+
+
+/* ============================================================
+   SEASON MEETING MATRIX
+============================================================ */
+
+function buildMeetingMatrix() {
+
+  /*
+    Sort alphabetically for easier lookup.
+  */
+
+  const matrixPlayers =
+    [...players].sort(
+      (a,b) =>
+        a.name.localeCompare(
+          b.name
+        )
+    );
+
+
+  /*
+    Count meetings already recorded
+    in Summer 2026.
+  */
+
+  const counts =
+    new Map();
+
+
+  for (
+    const row
+    of sheetData
+  ) {
+
+    const p1 =
+      cleanName(
+        row["Player 1"]
+      );
+
+
+    const p2 =
+      cleanName(
+        row["Player 2"]
+      );
+
+
+    if (
+      !p1 ||
+      !p2 ||
+      p1 === p2
+    )
+      continue;
+
+
+    const key =
+      pairKey(
+        p1,
+        p2
+      );
+
+
+    counts.set(
+      key,
+      (counts.get(key) || 0) + 1
+    );
+
+  }
+
+
+
+  let html = `
+
+    <thead>
+
+      <tr>
+
+        <th class="matrix-corner">
+          Player
+        </th>
+  `;
+
+
+
+  for (
+    const player
+    of matrixPlayers
+  ) {
+
+    html += `
+
+      <th>
+        ${escapeHtml(
+          player.name
+        )}
+      </th>
+    `;
+
+  }
+
+
+
+  html += `
+
+      </tr>
+
+    </thead>
+
+    <tbody>
+  `;
+
+
+
+  for (
+    const rowPlayer
+    of matrixPlayers
+  ) {
+
+    html += `
+
+      <tr>
+
+        <th class="matrix-row-name">
+
+          ${escapeHtml(
+            rowPlayer.name
+          )}
+
+        </th>
+    `;
+
+
+
+    for (
+      const columnPlayer
+      of matrixPlayers
+    ) {
+
+
+      if (
+        rowPlayer.name ===
+        columnPlayer.name
+      ) {
+
+        html += `
+
+          <td class="matrix-diagonal">
+            —
+          </td>
+        `;
+
+        continue;
+
+      }
+
+
+
+      const count =
+        counts.get(
+          pairKey(
+            rowPlayer.name,
+            columnPlayer.name
+          )
+        ) || 0;
+
+
+
+      let cellClass =
+        "";
+
+
+      if (
+        count === 0
+      ) {
+
+        cellClass =
+          "matrix-zero";
+
+      }
+
+
+      else if (
+        count >= 2
+      ) {
+
+        cellClass =
+          "matrix-many";
+
+      }
+
+
+
+      html += `
+
+        <td class="${cellClass}">
+
+          ${count}
+
+        </td>
+      `;
+
+    }
+
+
+
+    html +=
+      "</tr>";
+
+  }
+
+
+
+  html +=
+    "</tbody>";
+
+
+  document.getElementById(
+    "meetingMatrix"
+  ).innerHTML =
+    html;
 
 }
 
