@@ -1523,11 +1523,21 @@ async function generateSchedule() {
           ] || 0;
 
 
-        const cost =
-          eloDifference
-          +
-          rematchPenalty *
-          previous;
+        let repeatCost =
+  rematchPenalty *
+  previous *
+  previous;
+
+if (
+  rematchPenalty >= 250 &&
+  previous >= 3
+) {
+  repeatCost += 2000;
+}
+
+const cost =
+  eloDifference +
+  repeatCost;
 
 
         const edge = {
