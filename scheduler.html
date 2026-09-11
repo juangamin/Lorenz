@@ -60,6 +60,11 @@ input[type="text"] {
   width: 160px;
 }
 
+input[readonly] {
+  background: #eee;
+  color: #555;
+}
+
 button {
   padding: 9px 15px;
   font-size: 14px;
@@ -310,12 +315,13 @@ th {
     <div class="controls">
 
       <label>
-        Earliest league time
+        Start time
 
         <input
           id="startTime"
           type="text"
           value="1800"
+          readonly
         >
       </label>
 
@@ -366,6 +372,9 @@ th {
 
     <p class="small">
 
+      The schedule always begins at
+      <strong>6:00 PM</strong>.
+
       Each active player receives
       <strong>2 different opponents</strong>
       whenever possible.
@@ -384,6 +393,11 @@ th {
       <strong>&gt;=1800 &lt;2000</strong>.
 
       Leave blank for unrestricted availability.
+
+      <br><br>
+
+      Your player availability entries and removed-player selections
+      are saved automatically in this browser.
 
     </p>
 
@@ -469,6 +483,26 @@ const PAIRING_ATTEMPTS = 2200;
 const ROUND_ATTEMPTS = 1800;
 
 
+/*
+  Browser-storage names.
+
+  The "summer2026" part keeps these settings separate
+  from any future season scheduler.
+*/
+
+const STORAGE_CONSTRAINTS =
+  "tilt_summer2026_constraints";
+
+const STORAGE_EXCLUDED =
+  "tilt_summer2026_excluded";
+
+const STORAGE_END_TIME =
+  "tilt_summer2026_endtime";
+
+const STORAGE_REMATCH =
+  "tilt_summer2026_rematch";
+
+
 
 /* ============================================================
    GLOBAL DATA
@@ -513,6 +547,8 @@ fetch(DATA_URL)
 
   displayAvailabilityTable();
 
+  restoreUserSettings();
+
   buildMeetingMatrix();
 
 
@@ -538,6 +574,30 @@ fetch(DATA_URL)
       generateSchedule
     );
 
+
+  /*
+    Save the general controls too.
+  */
+
+  document
+    .getElementById(
+      "endTime"
+    )
+    .addEventListener(
+      "input",
+      saveUserSettings
+    );
+
+
+  document
+    .getElementById(
+      "rematchPenalty"
+    )
+    .addEventListener(
+      "change",
+      saveUserSettings
+    );
+
 })
 
 .catch(error => {
@@ -556,6 +616,282 @@ fetch(DATA_URL)
   );
 
 });
+
+
+
+/* ============================================================
+   SAVE USER SETTINGS
+============================================================ */
+
+function saveUserSettings() {
+
+  const constraints =
+    {};
+
+
+  document
+    .querySelectorAll(
+      ".constraint-input"
+    )
+    .forEach(
+      input => {
+
+        constraints[
+          input.dataset.player
+        ] =
+          input.value;
+
+      }
+    );
+
+
+  try {
+
+    localStorage.setItem(
+      STORAGE_CONSTRAINTS,
+      JSON.stringify(
+        constraints
+      )
+    );
+
+
+    localStorage.setItem(
+      STORAGE_EXCLUDED,
+      JSON.stringify(
+        [...excludedPlayers]
+      )
+    );
+
+
+    localStorage.setItem(
+      STORAGE_END_TIME,
+      document.getElementById(
+        "endTime"
+      ).value
+    );
+
+
+    localStorage.setItem(
+      STORAGE_REMATCH,
+      document.getElementById(
+        "rematchPenalty"
+      ).value
+    );
+
+  }
+
+  catch(error) {
+
+    console.warn(
+      "Could not save scheduler settings:",
+      error
+    );
+
+  }
+
+}
+
+
+
+/* ============================================================
+   RESTORE USER SETTINGS
+============================================================ */
+
+function restoreUserSettings() {
+
+  let savedConstraints =
+    {};
+
+
+  let savedExcluded =
+    [];
+
+
+  try {
+
+    const constraintText =
+      localStorage.getItem(
+        STORAGE_CONSTRAINTS
+      );
+
+
+    if (
+      constraintText
+    ) {
+
+      savedConstraints =
+        JSON.parse(
+          constraintText
+        );
+
+    }
+
+
+
+    const excludedText =
+      localStorage.getItem(
+        STORAGE_EXCLUDED
+      );
+
+
+    if (
+      excludedText
+    ) {
+
+      savedExcluded =
+        JSON.parse(
+          excludedText
+        );
+
+    }
+
+
+
+    const savedEndTime =
+      localStorage.getItem(
+        STORAGE_END_TIME
+      );
+
+
+    if (
+      savedEndTime
+    ) {
+
+      document.getElementById(
+        "endTime"
+      ).value =
+        savedEndTime;
+
+    }
+
+
+
+    const savedRematch =
+      localStorage.getItem(
+        STORAGE_REMATCH
+      );
+
+
+    if (
+      savedRematch !== null
+    ) {
+
+      document.getElementById(
+        "rematchPenalty"
+      ).value =
+        savedRematch;
+
+    }
+
+  }
+
+  catch(error) {
+
+    console.warn(
+      "Could not restore scheduler settings:",
+      error
+    );
+
+
+    savedConstraints =
+      {};
+
+
+    savedExcluded =
+      [];
+
+  }
+
+
+
+  /*
+    Restore time constraints.
+  */
+
+  document
+    .querySelectorAll(
+      ".constraint-input"
+    )
+    .forEach(
+      input => {
+
+        const playerName =
+          input.dataset.player;
+
+
+        if (
+          Object.prototype.hasOwnProperty.call(
+            savedConstraints,
+            playerName
+          )
+        ) {
+
+          input.value =
+            savedConstraints[
+              playerName
+            ];
+
+        }
+
+      }
+    );
+
+
+
+  /*
+    Restore removed players.
+  */
+
+  excludedPlayers.clear();
+
+
+  if (
+    Array.isArray(
+      savedExcluded
+    )
+  ) {
+
+    for (
+      const playerName
+      of savedExcluded
+    ) {
+
+      const playerExists =
+        players.some(
+          player =>
+            player.name ===
+            playerName
+        );
+
+
+      if (
+        playerExists
+      ) {
+
+        excludedPlayers.add(
+          playerName
+        );
+
+      }
+
+    }
+
+  }
+
+
+
+  for (
+    const player
+    of players
+  ) {
+
+    updatePlayerRow(
+      player.name
+    );
+
+  }
+
+}
 
 
 
@@ -837,6 +1173,10 @@ function displayAvailabilityTable() {
 
 
 
+  /*
+    Remove / Restore buttons.
+  */
+
   document
     .querySelectorAll(
       ".remove-button"
@@ -850,6 +1190,27 @@ function displayAvailabilityTable() {
             togglePlayer(
               button.dataset.player
             )
+        );
+
+      }
+    );
+
+
+
+  /*
+    Save constraints immediately as they are typed.
+  */
+
+  document
+    .querySelectorAll(
+      ".constraint-input"
+    )
+    .forEach(
+      input => {
+
+        input.addEventListener(
+          "input",
+          saveUserSettings
         );
 
       }
@@ -891,6 +1252,13 @@ function togglePlayer(
   updatePlayerRow(
     playerName
   );
+
+
+  /*
+    Immediately remember the change.
+  */
+
+  saveUserSettings();
 
 }
 
@@ -947,6 +1315,14 @@ function updatePlayerRow(
 
 async function generateSchedule() {
 
+  /*
+    Save everything before attempting scheduling.
+    This means even an error cannot lose the entries.
+  */
+
+  saveUserSettings();
+
+
   clearValidation();
 
 
@@ -963,12 +1339,12 @@ async function generateSchedule() {
   try {
 
 
+    /*
+      Hard-coded 6:00 PM start.
+    */
+
     const leagueStart =
-      parseMilitaryTime(
-        document.getElementById(
-          "startTime"
-        ).value
-      );
+      18 * 60;
 
 
     const leagueEnd =
@@ -988,13 +1364,12 @@ async function generateSchedule() {
 
 
     if (
-      leagueStart === null ||
       leagueEnd === null ||
       leagueEnd <= leagueStart
     ) {
 
       alert(
-        "Please enter a valid league time window."
+        "Please enter a valid latest league time."
       );
 
       return;
@@ -1314,7 +1689,7 @@ async function generateSchedule() {
     ) {
 
       throw new Error(
-        "Could not fit these matches into the available time window."
+        "Could not fit these matches into the available time window starting at 6:00 PM."
       );
 
     }
@@ -2061,6 +2436,7 @@ function cloneCandidate(
 
 /* ============================================================
    COMPACT ROUND OPTIMIZER
+   ALWAYS STARTS AT 6:00 PM
 ============================================================ */
 
 async function optimizeCompactRounds(
@@ -2115,12 +2491,44 @@ async function optimizeCompactRounds(
 
 
 
-    const latestStart =
-      leagueEnd -
+    const blockStart =
+      leagueStart;
+
+
+    const lastRoundStart =
+      blockStart +
       (
         roundCount - 1
       ) *
       MATCH_MINUTES;
+
+
+    if (
+      lastRoundStart >
+      leagueEnd
+    )
+      continue;
+
+
+
+    const roundTimes =
+      [];
+
+
+    for (
+      let r = 0;
+      r < roundCount;
+      r++
+    ) {
+
+      roundTimes.push(
+        blockStart +
+        r *
+        MATCH_MINUTES
+      );
+
+    }
+
 
 
     let bestForRoundCount =
@@ -2129,122 +2537,87 @@ async function optimizeCompactRounds(
 
 
     for (
-      let blockStart =
-        leagueStart;
-
-      blockStart <=
-        latestStart;
-
-      blockStart +=
-        MATCH_MINUTES
+      let attempt = 0;
+      attempt < ROUND_ATTEMPTS;
+      attempt++
     ) {
 
+      const candidate =
+        createPackedRoundCandidate(
+          matches,
+          players,
+          roundTimes,
+          capacities
+        );
 
-      const roundTimes =
-        [];
+
+      if (
+        candidate.unscheduled.length >
+        0
+      )
+        continue;
+
+
+
+      let correctCapacity =
+        true;
 
 
       for (
         let r = 0;
-        r < roundCount;
+        r < capacities.length;
         r++
       ) {
 
-        roundTimes.push(
-          blockStart +
-          r *
-          MATCH_MINUTES
-        );
+        if (
+          candidate.rounds[r].length !==
+          capacities[r]
+        ) {
+
+          correctCapacity =
+            false;
+
+          break;
+
+        }
+
+      }
+
+
+      if (
+        !correctCapacity
+      )
+        continue;
+
+
+
+      evaluateRoundCandidate(
+        candidate,
+        players.length
+      );
+
+
+      if (
+        isBetterPackedRoundSchedule(
+          candidate,
+          bestForRoundCount
+        )
+      ) {
+
+        bestForRoundCount =
+          cloneRoundCandidate(
+            candidate
+          );
 
       }
 
 
 
-      for (
-        let attempt = 0;
-        attempt < ROUND_ATTEMPTS;
-        attempt++
+      if (
+        attempt % 35 === 0
       ) {
 
-        const candidate =
-          createPackedRoundCandidate(
-            matches,
-            players,
-            roundTimes,
-            capacities
-          );
-
-
-        if (
-          candidate.unscheduled.length
-          > 0
-        )
-          continue;
-
-
-
-        let correctCapacity =
-          true;
-
-
-        for (
-          let r = 0;
-          r < capacities.length;
-          r++
-        ) {
-
-          if (
-            candidate.rounds[r].length
-            !==
-            capacities[r]
-          ) {
-
-            correctCapacity =
-              false;
-
-            break;
-
-          }
-
-        }
-
-
-        if (
-          !correctCapacity
-        )
-          continue;
-
-
-
-        evaluateRoundCandidate(
-          candidate,
-          players.length
-        );
-
-
-        if (
-          isBetterPackedRoundSchedule(
-            candidate,
-            bestForRoundCount
-          )
-        ) {
-
-          bestForRoundCount =
-            cloneRoundCandidate(
-              candidate
-            );
-
-        }
-
-
-
-        if (
-          attempt % 35 === 0
-        ) {
-
-          await letBrowserBreathe();
-
-        }
+        await letBrowserBreathe();
 
       }
 
@@ -2833,23 +3206,9 @@ function isBetterPackedRoundSchedule(
     return true;
 
 
-  if (
-    candidate.waitCost !==
-    best.waitCost
-  ) {
-
-    return (
-      candidate.waitCost <
-      best.waitCost
-    );
-
-  }
-
-
   return (
-    candidate.roundTimes[0]
-    <
-    best.roundTimes[0]
+    candidate.waitCost <
+    best.waitCost
   );
 
 }
@@ -3532,10 +3891,6 @@ function displaySchedule(
 
 function buildMeetingMatrix() {
 
-  /*
-    Sort alphabetically for easier lookup.
-  */
-
   const matrixPlayers =
     [...players].sort(
       (a,b) =>
@@ -3544,11 +3899,6 @@ function buildMeetingMatrix() {
         )
     );
 
-
-  /*
-    Count meetings already recorded
-    in Summer 2026.
-  */
 
   const counts =
     new Map();
@@ -3719,9 +4069,7 @@ function buildMeetingMatrix() {
       html += `
 
         <td class="${cellClass}">
-
           ${count}
-
         </td>
       `;
 
