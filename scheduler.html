@@ -1,13 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
 <meta charset="UTF-8">
-
-<title>Tilt Summer 2026 Scheduler</title>
+<title>Tilt Fall 2026 Scheduler</title>
 
 <style>
-
 body {
   font-family: Arial, sans-serif;
   max-width: 1200px;
@@ -15,13 +12,8 @@ body {
   padding: 0 20px 60px;
 }
 
-h1 {
-  margin-bottom: 4px;
-}
-
-h2 {
-  margin-top: 35px;
-}
+h1 { margin-bottom: 4px; }
+h2 { margin-top: 35px; }
 
 .subtitle {
   color: #666;
@@ -72,8 +64,8 @@ button {
 }
 
 button:disabled {
-  cursor: not-allowed;
   opacity: 0.6;
+  cursor: not-allowed;
 }
 
 .remove-button {
@@ -168,9 +160,9 @@ th {
 }
 
 
-/* =========================================================
-   PROGRESS BAR
-========================================================= */
+/* ============================
+   PROGRESS
+============================ */
 
 #progressArea {
   display: none;
@@ -199,9 +191,9 @@ th {
 }
 
 
-/* =========================================================
-   SEASON MEETING MATRIX
-========================================================= */
+/* ============================
+   MATCH MATRIX
+============================ */
 
 .meeting-matrix-wrap {
   overflow-x: auto;
@@ -230,48 +222,41 @@ th {
 }
 
 .meeting-matrix thead th {
-  background: #f1f1f1;
   position: sticky;
   top: 0;
   z-index: 2;
-}
-
-.meeting-matrix .matrix-row-name {
-  position: sticky;
-  left: 0;
-  background: #f7f7f7;
-  text-align: left;
-  font-weight: bold;
-  z-index: 1;
-}
-
-.meeting-matrix .matrix-corner {
-  position: sticky;
-  left: 0;
-  z-index: 3;
   background: #f1f1f1;
 }
 
-.meeting-matrix .matrix-diagonal {
+.matrix-row-name {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  background: #f7f7f7;
+  text-align: left !important;
+  font-weight: bold;
+}
+
+.matrix-corner {
+  position: sticky;
+  left: 0;
+  z-index: 3 !important;
+}
+
+.matrix-diagonal {
   background: #eee;
   color: #999;
 }
 
-.meeting-matrix .matrix-zero {
+.matrix-zero {
   color: #bbb;
 }
 
-.meeting-matrix .matrix-many {
+.matrix-many {
   font-weight: bold;
 }
 
-
-/* =========================================================
-   MOBILE
-========================================================= */
-
 @media (max-width: 700px) {
-
   body {
     padding: 0 10px 40px;
   }
@@ -284,16 +269,13 @@ th {
   td {
     padding: 7px 5px;
   }
-
 }
-
 </style>
 </head>
 
-
 <body>
 
-<h1>Tilt Summer 2026</h1>
+<h1>Tilt Fall 2026</h1>
 
 <div class="subtitle">
   Two matches per player with ELO matching,
@@ -301,14 +283,11 @@ th {
   and reduced waiting time
 </div>
 
-
 <div id="status">
   Loading live spreadsheet...
 </div>
 
-
 <div id="main" style="display:none">
-
 
   <div class="panel">
 
@@ -316,52 +295,24 @@ th {
 
       <label>
         Start time
-
-        <input
-          id="startTime"
-          type="text"
-          value="1800"
-          readonly
-        >
+        <input id="startTime" type="text" value="1800" readonly>
       </label>
-
 
       <label>
         Latest league time
-
-        <input
-          id="endTime"
-          type="text"
-          value="2200"
-        >
+        <input id="endTime" type="text" value="2200">
       </label>
-
 
       <label>
         Rematch avoidance
 
         <select id="rematchPenalty">
-
-          <option value="0">
-            None
-          </option>
-
-          <option value="50">
-            Low
-          </option>
-
-          <option value="125" selected>
-            Moderate
-          </option>
-
-          <option value="250">
-            Strong
-          </option>
-
+          <option value="0">None</option>
+          <option value="50">Low</option>
+          <option value="125" selected>Moderate</option>
+          <option value="250">Strong</option>
         </select>
-
       </label>
-
 
       <button id="generateButton">
         Generate Schedule
@@ -369,21 +320,12 @@ th {
 
     </div>
 
-
     <p class="small">
+      The schedule always begins at <strong>6:00 PM</strong>.
+      Each active player receives <strong>2 different opponents</strong>
+      whenever possible. Each match lasts <strong>15 minutes</strong>.
 
-      The schedule always begins at
-      <strong>6:00 PM</strong>.
-
-      Each active player receives
-      <strong>2 different opponents</strong>
-      whenever possible.
-
-      Each match is assumed to last
-      <strong>15 minutes</strong>.
-
-      Availability is entered in military time and is a
-      <strong>hard constraint</strong>.
+      Availability is a <strong>hard constraint</strong>.
 
       Examples:
       <strong>&lt;1900</strong>,
@@ -396,14 +338,11 @@ th {
 
       <br><br>
 
-      Your player availability entries and removed-player selections
-      are saved automatically in this browser.
-
+      Availability entries and removed-player selections are saved
+      automatically in this browser for Fall 2026.
     </p>
 
-
     <div id="progressArea">
-
       <div class="progressOuter">
         <div id="progressBar"></div>
       </div>
@@ -411,96 +350,97 @@ th {
       <div id="progressText">
         Preparing...
       </div>
-
     </div>
 
   </div>
 
 
-
   <h2>Players and Availability</h2>
-
   <table id="availabilityTable"></table>
 
 
-
   <h2>Proposed Schedule</h2>
-
   <div id="summary"></div>
-
   <table id="scheduleTable"></table>
-
   <div id="incomplete"></div>
 
 
-
   <h2>Matches Per Player</h2>
-
   <table id="playerSummaryTable"></table>
-
 
 
   <h2>Matches Played This Season</h2>
 
   <p class="small">
     Each cell shows how many times the two players have played
-    each other during Summer 2026.
+    each other during Fall 2026.
   </p>
 
   <div class="meeting-matrix-wrap">
-
-    <table
-      id="meetingMatrix"
-      class="meeting-matrix"
-    ></table>
-
+    <table id="meetingMatrix" class="meeting-matrix"></table>
   </div>
 
 </div>
 
 
-
 <script>
 
 /* ============================================================
-   SETTINGS
+   BASIC SETTINGS
 ============================================================ */
 
-const DATA_URL =
-  "https://opensheet.elk.sh/" +
-  "1hDSENodpAjdOQudeX0HbAXauWn6KMPiK7lkj50Q-uug/" +
-  "Summer%202026";
+const SPREADSHEET_ID =
+  "1hDSENodpAjdOQudeX0HbAXauWn6KMPiK7lkj50Q-uug";
 
-
-const TARGET_MATCHES_PER_PLAYER = 2;
-
-const MATCH_MINUTES = 15;
-
-const NUMBER_OF_TABLES = 3;
-
-const PAIRING_ATTEMPTS = 2200;
-
-const ROUND_ATTEMPTS = 1800;
+const SEASON =
+  "Fall 2026";
 
 
 /*
-  Browser-storage names.
-
-  The "summer2026" part keeps these settings separate
-  from any future season scheduler.
+  OpenSheet is used ONLY for match history.
 */
 
+const MATCH_DATA_URL =
+  "https://opensheet.elk.sh/" +
+  SPREADSHEET_ID +
+  "/" +
+  encodeURIComponent(SEASON);
+
+
+/*
+  The rating block is physically G:AX.
+
+  We fetch that exact Google Sheets range separately.
+*/
+
+const ELO_RANGE =
+  "G:AX";
+
+
+const TARGET_MATCHES_PER_PLAYER = 2;
+const MATCH_MINUTES = 15;
+const NUMBER_OF_TABLES = 3;
+
+const PAIRING_ATTEMPTS = 2200;
+const ROUND_ATTEMPTS = 1800;
+
+
+
+/* ============================================================
+   LOCAL STORAGE
+============================================================ */
+
 const STORAGE_CONSTRAINTS =
-  "tilt_summer2026_constraints";
+  "tilt_fall2026_constraints";
 
 const STORAGE_EXCLUDED =
-  "tilt_summer2026_excluded";
+  "tilt_fall2026_excluded";
 
 const STORAGE_END_TIME =
-  "tilt_summer2026_endtime";
+  "tilt_fall2026_endtime";
 
 const STORAGE_REMATCH =
-  "tilt_summer2026_rematch";
+  "tilt_fall2026_rematch";
 
 
 
@@ -509,6 +449,10 @@ const STORAGE_REMATCH =
 ============================================================ */
 
 let sheetData = [];
+
+let eloHeaders = [];
+
+let eloRows = [];
 
 let players = [];
 
@@ -522,105 +466,642 @@ const excludedPlayers =
 
 
 /* ============================================================
-   LOAD DATA
+   INITIAL LOAD
 ============================================================ */
 
-fetch(DATA_URL)
+loadEverything();
 
-.then(response => {
 
-  if (!response.ok)
-    throw new Error(
-      "HTTP " + response.status
+
+async function loadEverything() {
+
+  try {
+
+    document.getElementById(
+      "status"
+    ).textContent =
+      "Loading Fall 2026 match history...";
+
+
+    /*
+      Load OpenSheet match-history data.
+    */
+
+    const matchResponse =
+      await fetch(
+        MATCH_DATA_URL,
+        {
+          cache: "no-store"
+        }
+      );
+
+
+    if (
+      !matchResponse.ok
+    ) {
+
+      throw new Error(
+        "Match-history load failed: HTTP " +
+        matchResponse.status
+      );
+
+    }
+
+
+    sheetData =
+      await matchResponse.json();
+
+
+
+    document.getElementById(
+      "status"
+    ).textContent =
+      "Loading current ELO ratings from columns G:AX...";
+
+
+    /*
+      Load the physical G:AX block directly from Google Sheets.
+    */
+
+    const eloData =
+      await loadGoogleRangeJSONP(
+        ELO_RANGE
+      );
+
+
+    eloHeaders =
+      eloData.headers;
+
+
+    eloRows =
+      eloData.rows;
+
+
+
+    processMatchHistory();
+
+    processEloRatings();
+
+    displayAvailabilityTable();
+
+    restoreUserSettings();
+
+    buildMeetingMatrix();
+
+
+
+    document.getElementById(
+      "status"
+    ).textContent =
+      sheetData.length +
+      " spreadsheet rows loaded. " +
+      players.length +
+      " players found from G:AX.";
+
+
+
+    document.getElementById(
+      "main"
+    ).style.display =
+      "block";
+
+
+
+    document
+      .getElementById(
+        "generateButton"
+      )
+      .addEventListener(
+        "click",
+        generateSchedule
+      );
+
+
+
+    document
+      .getElementById(
+        "endTime"
+      )
+      .addEventListener(
+        "input",
+        saveUserSettings
+      );
+
+
+
+    document
+      .getElementById(
+        "rematchPenalty"
+      )
+      .addEventListener(
+        "change",
+        saveUserSettings
+      );
+
+  }
+
+  catch(error) {
+
+    console.error(
+      error
     );
 
-  return response.json();
 
-})
+    document.getElementById(
+      "status"
+    ).innerHTML =
 
-.then(data => {
+      "<strong>Could not load spreadsheet.</strong><br>" +
 
-  sheetData =
-    data;
+      escapeHtml(
+        error.message
+      );
 
-  processSpreadsheet();
+  }
 
-  displayAvailabilityTable();
-
-  restoreUserSettings();
-
-  buildMeetingMatrix();
-
-
-  document.getElementById(
-    "status"
-  ).textContent =
-    data.length +
-    " spreadsheet rows loaded successfully.";
-
-
-  document.getElementById(
-    "main"
-  ).style.display =
-    "block";
-
-
-  document
-    .getElementById(
-      "generateButton"
-    )
-    .addEventListener(
-      "click",
-      generateSchedule
-    );
-
-
-  /*
-    Save the general controls too.
-  */
-
-  document
-    .getElementById(
-      "endTime"
-    )
-    .addEventListener(
-      "input",
-      saveUserSettings
-    );
-
-
-  document
-    .getElementById(
-      "rematchPenalty"
-    )
-    .addEventListener(
-      "change",
-      saveUserSettings
-    );
-
-})
-
-.catch(error => {
-
-  document.getElementById(
-    "status"
-  ).innerHTML =
-    "<strong>Could not load spreadsheet.</strong><br>" +
-    escapeHtml(
-      error.message
-    );
-
-
-  console.error(
-    error
-  );
-
-});
+}
 
 
 
 /* ============================================================
-   SAVE USER SETTINGS
+   GOOGLE G:AX RANGE LOADER
+
+   Uses a script tag / JSONP rather than fetch(),
+   so normal browser CORS restrictions do not block it.
+============================================================ */
+
+function loadGoogleRangeJSONP(
+  range
+) {
+
+  return new Promise(
+    (resolve,reject) => {
+
+      const callbackName =
+        "__tiltGoogleCallback_" +
+        Date.now() +
+        "_" +
+        Math.floor(
+          Math.random() * 1000000
+        );
+
+
+      const script =
+        document.createElement(
+          "script"
+        );
+
+
+      const timeout =
+        setTimeout(
+          () => {
+
+            cleanup();
+
+            reject(
+              new Error(
+                "Timed out while loading the G:AX ELO range."
+              )
+            );
+
+          },
+          20000
+        );
+
+
+
+      function cleanup() {
+
+        clearTimeout(
+          timeout
+        );
+
+
+        try {
+          delete window[
+            callbackName
+          ];
+        }
+        catch(error) {}
+
+
+        if (
+          script.parentNode
+        ) {
+
+          script.parentNode.removeChild(
+            script
+          );
+
+        }
+
+      }
+
+
+
+      window[
+        callbackName
+      ] =
+        function(response) {
+
+          try {
+
+            if (
+              !response ||
+              !response.table
+            ) {
+
+              throw new Error(
+                "Google returned an unexpected ELO response."
+              );
+
+            }
+
+
+
+            const headers =
+              response.table.cols.map(
+                column =>
+                  cleanName(
+                    column.label
+                  ) ||
+                  cleanName(
+                    column.id
+                  ) ||
+                  ""
+              );
+
+
+
+            const rows =
+              response.table.rows.map(
+                row =>
+                  row.c.map(
+                    cell =>
+                      cell
+                        ?
+                        cell.v
+                        :
+                        null
+                  )
+              );
+
+
+
+            cleanup();
+
+
+            resolve({
+              headers,
+              rows
+            });
+
+          }
+
+          catch(error) {
+
+            cleanup();
+
+            reject(
+              error
+            );
+
+          }
+
+        };
+
+
+
+      /*
+        reqId changes on every reload, which helps prevent
+        stale Google query responses.
+      */
+
+      const tqx =
+        "out:json;" +
+        "responseHandler:" +
+        callbackName +
+        ";" +
+        "reqId:" +
+        Date.now();
+
+
+
+      const url =
+        "https://docs.google.com/spreadsheets/d/" +
+        SPREADSHEET_ID +
+        "/gviz/tq" +
+        "?sheet=" +
+        encodeURIComponent(
+          SEASON
+        ) +
+        "&range=" +
+        encodeURIComponent(
+          range
+        ) +
+        "&headers=1" +
+        "&tqx=" +
+        encodeURIComponent(
+          tqx
+        );
+
+
+
+      script.onerror =
+        function() {
+
+          cleanup();
+
+          reject(
+            new Error(
+              "Google Sheets could not load the G:AX ELO block."
+            )
+          );
+
+        };
+
+
+      script.src =
+        url;
+
+
+      document.head.appendChild(
+        script
+      );
+
+    }
+  );
+
+}
+
+
+
+/* ============================================================
+   MATCH HISTORY
+============================================================ */
+
+function processMatchHistory() {
+
+  matchCounts = {};
+
+  latestWeek = 0;
+
+
+  for (
+    const row
+    of sheetData
+  ) {
+
+    const p1 =
+      cleanName(
+        row["Player 1"]
+      );
+
+
+    const p2 =
+      cleanName(
+        row["Player 2"]
+      );
+
+
+    if (
+      p1 &&
+      p2 &&
+      p1 !== p2
+    ) {
+
+      const key =
+        pairKey(
+          p1,
+          p2
+        );
+
+
+      matchCounts[key] =
+        (
+          matchCounts[key] ||
+          0
+        ) + 1;
+
+    }
+
+
+
+    for (
+      const value
+      of Object.values(row)
+    ) {
+
+      if (
+        typeof value !==
+        "string"
+      )
+        continue;
+
+
+      const weekMatch =
+        value.match(
+          /^Week\s*(\d+)$/i
+        );
+
+
+      if (
+        weekMatch
+      ) {
+
+        latestWeek =
+          Math.max(
+            latestWeek,
+            Number(
+              weekMatch[1]
+            )
+          );
+
+      }
+
+    }
+
+  }
+
+}
+
+
+
+/* ============================================================
+   ELO RATINGS FROM PHYSICAL G:AX BLOCK
+============================================================ */
+
+function processEloRatings() {
+
+  players = [];
+
+
+  /*
+    We expect 44 columns from G through AX.
+
+    We do not depend on this being exactly 44 to continue,
+    but log a warning if the sheet structure changes.
+  */
+
+  if (
+    eloHeaders.length !== 44
+  ) {
+
+    console.warn(
+      "Expected 44 columns in G:AX, received:",
+      eloHeaders.length
+    );
+
+  }
+
+
+
+  for (
+    let columnIndex = 0;
+    columnIndex < eloHeaders.length;
+    columnIndex++
+  ) {
+
+    const playerName =
+      cleanName(
+        eloHeaders[
+          columnIndex
+        ]
+      );
+
+
+    if (
+      !playerName
+    )
+      continue;
+
+
+
+    let currentElo =
+      null;
+
+
+
+    /*
+      IMPORTANT:
+
+      Search THIS physical G:AX column from the bottom upward.
+
+      Because the request contains only G:AX,
+      a duplicate Amanda/Joe/etc. header in CI:DZ cannot
+      interfere with this lookup.
+    */
+
+    for (
+      let rowIndex =
+        eloRows.length - 1;
+
+      rowIndex >= 0;
+
+      rowIndex--
+    ) {
+
+      const row =
+        eloRows[
+          rowIndex
+        ];
+
+
+      const value =
+        parseNumber(
+          row[
+            columnIndex
+          ]
+        );
+
+
+      if (
+        isValidElo(
+          value
+        )
+      ) {
+
+        currentElo =
+          value;
+
+        break;
+
+      }
+
+    }
+
+
+
+    if (
+      currentElo !== null
+    ) {
+
+      players.push({
+
+        name:
+          playerName,
+
+        elo:
+          currentElo
+
+      });
+
+    }
+
+    else {
+
+      console.warn(
+        "No valid ELO found in G:AX for:",
+        playerName
+      );
+
+    }
+
+  }
+
+
+
+  /*
+    Rank by current ELO.
+  */
+
+  players.sort(
+    (a,b) =>
+      b.elo -
+      a.elo
+  );
+
+
+  console.log(
+    "Current Fall 2026 G:AX ratings:",
+    players
+  );
+
+}
+
+
+
+/* ============================================================
+   ELO VALIDATION
+============================================================ */
+
+function isValidElo(
+  value
+) {
+
+  return (
+    value !== null &&
+    Number.isFinite(value) &&
+    value >= 100 &&
+    value <= 4000
+  );
+
+}
+
+
+
+/* ============================================================
+   SAVE SETTINGS
 ============================================================ */
 
 function saveUserSettings() {
@@ -694,7 +1175,7 @@ function saveUserSettings() {
 
 
 /* ============================================================
-   RESTORE USER SETTINGS
+   RESTORE SETTINGS
 ============================================================ */
 
 function restoreUserSettings() {
@@ -702,49 +1183,26 @@ function restoreUserSettings() {
   let savedConstraints =
     {};
 
-
   let savedExcluded =
     [];
 
 
   try {
 
-    const constraintText =
-      localStorage.getItem(
-        STORAGE_CONSTRAINTS
+    savedConstraints =
+      JSON.parse(
+        localStorage.getItem(
+          STORAGE_CONSTRAINTS
+        ) || "{}"
       );
 
 
-    if (
-      constraintText
-    ) {
-
-      savedConstraints =
-        JSON.parse(
-          constraintText
-        );
-
-    }
-
-
-
-    const excludedText =
-      localStorage.getItem(
-        STORAGE_EXCLUDED
+    savedExcluded =
+      JSON.parse(
+        localStorage.getItem(
+          STORAGE_EXCLUDED
+        ) || "[]"
       );
-
-
-    if (
-      excludedText
-    ) {
-
-      savedExcluded =
-        JSON.parse(
-          excludedText
-        );
-
-    }
-
 
 
     const savedEndTime =
@@ -788,25 +1246,13 @@ function restoreUserSettings() {
   catch(error) {
 
     console.warn(
-      "Could not restore scheduler settings:",
+      "Could not restore settings:",
       error
     );
-
-
-    savedConstraints =
-      {};
-
-
-    savedExcluded =
-      [];
 
   }
 
 
-
-  /*
-    Restore time constraints.
-  */
 
   document
     .querySelectorAll(
@@ -815,20 +1261,20 @@ function restoreUserSettings() {
     .forEach(
       input => {
 
-        const playerName =
+        const name =
           input.dataset.player;
 
 
         if (
           Object.prototype.hasOwnProperty.call(
             savedConstraints,
-            playerName
+            name
           )
         ) {
 
           input.value =
             savedConstraints[
-              playerName
+              name
             ];
 
         }
@@ -838,11 +1284,8 @@ function restoreUserSettings() {
 
 
 
-  /*
-    Restore removed players.
-  */
-
   excludedPlayers.clear();
+
 
 
   if (
@@ -852,24 +1295,19 @@ function restoreUserSettings() {
   ) {
 
     for (
-      const playerName
+      const name
       of savedExcluded
     ) {
 
-      const playerExists =
+      if (
         players.some(
           player =>
-            player.name ===
-            playerName
-        );
-
-
-      if (
-        playerExists
+            player.name === name
+        )
       ) {
 
         excludedPlayers.add(
-          playerName
+          name
         );
 
       }
@@ -896,179 +1334,6 @@ function restoreUserSettings() {
 
 
 /* ============================================================
-   PROCESS SPREADSHEET
-============================================================ */
-
-function processSpreadsheet() {
-
-  const names =
-    new Set();
-
-
-  matchCounts =
-    {};
-
-  latestWeek =
-    0;
-
-
-  for (
-    const row
-    of sheetData
-  ) {
-
-    const p1 =
-      cleanName(
-        row["Player 1"]
-      );
-
-
-    const p2 =
-      cleanName(
-        row["Player 2"]
-      );
-
-
-    if (p1)
-      names.add(p1);
-
-
-    if (p2)
-      names.add(p2);
-
-
-
-    if (
-      p1 &&
-      p2
-    ) {
-
-      const key =
-        pairKey(
-          p1,
-          p2
-        );
-
-
-      matchCounts[key] =
-        (
-          matchCounts[key] ||
-          0
-        )
-        +
-        1;
-
-    }
-
-
-
-    for (
-      const value
-      of Object.values(row)
-    ) {
-
-      if (
-        typeof value !==
-        "string"
-      )
-        continue;
-
-
-      const match =
-        value.match(
-          /^Week\s*(\d+)$/i
-        );
-
-
-      if (match) {
-
-        latestWeek =
-          Math.max(
-            latestWeek,
-            Number(
-              match[1]
-            )
-          );
-
-      }
-
-    }
-
-  }
-
-
-
-  players =
-    [];
-
-
-  for (
-    const name
-    of names
-  ) {
-
-    let elo =
-      null;
-
-
-    for (
-      let i =
-        sheetData.length - 1;
-
-      i >= 0;
-
-      i--
-    ) {
-
-      const value =
-        parseNumber(
-          sheetData[i][name]
-        );
-
-
-      if (
-        value !== null
-      ) {
-
-        elo =
-          value;
-
-        break;
-
-      }
-
-    }
-
-
-    if (
-      elo !== null
-    ) {
-
-      players.push({
-
-        name,
-
-        elo
-
-      });
-
-    }
-
-  }
-
-
-
-  players.sort(
-    (a,b) =>
-      b.elo -
-      a.elo
-  );
-
-}
-
-
-
-/* ============================================================
    PLAYER TABLE
 ============================================================ */
 
@@ -1077,31 +1342,13 @@ function displayAvailabilityTable() {
   let html = `
 
     <thead>
-
       <tr>
-
-        <th>
-          Rank
-        </th>
-
-        <th>
-          Player
-        </th>
-
-        <th class="number">
-          ELO
-        </th>
-
-        <th>
-          Time constraint
-        </th>
-
-        <th>
-          Schedule?
-        </th>
-
+        <th>Rank</th>
+        <th>Player</th>
+        <th class="number">ELO</th>
+        <th>Time constraint</th>
+        <th>Schedule?</th>
       </tr>
-
     </thead>
 
     <tbody>
@@ -1173,10 +1420,6 @@ function displayAvailabilityTable() {
 
 
 
-  /*
-    Remove / Restore buttons.
-  */
-
   document
     .querySelectorAll(
       ".remove-button"
@@ -1196,10 +1439,6 @@ function displayAvailabilityTable() {
     );
 
 
-
-  /*
-    Save constraints immediately as they are typed.
-  */
 
   document
     .querySelectorAll(
@@ -1254,10 +1493,6 @@ function togglePlayer(
   );
 
 
-  /*
-    Immediately remember the change.
-  */
-
   saveUserSettings();
 
 }
@@ -1282,7 +1517,9 @@ function updatePlayerRow(
     );
 
 
-  if (!row)
+  if (
+    !row
+  )
     return;
 
 
@@ -1302,26 +1539,22 @@ function updatePlayerRow(
     ".remove-button"
   ).textContent =
     removed
-      ? "Restore"
-      : "Remove";
+      ?
+      "Restore"
+      :
+      "Remove";
 
 }
 
 
 
 /* ============================================================
-   GENERATE
+   GENERATE SCHEDULE
 ============================================================ */
 
 async function generateSchedule() {
 
-  /*
-    Save everything before attempting scheduling.
-    This means even an error cannot lose the entries.
-  */
-
   saveUserSettings();
-
 
   clearValidation();
 
@@ -1337,11 +1570,6 @@ async function generateSchedule() {
 
 
   try {
-
-
-    /*
-      Hard-coded 6:00 PM start.
-    */
 
     const leagueStart =
       18 * 60;
@@ -1388,11 +1616,11 @@ async function generateSchedule() {
 
 
     if (
-      activePlayers.length < 2
+      activePlayers.length < 3
     ) {
 
       alert(
-        "At least two players must be active."
+        "At least three active players are needed."
       );
 
       return;
@@ -1465,9 +1693,9 @@ async function generateSchedule() {
 
 
 
-    /* ======================================================
+    /* ==============================
        POSSIBLE PAIRS
-    ====================================================== */
+    ============================== */
 
     const edges =
       [];
@@ -1475,6 +1703,7 @@ async function generateSchedule() {
 
     const edgeLookup =
       new Map();
+
 
 
     for (
@@ -1523,21 +1752,24 @@ async function generateSchedule() {
           ] || 0;
 
 
+
         let repeatCost =
-  rematchPenalty *
-  previous *
-  previous;
+          rematchPenalty *
+          previous *
+          previous;
 
-if (
-  rematchPenalty >= 250 &&
-  previous >= 3
-) {
-  repeatCost += 2000;
-}
 
-const cost =
-  eloDifference +
-  repeatCost;
+
+        if (
+          rematchPenalty >= 250 &&
+          previous >= 3
+        ) {
+
+          repeatCost +=
+            2000;
+
+        }
+
 
 
         const edge = {
@@ -1550,7 +1782,9 @@ const cost =
 
           previous,
 
-          cost
+          cost:
+            eloDifference +
+            repeatCost
 
         };
 
@@ -1574,9 +1808,9 @@ const cost =
 
 
 
-    /* ======================================================
-       STAGE 1 — OPPONENTS
-    ====================================================== */
+    /* ==============================
+       CHOOSE OPPONENTS
+    ============================== */
 
     showProgress(
       0,
@@ -1589,6 +1823,7 @@ const cost =
 
     let best =
       null;
+
 
 
     for (
@@ -1634,8 +1869,7 @@ const cost =
 
 
       if (
-        attempt % 20 ===
-        0
+        attempt % 20 === 0
       ) {
 
         const percentage =
@@ -1662,7 +1896,9 @@ const cost =
 
 
 
-    if (!best) {
+    if (
+      !best
+    ) {
 
       throw new Error(
         "Could not construct a schedule."
@@ -1672,9 +1908,9 @@ const cost =
 
 
 
-    /* ======================================================
-       STAGE 2 — COMPACT TIME SCHEDULE
-    ====================================================== */
+    /* ==============================
+       ASSIGN TIMES
+    ============================== */
 
     showProgress(
       56,
@@ -1699,7 +1935,7 @@ const cost =
     ) {
 
       throw new Error(
-        "Could not fit these matches into the available time window starting at 6:00 PM."
+        "Could not fit these matches into the available time constraints."
       );
 
     }
@@ -1758,7 +1994,6 @@ const cost =
 
   }
 
-
   catch(error) {
 
     console.error(
@@ -1773,7 +2008,6 @@ const cost =
 
   }
 
-
   finally {
 
     button.disabled =
@@ -1786,7 +2020,7 @@ const cost =
 
 
 /* ============================================================
-   CREATE OPPONENT SET
+   PAIRING CANDIDATE
 ============================================================ */
 
 function createMatchCandidate(
@@ -1834,28 +2068,25 @@ function createMatchCandidate(
       Infinity;
 
 
+
     for (
       const edge
       of candidates
     ) {
 
-      const i =
-        edge.i;
-
-
-      const j =
-        edge.j;
-
-
       if (
-        degrees[i] >=
+        degrees[
+          edge.i
+        ] >=
         TARGET_MATCHES_PER_PLAYER
       )
         continue;
 
 
       if (
-        degrees[j] >=
+        degrees[
+          edge.j
+        ] >=
         TARGET_MATCHES_PER_PLAYER
       )
         continue;
@@ -1863,8 +2094,8 @@ function createMatchCandidate(
 
       const key =
         numericPairKey(
-          i,
-          j
+          edge.i,
+          edge.j
         );
 
 
@@ -1879,12 +2110,16 @@ function createMatchCandidate(
 
       const needI =
         TARGET_MATCHES_PER_PLAYER -
-        degrees[i];
+        degrees[
+          edge.i
+        ];
 
 
       const needJ =
         TARGET_MATCHES_PER_PLAYER -
-        degrees[j];
+        degrees[
+          edge.j
+        ];
 
 
       const fairnessBonus =
@@ -1895,15 +2130,12 @@ function createMatchCandidate(
         );
 
 
-      const noise =
-        Math.random() *
-        100;
-
-
       const score =
         edge.cost -
         fairnessBonus +
-        noise;
+        Math.random() *
+        100;
+
 
 
       if (
@@ -1914,7 +2146,6 @@ function createMatchCandidate(
         bestScore =
           score;
 
-
         bestEdge =
           edge;
 
@@ -1924,7 +2155,9 @@ function createMatchCandidate(
 
 
 
-    if (!bestEdge)
+    if (
+      !bestEdge
+    )
       break;
 
 
@@ -2015,6 +2248,7 @@ function improveMatchCandidate(
       false;
 
 
+
     for (
       let x = 0;
       x < matches.length;
@@ -2037,10 +2271,13 @@ function improveMatchCandidate(
 
         const unique =
           new Set([
+
             first.i,
             first.j,
+
             second.i,
             second.j
+
           ]);
 
 
@@ -2048,6 +2285,7 @@ function improveMatchCandidate(
           unique.size < 4
         )
           continue;
+
 
 
         const a =
@@ -2087,6 +2325,7 @@ function improveMatchCandidate(
           );
 
 
+
         if (
           ac &&
           bd &&
@@ -2110,14 +2349,11 @@ function improveMatchCandidate(
           matches[x] =
             ac;
 
-
           matches[y] =
             bd;
 
-
           changed =
             true;
-
 
           continue;
 
@@ -2143,6 +2379,7 @@ function improveMatchCandidate(
           );
 
 
+
         if (
           ad &&
           bc &&
@@ -2166,10 +2403,8 @@ function improveMatchCandidate(
           matches[x] =
             ad;
 
-
           matches[y] =
             bc;
-
 
           changed =
             true;
@@ -2181,7 +2416,10 @@ function improveMatchCandidate(
     }
 
 
-    if (!changed)
+
+    if (
+      !changed
+    )
       break;
 
   }
@@ -2190,7 +2428,7 @@ function improveMatchCandidate(
 
   candidate.degrees =
     calculateDegrees(
-      candidate.matches,
+      matches,
       players.length
     );
 
@@ -2205,7 +2443,7 @@ function improveMatchCandidate(
 
 
 /* ============================================================
-   DUPLICATE PAIR CHECK
+   DUPLICATE PAIR TEST
 ============================================================ */
 
 function pairExistsElsewhere(
@@ -2235,14 +2473,10 @@ function pairExistsElsewhere(
       continue;
 
 
-    const existing =
-      matches[i];
-
-
     if (
       numericPairKey(
-        existing.i,
-        existing.j
+        matches[i].i,
+        matches[i].j
       ) === key
     )
       return true;
@@ -2265,36 +2499,30 @@ function evaluateCandidate(
   playerCount
 ) {
 
-  const degrees =
+  candidate.degrees =
     calculateDegrees(
       candidate.matches,
       playerCount
     );
 
 
-  candidate.degrees =
-    degrees;
-
-
   let totalDeficit =
     0;
-
 
   let maxDeficit =
     0;
 
-
   let squaredDeficit =
     0;
-
 
   let completePlayers =
     0;
 
 
+
   for (
     const degree
-    of degrees
+    of candidate.degrees
   ) {
 
     const deficit =
@@ -2358,7 +2586,9 @@ function isBetterMatchSchedule(
   best
 ) {
 
-  if (!best)
+  if (
+    !best
+  )
     return true;
 
 
@@ -2445,8 +2675,8 @@ function cloneCandidate(
 
 
 /* ============================================================
-   COMPACT ROUND OPTIMIZER
-   ALWAYS STARTS AT 6:00 PM
+   ROUND OPTIMIZER
+   ALWAYS STARTS AT 6 PM
 ============================================================ */
 
 async function optimizeCompactRounds(
@@ -2467,7 +2697,7 @@ async function optimizeCompactRounds(
     );
 
 
-  const maxPossibleRounds =
+  const maxRounds =
     Math.floor(
       (
         leagueEnd -
@@ -2483,11 +2713,10 @@ async function optimizeCompactRounds(
       theoreticalMinimum;
 
     roundCount <=
-      maxPossibleRounds;
+      maxRounds;
 
     roundCount++
   ) {
-
 
     const capacities =
       createPackedCapacities(
@@ -2496,26 +2725,8 @@ async function optimizeCompactRounds(
       );
 
 
-    if (!capacities)
-      continue;
-
-
-
-    const blockStart =
-      leagueStart;
-
-
-    const lastRoundStart =
-      blockStart +
-      (
-        roundCount - 1
-      ) *
-      MATCH_MINUTES;
-
-
     if (
-      lastRoundStart >
-      leagueEnd
+      !capacities
     )
       continue;
 
@@ -2532,7 +2743,7 @@ async function optimizeCompactRounds(
     ) {
 
       roundTimes.push(
-        blockStart +
+        leagueStart +
         r *
         MATCH_MINUTES
       );
@@ -2541,7 +2752,7 @@ async function optimizeCompactRounds(
 
 
 
-    let bestForRoundCount =
+    let best =
       null;
 
 
@@ -2569,8 +2780,9 @@ async function optimizeCompactRounds(
 
 
 
-      let correctCapacity =
+      let correct =
         true;
+
 
 
       for (
@@ -2584,7 +2796,7 @@ async function optimizeCompactRounds(
           capacities[r]
         ) {
 
-          correctCapacity =
+          correct =
             false;
 
           break;
@@ -2594,8 +2806,9 @@ async function optimizeCompactRounds(
       }
 
 
+
       if (
-        !correctCapacity
+        !correct
       )
         continue;
 
@@ -2608,13 +2821,12 @@ async function optimizeCompactRounds(
 
 
       if (
-        isBetterPackedRoundSchedule(
-          candidate,
-          bestForRoundCount
-        )
+        !best ||
+        candidate.waitCost <
+        best.waitCost
       ) {
 
-        bestForRoundCount =
+        best =
           cloneRoundCandidate(
             candidate
           );
@@ -2636,12 +2848,9 @@ async function optimizeCompactRounds(
 
 
     if (
-      bestForRoundCount
-    ) {
-
-      return bestForRoundCount;
-
-    }
+      best
+    )
+      return best;
 
   }
 
@@ -2653,7 +2862,7 @@ async function optimizeCompactRounds(
 
 
 /* ============================================================
-   PACKED ROUND CAPACITIES
+   ROUND CAPACITY
 ============================================================ */
 
 function createPackedCapacities(
@@ -2662,13 +2871,7 @@ function createPackedCapacities(
 ) {
 
   if (
-    matchCount <
-    roundCount
-  )
-    return null;
-
-
-  if (
+    matchCount < roundCount ||
     matchCount >
     roundCount *
     NUMBER_OF_TABLES
@@ -2724,7 +2927,7 @@ function createPackedCapacities(
 
 
 /* ============================================================
-   CREATE PACKED ROUND CANDIDATE
+   ASSIGN MATCHES TO ROUNDS
 ============================================================ */
 
 function createPackedRoundCandidate(
@@ -2758,7 +2961,6 @@ function createPackedRoundCandidate(
     [];
 
 
-
   const ordered =
     matches.map(
       edge => ({
@@ -2780,15 +2982,15 @@ function createPackedRoundCandidate(
   ordered.sort(
     (a,b) => {
 
-      const diff =
+      const difference =
         a.allowed.length -
         b.allowed.length;
 
 
       if (
-        diff !== 0
+        difference !== 0
       )
-        return diff;
+        return difference;
 
 
       return (
@@ -2814,18 +3016,17 @@ function createPackedRoundCandidate(
       [];
 
 
+
     for (
       const round
       of item.allowed
     ) {
-
 
       if (
         rounds[round].length >=
         capacities[round]
       )
         continue;
-
 
 
       if (
@@ -2849,7 +3050,7 @@ function createPackedRoundCandidate(
 
 
 
-      const waitingIncrease =
+      const waitIncrease =
         incrementalWaitingCost(
           playerRounds[
             edge.i
@@ -2865,22 +3066,9 @@ function createPackedRoundCandidate(
         );
 
 
-
       const remainingCapacity =
         capacities[round] -
         rounds[round].length;
-
-
-
-      const score =
-        waitingIncrease *
-        30
-        -
-        remainingCapacity *
-        4
-        +
-        Math.random() *
-        2;
 
 
 
@@ -2888,7 +3076,15 @@ function createPackedRoundCandidate(
 
         round,
 
-        score
+        score:
+          waitIncrease *
+          30
+          -
+          remainingCapacity *
+          4
+          +
+          Math.random() *
+          2
 
       });
 
@@ -3041,7 +3237,7 @@ function allowedRoundsForEdge(
 
 
 /* ============================================================
-   AVAILABILITY AT A PARTICULAR START TIME
+   TIME AVAILABILITY
 ============================================================ */
 
 function timeFitsAvailability(
@@ -3064,18 +3260,14 @@ function timeFitsAvailability(
 
 
   if (
-    time ===
-      availability.min
-    &&
+    time === availability.min &&
     !availability.minInclusive
   )
     return false;
 
 
   if (
-    time ===
-      availability.max
-    &&
+    time === availability.max &&
     !availability.maxInclusive
   )
     return false;
@@ -3088,7 +3280,7 @@ function timeFitsAvailability(
 
 
 /* ============================================================
-   WAITING PENALTY
+   WAITING
 ============================================================ */
 
 function waitingCostForRounds(
@@ -3096,8 +3288,7 @@ function waitingCostForRounds(
 ) {
 
   if (
-    rounds.length <=
-    1
+    rounds.length <= 1
   )
     return 0;
 
@@ -3136,49 +3327,38 @@ function waitingCostForRounds(
 
 
 
-/* ============================================================
-   INCREMENTAL WAIT COST
-============================================================ */
-
 function incrementalWaitingCost(
-  existingRounds,
+  rounds,
   newRound
 ) {
 
-  const before =
-    waitingCostForRounds(
-      existingRounds
-    );
+  return (
 
-
-  const after =
     waitingCostForRounds(
       [
-        ...existingRounds,
+        ...rounds,
         newRound
       ]
-    );
+    )
 
+    -
 
-  return (
-    after -
-    before
+    waitingCostForRounds(
+      rounds
+    )
+
   );
 
 }
 
 
 
-/* ============================================================
-   EVALUATE ROUND SCHEDULE
-============================================================ */
-
 function evaluateRoundCandidate(
   candidate,
   playerCount
 ) {
 
-  let waitCost =
+  let cost =
     0;
 
 
@@ -3188,7 +3368,7 @@ function evaluateRoundCandidate(
     i++
   ) {
 
-    waitCost +=
+    cost +=
       waitingCostForRounds(
         candidate.playerRounds[i]
       );
@@ -3197,37 +3377,11 @@ function evaluateRoundCandidate(
 
 
   candidate.waitCost =
-    waitCost;
+    cost;
 
 }
 
 
-
-/* ============================================================
-   COMPARE PACKED SCHEDULES
-============================================================ */
-
-function isBetterPackedRoundSchedule(
-  candidate,
-  best
-) {
-
-  if (!best)
-    return true;
-
-
-  return (
-    candidate.waitCost <
-    best.waitCost
-  );
-
-}
-
-
-
-/* ============================================================
-   CLONE ROUND SCHEDULE
-============================================================ */
 
 function cloneRoundCandidate(
   candidate
@@ -3254,11 +3408,7 @@ function cloneRoundCandidate(
       [...candidate.unscheduled],
 
     capacities:
-      candidate.capacities
-        ?
-        [...candidate.capacities]
-        :
-        null,
+      [...candidate.capacities],
 
     waitCost:
       candidate.waitCost
@@ -3283,25 +3433,9 @@ function displaySchedule(
     new Map();
 
 
-  for (
-    const pairing
-    of pairings
-  ) {
-
-    edgeToPair.set(
-      numericPairKey(
-        pairing.edge.i,
-        pairing.edge.j
-      ),
-      pairing
-    );
-
-  }
-
-
-
   const degrees =
     new Map();
+
 
 
   for (
@@ -3319,26 +3453,55 @@ function displaySchedule(
 
 
   for (
-    const match
+    const pairing
     of pairings
   ) {
 
-    degrees.set(
-      match.player1.name,
-      degrees.get(
-        match.player1.name
-      ) + 1
+    edgeToPair.set(
+
+      numericPairKey(
+        pairing.edge.i,
+        pairing.edge.j
+      ),
+
+      pairing
+
     );
 
 
     degrees.set(
-      match.player2.name,
+
+      pairing.player1.name,
+
       degrees.get(
-        match.player2.name
+        pairing.player1.name
       ) + 1
+
+    );
+
+
+    degrees.set(
+
+      pairing.player2.name,
+
+      degrees.get(
+        pairing.player2.name
+      ) + 1
+
     );
 
   }
+
+
+
+  const complete =
+    scheduledPlayers.filter(
+      player =>
+        degrees.get(
+          player.name
+        ) ===
+        TARGET_MATCHES_PER_PLAYER
+    ).length;
 
 
 
@@ -3358,51 +3521,32 @@ function displaySchedule(
 
 
 
-  const complete =
-    scheduledPlayers.filter(
-      player =>
-        degrees.get(
-          player.name
-        )
-        ===
-        TARGET_MATCHES_PER_PLAYER
-    ).length;
-
-
-
-  const weekText =
+  const weekNumber =
     latestWeek > 0
       ?
       latestWeek + 1
       :
-      "?";
+      1;
 
-
-  const startTime =
-    roundResult.roundTimes[
-      0
-    ];
-
-
-  const lastStart =
-    roundResult.roundTimes[
-      roundResult.roundTimes.length -
-      1
-    ];
 
 
   const finishTime =
-    lastStart +
+    roundResult.roundTimes[
+      roundResult.roundTimes.length -
+      1
+    ]
+    +
     MATCH_MINUTES;
 
 
-  const totalCapacity =
+
+  const totalSlots =
     roundResult.rounds.length *
     NUMBER_OF_TABLES;
 
 
   const unusedSlots =
-    totalCapacity -
+    totalSlots -
     pairings.length;
 
 
@@ -3414,7 +3558,7 @@ function displaySchedule(
     <div class="good">
 
       <strong>
-        Proposed Week ${weekText}
+        Proposed Week ${weekNumber}
       </strong>
 
       <br><br>
@@ -3435,9 +3579,7 @@ function displaySchedule(
 
       Players receiving both matches:
       <strong>
-        ${complete}
-        /
-        ${scheduledPlayers.length}
+        ${complete}/${scheduledPlayers.length}
       </strong>
 
       <br>
@@ -3451,9 +3593,10 @@ function displaySchedule(
 
       Time:
       <strong>
-        ${formatRegularTime(startTime)}
-        –
-        ${formatRegularTime(finishTime)}
+        6:00 PM –
+        ${formatRegularTime(
+          finishTime
+        )}
       </strong>
 
       <br>
@@ -3489,27 +3632,12 @@ function displaySchedule(
   let html = `
 
     <thead>
-
       <tr>
-
-        <th>
-          Time
-        </th>
-
-        <th>
-          Table 1
-        </th>
-
-        <th>
-          Table 2
-        </th>
-
-        <th>
-          Table 3
-        </th>
-
+        <th>Time</th>
+        <th>Table 1</th>
+        <th>Table 2</th>
+        <th>Table 3</th>
       </tr>
-
     </thead>
 
     <tbody>
@@ -3524,68 +3652,53 @@ function displaySchedule(
     roundIndex++
   ) {
 
-    const edges =
+    const matches =
       roundResult.rounds[
         roundIndex
-      ];
+      ]
 
-
-    const matches =
-      edges
-
-        .map(
-          edge =>
-            edgeToPair.get(
-              numericPairKey(
-                edge.i,
-                edge.j
-              )
+      .map(
+        edge =>
+          edgeToPair.get(
+            numericPairKey(
+              edge.i,
+              edge.j
             )
-        )
+          )
+      )
 
-        .filter(
-          Boolean
-        );
+      .filter(
+        Boolean
+      )
 
-
-
-    /*
-      Table 1 = highest-rated match
-      Table 2 = middle
-      Table 3 = lowest
-    */
-
-    matches.sort(
-      (a,b) =>
-        b.averageElo -
-        a.averageElo
-    );
-
-
-
-    html +=
-      "<tr>";
+      .sort(
+        (a,b) =>
+          b.averageElo -
+          a.averageElo
+      );
 
 
 
     html += `
 
-      <td class="time-cell">
+      <tr>
 
-        ${formatRegularTime(
-          roundResult.roundTimes[
-            roundIndex
-          ]
-        )}
+        <td class="time-cell">
 
-      </td>
+          ${formatRegularTime(
+            roundResult.roundTimes[
+              roundIndex
+            ]
+          )}
+
+        </td>
     `;
 
 
 
     for (
       let table = 0;
-      table < 3;
+      table < NUMBER_OF_TABLES;
       table++
     ) {
 
@@ -3595,7 +3708,9 @@ function displaySchedule(
         ];
 
 
-      if (!match) {
+      if (
+        !match
+      ) {
 
         html +=
           "<td></td>";
@@ -3639,8 +3754,7 @@ function displaySchedule(
 
             &nbsp; | &nbsp;
 
-            Δ
-            ${Math.round(
+            Δ${Math.round(
               match.difference
             )}
 
@@ -3675,13 +3789,16 @@ function displaySchedule(
 
 
 
+  /* ==============================
+     INCOMPLETE PLAYERS
+  ============================== */
+
   const shortPlayers =
     scheduledPlayers.filter(
       player =>
         degrees.get(
           player.name
-        )
-        <
+        ) <
         TARGET_MATCHES_PER_PLAYER
     );
 
@@ -3705,17 +3822,18 @@ function displaySchedule(
         ${shortPlayers
           .map(
             player =>
+
               escapeHtml(
                 player.name
               )
               +
-              " ("
-              +
+              " (" +
               degrees.get(
                 player.name
               )
               +
               " matches)"
+
           )
           .join(", ")}
 
@@ -3735,15 +3853,17 @@ function displaySchedule(
 
 
 
-  let summaryHtml = `
+  /* ==============================
+     PLAYER SUMMARY
+  ============================== */
+
+  let playerHtml = `
 
     <thead>
 
       <tr>
 
-        <th>
-          Player
-        </th>
+        <th>Player</th>
 
         <th class="number">
           ELO
@@ -3808,7 +3928,7 @@ function displaySchedule(
 
 
 
-      const playerTimes =
+      const times =
         [...roundResult.playerRounds[index]]
 
         .sort(
@@ -3837,7 +3957,7 @@ function displaySchedule(
 
 
 
-      summaryHtml += `
+      playerHtml += `
 
         <tr>
 
@@ -3858,21 +3978,15 @@ function displaySchedule(
           </td>
 
           <td>
-
             ${opponents
               .map(
                 escapeHtml
               )
               .join(", ")}
-
           </td>
 
           <td>
-
-            ${playerTimes.join(
-              ", "
-            )}
-
+            ${times.join(", ")}
           </td>
 
         </tr>
@@ -3882,21 +3996,21 @@ function displaySchedule(
   );
 
 
-  summaryHtml +=
+  playerHtml +=
     "</tbody>";
 
 
   document.getElementById(
     "playerSummaryTable"
   ).innerHTML =
-    summaryHtml;
+    playerHtml;
 
 }
 
 
 
 /* ============================================================
-   SEASON MEETING MATRIX
+   MATCH COUNT MATRIX
 ============================================================ */
 
 function buildMeetingMatrix() {
@@ -3908,51 +4022,6 @@ function buildMeetingMatrix() {
           b.name
         )
     );
-
-
-  const counts =
-    new Map();
-
-
-  for (
-    const row
-    of sheetData
-  ) {
-
-    const p1 =
-      cleanName(
-        row["Player 1"]
-      );
-
-
-    const p2 =
-      cleanName(
-        row["Player 2"]
-      );
-
-
-    if (
-      !p1 ||
-      !p2 ||
-      p1 === p2
-    )
-      continue;
-
-
-    const key =
-      pairKey(
-        p1,
-        p2
-      );
-
-
-    counts.set(
-      key,
-      (counts.get(key) || 0) + 1
-    );
-
-  }
-
 
 
   let html = `
@@ -4022,7 +4091,6 @@ function buildMeetingMatrix() {
       of matrixPlayers
     ) {
 
-
       if (
         rowPlayer.name ===
         columnPlayer.name
@@ -4042,16 +4110,16 @@ function buildMeetingMatrix() {
 
 
       const count =
-        counts.get(
+        matchCounts[
           pairKey(
             rowPlayer.name,
             columnPlayer.name
           )
-        ) || 0;
+        ] || 0;
 
 
 
-      let cellClass =
+      let className =
         "";
 
 
@@ -4059,17 +4127,16 @@ function buildMeetingMatrix() {
         count === 0
       ) {
 
-        cellClass =
+        className =
           "matrix-zero";
 
       }
-
 
       else if (
         count >= 2
       ) {
 
-        cellClass =
+        className =
           "matrix-many";
 
       }
@@ -4078,7 +4145,7 @@ function buildMeetingMatrix() {
 
       html += `
 
-        <td class="${cellClass}">
+        <td class="${className}">
           ${count}
         </td>
       `;
@@ -4108,44 +4175,6 @@ function buildMeetingMatrix() {
 
 
 /* ============================================================
-   DEGREE
-============================================================ */
-
-function calculateDegrees(
-  matches,
-  playerCount
-) {
-
-  const degrees =
-    new Array(
-      playerCount
-    ).fill(0);
-
-
-  for (
-    const edge
-    of matches
-  ) {
-
-    degrees[
-      edge.i
-    ]++;
-
-
-    degrees[
-      edge.j
-    ]++;
-
-  }
-
-
-  return degrees;
-
-}
-
-
-
-/* ============================================================
    AVAILABILITY PARSER
 ============================================================ */
 
@@ -4155,7 +4184,9 @@ function parseAvailability(
   leagueEnd
 ) {
 
-  if (!text) {
+  if (
+    !text
+  ) {
 
     return {
 
@@ -4187,13 +4218,15 @@ function parseAvailability(
 
 
 
-  let range =
+  const range =
     cleaned.match(
       /^(\d{3,4})\s*-\s*(\d{3,4})$/
     );
 
 
-  if (range) {
+  if (
+    range
+  ) {
 
     const low =
       parseMilitaryTime(
@@ -4299,8 +4332,11 @@ function parseAvailability(
     );
 
 
-  if (!clauses)
+  if (
+    !clauses
+  )
     return null;
+
 
 
   const residue =
@@ -4312,21 +4348,21 @@ function parseAvailability(
       .trim();
 
 
-  if (residue)
+  if (
+    residue
+  )
     return null;
+
 
 
   let min =
     leagueStart;
 
-
   let max =
     leagueEnd;
 
-
   let minInclusive =
     true;
-
 
   let maxInclusive =
     true;
@@ -4344,7 +4380,9 @@ function parseAvailability(
       );
 
 
-    if (!match)
+    if (
+      !match
+    )
       return null;
 
 
@@ -4383,7 +4421,6 @@ function parseAvailability(
 
     }
 
-
     else if (
       operator === ">="
     ) {
@@ -4402,7 +4439,6 @@ function parseAvailability(
 
     }
 
-
     else if (
       operator === "<"
     ) {
@@ -4420,7 +4456,6 @@ function parseAvailability(
       }
 
     }
-
 
     else if (
       operator === "<="
@@ -4448,7 +4483,6 @@ function parseAvailability(
     min > max
   )
     return null;
-
 
 
   if (
@@ -4548,14 +4582,107 @@ function overlapAvailability(
 
 
 /* ============================================================
-   MILITARY TIME INPUT
+   HELPERS
 ============================================================ */
+
+function calculateDegrees(
+  matches,
+  playerCount
+) {
+
+  const degrees =
+    new Array(
+      playerCount
+    ).fill(0);
+
+
+  for (
+    const edge
+    of matches
+  ) {
+
+    degrees[
+      edge.i
+    ]++;
+
+
+    degrees[
+      edge.j
+    ]++;
+
+  }
+
+
+  return degrees;
+
+}
+
+
+
+function totalCost(
+  matches
+) {
+
+  return matches.reduce(
+    (sum,edge) =>
+      sum +
+      edge.cost,
+    0
+  );
+
+}
+
+
+
+function pairKey(
+  a,
+  b
+) {
+
+  return [
+    a,
+    b
+  ]
+    .sort()
+    .join("|||");
+
+}
+
+
+
+function numericPairKey(
+  a,
+  b
+) {
+
+  if (
+    a < b
+  ) {
+
+    return (
+      a +
+      "|||" +
+      b
+    );
+
+  }
+
+
+  return (
+    b +
+    "|||" +
+    a
+  );
+
+}
+
+
 
 function parseMilitaryTime(
   value
 ) {
 
-  const string =
+  const text =
     String(value)
       .trim()
       .replace(
@@ -4566,14 +4693,14 @@ function parseMilitaryTime(
 
   if (
     !/^\d{3,4}$/.test(
-      string
+      text
     )
   )
     return null;
 
 
   const padded =
-    string.padStart(
+    text.padStart(
       4,
       "0"
     );
@@ -4607,7 +4734,8 @@ function parseMilitaryTime(
 
 
   return (
-    hour * 60 +
+    hour *
+    60 +
     minute
   );
 
@@ -4615,32 +4743,33 @@ function parseMilitaryTime(
 
 
 
-/* ============================================================
-   REGULAR-TIME DISPLAY
-============================================================ */
-
 function formatRegularTime(
   minutes
 ) {
 
-  let hour24 =
+  const hour24 =
     Math.floor(
-      minutes / 60
+      minutes /
+      60
     );
 
 
   const minute =
-    minutes % 60;
+    minutes %
+    60;
 
 
   const suffix =
     hour24 >= 12
-      ? "PM"
-      : "AM";
+      ?
+      "PM"
+      :
+      "AM";
 
 
   let hour12 =
-    hour24 % 12;
+    hour24 %
+    12;
 
 
   if (
@@ -4662,114 +4791,6 @@ function formatRegularTime(
     " " +
     suffix
   );
-
-}
-
-
-
-/* ============================================================
-   PROGRESS
-============================================================ */
-
-function showProgress(
-  percentage,
-  text
-) {
-
-  document.getElementById(
-    "progressArea"
-  ).style.display =
-    "block";
-
-
-  document.getElementById(
-    "progressBar"
-  ).style.width =
-    percentage +
-    "%";
-
-
-  document.getElementById(
-    "progressText"
-  ).textContent =
-    text;
-
-}
-
-
-
-function letBrowserBreathe() {
-
-  return new Promise(
-    resolve =>
-      setTimeout(
-        resolve,
-        0
-      )
-  );
-
-}
-
-
-
-/* ============================================================
-   HELPERS
-============================================================ */
-
-function totalCost(
-  matches
-) {
-
-  return matches.reduce(
-    (sum,edge) =>
-      sum +
-      edge.cost,
-    0
-  );
-
-}
-
-
-
-function numericPairKey(
-  a,
-  b
-) {
-
-  if (
-    a > b
-  ) {
-
-    const temp =
-      a;
-
-    a =
-      b;
-
-    b =
-      temp;
-
-  }
-
-
-  return (
-    a +
-    "|||" +
-    b
-  );
-
-}
-
-
-
-function pairKey(
-  a,
-  b
-) {
-
-  return [a,b]
-    .sort()
-    .join("|||");
 
 }
 
@@ -4869,11 +4890,55 @@ function clearValidation() {
       ".constraint-input"
     )
     .forEach(
-      input =>
+      input => {
+
         input.classList.remove(
           "invalid"
-        )
+        );
+
+      }
     );
+
+}
+
+
+
+function showProgress(
+  percentage,
+  text
+) {
+
+  document.getElementById(
+    "progressArea"
+  ).style.display =
+    "block";
+
+
+  document.getElementById(
+    "progressBar"
+  ).style.width =
+    percentage +
+    "%";
+
+
+  document.getElementById(
+    "progressText"
+  ).textContent =
+    text;
+
+}
+
+
+
+function letBrowserBreathe() {
+
+  return new Promise(
+    resolve =>
+      setTimeout(
+        resolve,
+        0
+      )
+  );
 
 }
 
