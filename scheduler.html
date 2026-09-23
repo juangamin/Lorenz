@@ -318,6 +318,10 @@ th {
         Generate Schedule
       </button>
 
+      <button id="downloadPdfButton" disabled>
+        Download PDF Schedule
+      </button>
+
     </div>
 
     <p class="small">
@@ -382,6 +386,8 @@ th {
 
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.2/dist/jspdf.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jspdf-autotable@3.8.4/dist/jspdf.plugin.autotable.min.js"></script>
 
 <script>
 
@@ -408,13 +414,78 @@ const MATCH_DATA_URL =
 
 
 /*
-  The rating block is physically G:AX.
+  The rating block is physically G:AW.
 
   We fetch that exact Google Sheets range separately.
 */
 
 const ELO_RANGE =
-  "G:AX";
+  "G:AW";
+
+
+/* ============================================================
+   SOFT TABLE PREFERENCES
+
+   These preferences affect only the assignment of matches to
+   Tables 1, 2, and 3 after the round schedule has been built.
+   They are SOFT: availability and schedule feasibility always
+   come first. Names that are not in the current roster are
+   harmless and simply never get used. Players missing from this
+   object are treated as having no table preference.
+============================================================ */
+
+const TABLE_PREFS = {
+  "Brett": "1,2",
+  "Bashi": "1,2",
+  "Justin": "1,2",
+  "Chris O": "1,2",
+  "Jeff": "1,2",
+  "Jason": "1,2",
+  "Laird": "1,2",
+  "Amanda": "1,2",
+  "Garrett": "1,2",
+  "Ramy": "1,2",
+  "Juan": "1,3",
+  "Andrew Mac": "any",
+  "Josh K": "any",
+  "Nathan": "any",
+  "Griff": "1,2",
+  "Theron": "1,2",
+  "Bart": "any",
+  "Thomas C": "any",
+  "Josh B": "any",
+  "Robert": "any",
+  "Thomas S": "any",
+  "Casey": "any",
+  "Richard": "any",
+  "Joe": "2",
+  "Miles": "any",
+  "Luke": "any",
+  "Terry": "any",
+  "Andrew N": "1,2",
+  "Darrell": "any",
+  "Sam": "any",
+  "Eric": "2,3",
+  "Harrison G": "any",
+  "Scott": "2,3",
+  "Tom": "any",
+  "Reza": "any",
+  "Vincent": "3",
+  "David C": "any",
+  "Gavin": "any",
+  "Matt C": "any",
+  "Sebastian": "any",
+  "Jon": "any",
+  "Chris G": "any",
+  "Bruce": "any",
+  "Korey": "any",
+  "David T": "2,3",
+  "Elizabeth": "3",
+  "David S": "2,3",
+  "Kaitlin": "2,3",
+  "Dhivya": "any",
+  "Daniel": "any"
+};
 
 
 const TARGET_MATCHES_PER_PLAYER = 2;
@@ -516,11 +587,11 @@ async function loadEverything() {
     document.getElementById(
       "status"
     ).textContent =
-      "Loading current ELO ratings from columns G:AX...";
+      "Loading current ELO ratings from columns G:AW...";
 
 
     /*
-      Load the physical G:AX block directly from Google Sheets.
+      Load the physical G:AW block directly from Google Sheets.
     */
 
     const eloData =
@@ -556,7 +627,7 @@ async function loadEverything() {
       sheetData.length +
       " spreadsheet rows loaded. " +
       players.length +
-      " players found from G:AX.";
+      " players found from G:AW.";
 
 
 
@@ -574,6 +645,16 @@ async function loadEverything() {
       .addEventListener(
         "click",
         generateSchedule
+      );
+
+
+    document
+      .getElementById(
+        "downloadPdfButton"
+      )
+      .addEventListener(
+        "click",
+        downloadSchedulePdf
       );
 
 
@@ -624,7 +705,7 @@ async function loadEverything() {
 
 
 /* ============================================================
-   GOOGLE G:AX RANGE LOADER
+   GOOGLE G:AW RANGE LOADER
 
    Uses a script tag / JSONP rather than fetch(),
    so normal browser CORS restrictions do not block it.
@@ -660,7 +741,7 @@ function loadGoogleRangeJSONP(
 
             reject(
               new Error(
-                "Timed out while loading the G:AX ELO range."
+                "Timed out while loading the G:AW ELO range."
               )
             );
 
@@ -814,7 +895,7 @@ function loadGoogleRangeJSONP(
 
           reject(
             new Error(
-              "Google Sheets could not load the G:AX ELO block."
+              "Google Sheets could not load the G:AW ELO block."
             )
           );
 
@@ -928,7 +1009,7 @@ function processMatchHistory() {
 
 
 /* ============================================================
-   ELO RATINGS FROM PHYSICAL G:AX BLOCK
+   ELO RATINGS FROM PHYSICAL G:AW BLOCK
 ============================================================ */
 
 function processEloRatings() {
@@ -944,11 +1025,11 @@ function processEloRatings() {
   */
 
   if (
-    eloHeaders.length !== 44
+    eloHeaders.length !== 43
   ) {
 
     console.warn(
-      "Expected 44 columns in G:AX, received:",
+      "Expected 43 columns in G:AW, received:",
       eloHeaders.length
     );
 
@@ -985,9 +1066,9 @@ function processEloRatings() {
     /*
       IMPORTANT:
 
-      Search THIS physical G:AX column from the bottom upward.
+      Search THIS physical G:AW column from the bottom upward.
 
-      Because the request contains only G:AX,
+      Because the request contains only G:AW,
       a duplicate Amanda/Joe/etc. header in CI:DZ cannot
       interfere with this lookup.
     */
@@ -1051,7 +1132,7 @@ function processEloRatings() {
     else {
 
       console.warn(
-        "No valid ELO found in G:AX for:",
+        "No valid ELO found in G:AW for:",
         playerName
       );
 
@@ -1073,7 +1154,7 @@ function processEloRatings() {
 
 
   console.log(
-    "Current Fall 2026 G:AX ratings:",
+    "Current Fall 2026 G:AW ratings:",
     players
   );
 
@@ -1564,6 +1645,11 @@ async function generateSchedule() {
 
 
   button.disabled =
+    true;
+
+  document.getElementById(
+    "downloadPdfButton"
+  ).disabled =
     true;
 
 
@@ -3418,6 +3504,748 @@ function cloneRoundCandidate(
 
 
 /* ============================================================
+   DOWNLOAD SCHEDULE AS PDF
+============================================================ */
+
+function downloadSchedulePdf() {
+
+  const scheduleTable =
+    document.getElementById(
+      "scheduleTable"
+    );
+
+
+  if (
+    !scheduleTable ||
+    !scheduleTable.querySelector(
+      "tbody tr"
+    )
+  ) {
+
+    alert(
+      "Please generate a schedule first."
+    );
+
+    return;
+
+  }
+
+
+  if (
+    !window.jspdf ||
+    !window.jspdf.jsPDF
+  ) {
+
+    alert(
+      "The PDF library did not load. Please check your internet connection and reload the page."
+    );
+
+    return;
+
+  }
+
+
+  const {
+    jsPDF
+  } =
+    window.jspdf;
+
+
+  const doc =
+    new jsPDF({
+      orientation: "landscape",
+      unit: "pt",
+      format: "letter"
+    });
+
+
+  if (
+    typeof doc.autoTable !==
+    "function"
+  ) {
+
+    alert(
+      "The PDF table library did not load. Please check your internet connection and reload the page."
+    );
+
+    return;
+
+  }
+
+
+  const weekNumber =
+    latestWeek > 0
+      ?
+        latestWeek + 1
+      :
+        1;
+
+
+  const title =
+    "Tilt Fall 2026 — Week " +
+    weekNumber +
+    " Schedule";
+
+
+  /*
+    Compact title.  The old PDF used a subtitle as well,
+    which consumed vertical space.  We omit it here.
+  */
+
+  doc.setFont(
+    "helvetica",
+    "bold"
+  );
+
+  doc.setFontSize(
+    13
+  );
+
+  doc.text(
+    title,
+    22,
+    24
+  );
+
+
+  const headers =
+    Array
+      .from(
+        scheduleTable.querySelectorAll(
+          "thead th"
+        )
+      )
+      .map(
+        th =>
+          th.textContent.trim()
+      );
+
+
+  const body =
+    Array
+      .from(
+        scheduleTable.querySelectorAll(
+          "tbody tr"
+        )
+      )
+      .map(
+        tr =>
+          Array
+            .from(
+              tr.querySelectorAll(
+                "td"
+              )
+            )
+            .map(
+              td => {
+
+                const main =
+                  td.querySelector(
+                    ".match-main"
+                  );
+
+                const info =
+                  td.querySelector(
+                    ".match-info"
+                  );
+
+
+                if (
+                  main
+                ) {
+
+                  /*
+                    Put the match on ONE compact line.
+                    The downloadable PDF shows only the ELO difference.
+                    Example:
+                    Bashi vs Chris O (Delta = 80)
+                  */
+
+                  const matchText =
+                    main.textContent
+                      .replace(
+                        /\s+/g,
+                        " "
+                      )
+                      .trim();
+
+
+                  let deltaText =
+                    "";
+
+
+                  if (
+                    info &&
+                    info.textContent.trim()
+                  ) {
+
+                    const compactInfo =
+                      info.textContent
+                        .replace(
+                          /\s+/g,
+                          " "
+                        )
+                        .trim();
+
+
+                    const deltaMatch =
+                      compactInfo.match(
+                        /Δ\s*([0-9]+(?:\.[0-9]+)?)/
+                      );
+
+
+                    if (
+                      deltaMatch
+                    ) {
+
+                      deltaText =
+                        deltaMatch[1];
+
+                    }
+
+                  }
+
+
+                  if (
+                    deltaText
+                  ) {
+
+                    return (
+                      matchText +
+                      "  (Delta = " +
+                      deltaText +
+                      ")"
+                    );
+
+                  }
+
+
+                  return matchText;
+
+                }
+
+
+                return td.textContent
+                  .replace(
+                    /\s+/g,
+                    " "
+                  )
+                  .trim();
+
+              }
+            )
+      );
+
+
+  doc.autoTable({
+
+    head:
+      [headers],
+
+    body,
+
+    startY:
+      32,
+
+    theme:
+      "grid",
+
+    margin: {
+      left: 16,
+      right: 16,
+      top: 16,
+      bottom: 16
+    },
+
+    styles: {
+
+      font:
+        "helvetica",
+
+      fontSize:
+        7.5,
+
+      cellPadding:
+        2.2,
+
+      minCellHeight:
+        0,
+
+      valign:
+        "middle",
+
+      overflow:
+        "linebreak",
+
+      lineWidth:
+        0.45,
+
+      lineColor:
+        [0, 0, 0],
+
+      textColor:
+        [0, 0, 0]
+
+    },
+
+    headStyles: {
+
+      fontStyle:
+        "bold",
+
+      fontSize:
+        8,
+
+      halign:
+        "center",
+
+      fillColor:
+        [240, 240, 240],
+
+      textColor:
+        [0, 0, 0],
+
+      lineWidth:
+        0.45,
+
+      lineColor:
+        [0, 0, 0],
+
+      cellPadding:
+        2.5
+
+    },
+
+    columnStyles: {
+
+      0: {
+        cellWidth: 56,
+        fontStyle: "bold",
+        halign: "center"
+      },
+
+      1: {
+        halign: "left"
+      },
+
+      2: {
+        halign: "left"
+      },
+
+      3: {
+        halign: "left"
+      }
+
+    },
+
+    /*
+      Do not print page numbers.  The goal is one clean page.
+    */
+
+    showHead:
+      "firstPage"
+
+  });
+
+
+  /*
+    With the compact one-line rows, a normal Tilt schedule
+    should fit on a single landscape-letter page.
+    If an unusually long future schedule spills over, shrink
+    the table onto one page rather than keeping the old large rows.
+  */
+
+  if (
+    doc.internal.getNumberOfPages() > 1
+  ) {
+
+    console.warn(
+      "PDF required more than one page. Consider reducing the PDF font size slightly for an unusually long schedule."
+    );
+
+  }
+
+
+  const filename =
+    "Tilt_Fall_2026_Week_" +
+    weekNumber +
+    "_Schedule.pdf";
+
+
+  doc.save(
+    filename
+  );
+
+}
+
+
+
+/* ============================================================
+   SOFT TABLE ASSIGNMENT
+============================================================ */
+
+function getAllowedTables(
+  playerName
+) {
+
+  const raw =
+    TABLE_PREFS[
+      playerName
+    ];
+
+
+  if (
+    !raw ||
+    String(raw).toLowerCase() === "any"
+  ) {
+
+    return null;
+
+  }
+
+
+  const tables =
+    String(raw)
+      .split(",")
+      .map(
+        value =>
+          Number(
+            value.trim()
+          )
+      )
+      .filter(
+        value =>
+          value >= 1 &&
+          value <= NUMBER_OF_TABLES
+      );
+
+
+  return tables.length
+    ? tables
+    : null;
+
+}
+
+
+function tablePreferencePenalty(
+  playerName,
+  tableNumber
+) {
+
+  const allowed =
+    getAllowedTables(
+      playerName
+    );
+
+
+  if (
+    !allowed ||
+    allowed.includes(
+      tableNumber
+    )
+  ) {
+
+    return 0;
+
+  }
+
+
+  /*
+    A single-table request is treated as stronger than a
+    two-table request, while remaining a soft preference.
+  */
+
+  return allowed.length === 1
+    ? 100
+    : 50;
+
+}
+
+
+function matchTablePreferencePenalty(
+  match,
+  tableNumber
+) {
+
+  return (
+    tablePreferencePenalty(
+      match.player1.name,
+      tableNumber
+    )
+    +
+    tablePreferencePenalty(
+      match.player2.name,
+      tableNumber
+    )
+  );
+
+}
+
+
+function permutations(
+  values
+) {
+
+  if (
+    values.length <= 1
+  ) {
+
+    return [
+      [...values]
+    ];
+
+  }
+
+
+  const result =
+    [];
+
+
+  for (
+    let i = 0;
+    i < values.length;
+    i++
+  ) {
+
+    const rest =
+      [
+        ...values.slice(0,i),
+        ...values.slice(i + 1)
+      ];
+
+
+    for (
+      const tail
+      of permutations(rest)
+    ) {
+
+      result.push([
+        values[i],
+        ...tail
+      ]);
+
+    }
+
+  }
+
+
+  return result;
+
+}
+
+
+function tableSlotChoices(
+  numberOfMatches
+) {
+
+  const tables =
+    [1,2,3];
+
+
+  if (
+    numberOfMatches === 1
+  ) {
+
+    return tables.map(
+      table =>
+        [table]
+    );
+
+  }
+
+
+  if (
+    numberOfMatches === 2
+  ) {
+
+    return [
+      [1,2],
+      [1,3],
+      [2,3]
+    ];
+
+  }
+
+
+  return [
+    [1,2,3]
+  ];
+
+}
+
+
+function assignMatchesToTables(
+  roundMatches
+) {
+
+  if (
+    roundMatches.length === 0
+  ) {
+
+    return [
+      null,
+      null,
+      null
+    ];
+
+  }
+
+
+  /*
+    Rank matches by average ELO. This is only a secondary
+    preference now: table preferences are more important.
+  */
+
+  const eloRanked =
+    [...roundMatches].sort(
+      (a,b) =>
+        b.averageElo -
+        a.averageElo
+    );
+
+
+  const desiredTable =
+    new Map();
+
+
+  eloRanked.forEach(
+    (match,index) => {
+
+      desiredTable.set(
+        match,
+        index + 1
+      );
+
+    }
+  );
+
+
+  let best =
+    null;
+
+
+  const matchOrders =
+    permutations(
+      roundMatches
+    );
+
+
+  const slotChoices =
+    tableSlotChoices(
+      roundMatches.length
+    );
+
+
+  for (
+    const order
+    of matchOrders
+  ) {
+
+    for (
+      const slots
+      of slotChoices
+    ) {
+
+      let score =
+        0;
+
+
+      for (
+        let i = 0;
+        i < order.length;
+        i++
+      ) {
+
+        const match =
+          order[i];
+
+        const tableNumber =
+          slots[i];
+
+
+        /*
+          Primary soft objective: honor player preferences.
+        */
+
+        score +=
+          matchTablePreferencePenalty(
+            match,
+            tableNumber
+          );
+
+
+        /*
+          Secondary objective: keep higher-rated matches
+          toward Table 1 when preferences allow it.
+        */
+
+        score +=
+          Math.abs(
+            desiredTable.get(match) -
+            tableNumber
+          );
+
+
+        /*
+          Tiny tie-breaker: when everything else is equal,
+          prefer using lower-numbered tables first.
+        */
+
+        score +=
+          tableNumber *
+          0.01;
+
+      }
+
+
+      if (
+        !best ||
+        score < best.score
+      ) {
+
+        best = {
+          score,
+          order:
+            [...order],
+          slots:
+            [...slots]
+        };
+
+      }
+
+    }
+
+  }
+
+
+  const assigned =
+    [
+      null,
+      null,
+      null
+    ];
+
+
+  for (
+    let i = 0;
+    i < best.order.length;
+    i++
+  ) {
+
+    assigned[
+      best.slots[i] - 1
+    ] =
+      best.order[i];
+
+  }
+
+
+  return assigned;
+
+}
+
+
+/* ============================================================
    DISPLAY SCHEDULE
 ============================================================ */
 
@@ -3650,7 +4478,7 @@ function displaySchedule(
     roundIndex++
   ) {
 
-    const matches =
+    const roundMatches =
       roundResult.rounds[
         roundIndex
       ]
@@ -3667,12 +4495,19 @@ function displaySchedule(
 
       .filter(
         Boolean
-      )
+      );
 
-      .sort(
-        (a,b) =>
-          b.averageElo -
-          a.averageElo
+
+    /*
+      Assign the matches in this round to Tables 1-3 using
+      the soft table preferences. When preferences do not
+      distinguish between assignments, higher-rated matches
+      still tend toward the lower-numbered tables.
+    */
+
+    const matches =
+      assignMatchesToTables(
+        roundMatches
       );
 
 
@@ -3784,6 +4619,12 @@ function displaySchedule(
     "scheduleTable"
   ).innerHTML =
     html;
+
+
+  document.getElementById(
+    "downloadPdfButton"
+  ).disabled =
+    false;
 
 
 
