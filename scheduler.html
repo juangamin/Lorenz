@@ -344,6 +344,12 @@ th {
 
       Availability entries and removed-player selections are saved
       automatically in this browser for Fall 2026.
+
+      <br><br>
+
+      Matchups from either of the <strong>two most recent weeks</strong>
+      are strongly avoided, but may still be used if needed to make
+      the schedule feasible.
     </p>
 
     <div id="progressArea">
@@ -414,13 +420,14 @@ const MATCH_DATA_URL =
 
 
 /*
-  The rating block is physically G:AW.
-
-  We fetch that exact Google Sheets range separately.
+  Start at column G and fetch a deliberately wide range.
+  The player block ends immediately BEFORE the column whose
+  header is "checksum". This means the scheduler adapts
+  automatically when players are added or removed.
 */
 
 const ELO_RANGE =
-  "G:AW";
+  "G:ZZ";
 
 
 /* ============================================================
@@ -495,6 +502,15 @@ const NUMBER_OF_TABLES = 3;
 const PAIRING_ATTEMPTS = 2200;
 const ROUND_ATTEMPTS = 1800;
 
+/*
+  Strongly avoid pairing two players if they met in either
+  of the two most recent completed weeks. This is a soft
+  penalty rather than a hard prohibition, so the scheduler
+  can still produce a feasible schedule if necessary.
+*/
+const AVOID_RECENT_WEEKS = 2;
+const RECENT_REMATCH_PENALTY = 100000;
+
 
 
 /* ============================================================
@@ -528,6 +544,8 @@ let eloRows = [];
 let players = [];
 
 let matchCounts = {};
+
+let lastPlayedWeek = {};
 
 let latestWeek = 0;
 
@@ -587,11 +605,11 @@ async function loadEverything() {
     document.getElementById(
       "status"
     ).textContent =
-      "Loading current ELO ratings from columns G:AW...";
+      "Loading current ELO ratings from the player block starting at column G...";
 
 
     /*
-      Load the physical G:AW block directly from Google Sheets.
+      Load the physical G through checksum block directly from Google Sheets.
     */
 
     const eloData =
@@ -627,7 +645,7 @@ async function loadEverything() {
       sheetData.length +
       " spreadsheet rows loaded. " +
       players.length +
-      " players found from G:AW.";
+      " players found before the checksum column.";
 
 
 
@@ -705,7 +723,7 @@ async function loadEverything() {
 
 
 /* ============================================================
-   GOOGLE G:AW RANGE LOADER
+   GOOGLE G through checksum RANGE LOADER
 
    Uses a script tag / JSONP rather than fetch(),
    so normal browser CORS restrictions do not block it.
@@ -741,7 +759,7 @@ function loadGoogleRangeJSONP(
 
             reject(
               new Error(
-                "Timed out while loading the G:AW ELO range."
+                "Timed out while loading the G through checksum ELO range."
               )
             );
 
@@ -895,7 +913,7 @@ function loadGoogleRangeJSONP(
 
           reject(
             new Error(
-              "Google Sheets could not load the G:AW ELO block."
+              "Google Sheets could not load the G through checksum ELO block."
             )
           );
 
@@ -925,13 +943,62 @@ function processMatchHistory() {
 
   matchCounts = {};
 
+  lastPlayedWeek = {};
+
   latestWeek = 0;
+
+  let currentWeek = 0;
 
 
   for (
     const row
     of sheetData
   ) {
+
+    /*
+      First determine which week this row belongs to.
+      Week labels such as "Week 13" occur in the same
+      sheet data that contains Player 1 and Player 2.
+    */
+
+    for (
+      const value
+      of Object.values(row)
+    ) {
+
+      if (
+        typeof value !==
+        "string"
+      )
+        continue;
+
+
+      const weekMatch =
+        value.match(
+          /^Week\s*(\d+)$/i
+        );
+
+
+      if (
+        weekMatch
+      ) {
+
+        currentWeek =
+          Number(
+            weekMatch[1]
+          );
+
+
+        latestWeek =
+          Math.max(
+            latestWeek,
+            currentWeek
+          );
+
+      }
+
+    }
+
 
     const p1 =
       cleanName(
@@ -964,38 +1031,21 @@ function processMatchHistory() {
           0
         ) + 1;
 
-    }
 
-
-
-    for (
-      const value
-      of Object.values(row)
-    ) {
+      /*
+        Remember the most recent week in which this pair
+        played. This lets the scheduler strongly avoid
+        immediate repeats.
+      */
 
       if (
-        typeof value !==
-        "string"
-      )
-        continue;
-
-
-      const weekMatch =
-        value.match(
-          /^Week\s*(\d+)$/i
-        );
-
-
-      if (
-        weekMatch
+        currentWeek > 0
       ) {
 
-        latestWeek =
+        lastPlayedWeek[key] =
           Math.max(
-            latestWeek,
-            Number(
-              weekMatch[1]
-            )
+            lastPlayedWeek[key] || 0,
+            currentWeek
           );
 
       }
@@ -1009,7 +1059,7 @@ function processMatchHistory() {
 
 
 /* ============================================================
-   ELO RATINGS FROM PHYSICAL G:AW BLOCK
+   ELO RATINGS FROM G THROUGH THE COLUMN BEFORE CHECKSUM
 ============================================================ */
 
 function processEloRatings() {
@@ -1017,29 +1067,37 @@ function processEloRatings() {
   players = [];
 
 
-  /*
-    We expect 44 columns from G through AX.
+  const checksumIndex =
+    eloHeaders.findIndex(
+      header =>
+        String(
+          header || ""
+        )
+          .trim()
+          .toLowerCase() ===
+        "checksum"
+    );
 
-    We do not depend on this being exactly 44 to continue,
-    but log a warning if the sheet structure changes.
-  */
 
   if (
-    eloHeaders.length !== 43
+    checksumIndex === -1
   ) {
 
-    console.warn(
-      "Expected 43 columns in G:AW, received:",
-      eloHeaders.length
+    throw new Error(
+      'Could not find the "checksum" column after column G.'
     );
 
   }
 
 
+  /*
+    Every column from G up to, but NOT including, checksum
+    is treated as a player column.
+  */
 
   for (
     let columnIndex = 0;
-    columnIndex < eloHeaders.length;
+    columnIndex < checksumIndex;
     columnIndex++
   ) {
 
@@ -1057,20 +1115,13 @@ function processEloRatings() {
       continue;
 
 
-
     let currentElo =
       null;
 
 
-
     /*
-      IMPORTANT:
-
-      Search THIS physical G:AW column from the bottom upward.
-
-      Because the request contains only G:AW,
-      a duplicate Amanda/Joe/etc. header in CI:DZ cannot
-      interfere with this lookup.
+      Search this physical spreadsheet column from the
+      bottom upward and use its most recent numeric ELO.
     */
 
     for (
@@ -1112,7 +1163,6 @@ function processEloRatings() {
     }
 
 
-
     if (
       currentElo !== null
     ) {
@@ -1132,7 +1182,7 @@ function processEloRatings() {
     else {
 
       console.warn(
-        "No valid ELO found in G:AW for:",
+        "No valid ELO found for:",
         playerName
       );
 
@@ -1140,11 +1190,6 @@ function processEloRatings() {
 
   }
 
-
-
-  /*
-    Rank by current ELO.
-  */
 
   players.sort(
     (a,b) =>
@@ -1154,7 +1199,13 @@ function processEloRatings() {
 
 
   console.log(
-    "Current Fall 2026 G:AW ratings:",
+    "Player columns before checksum:",
+    checksumIndex
+  );
+
+
+  console.log(
+    "Current Fall 2026 ratings:",
     players
   );
 
@@ -1827,14 +1878,29 @@ async function generateSchedule() {
           );
 
 
-        const previous =
-          matchCounts[
-            pairKey(
-              a.name,
-              b.name
-            )
-          ] || 0;
+        const key =
+          pairKey(
+            a.name,
+            b.name
+          );
 
+
+        const previous =
+          matchCounts[key] || 0;
+
+
+        const mostRecentWeek =
+          lastPlayedWeek[key] || 0;
+
+
+        const playedRecently =
+          (
+            latestWeek > 0 &&
+            mostRecentWeek > 0 &&
+            mostRecentWeek >=
+              latestWeek -
+              (AVOID_RECENT_WEEKS - 1)
+          );
 
 
         let repeatCost =
@@ -1842,6 +1908,21 @@ async function generateSchedule() {
           previous *
           previous;
 
+
+        /*
+          Strongly avoid a pair that played in either of
+          the two most recent completed weeks. This remains
+          soft so feasibility still wins if necessary.
+        */
+
+        if (
+          playedRecently
+        ) {
+
+          repeatCost +=
+            RECENT_REMATCH_PENALTY;
+
+        }
 
 
         if (
@@ -1865,6 +1946,10 @@ async function generateSchedule() {
           eloDifference,
 
           previous,
+
+          mostRecentWeek,
+
+          playedRecently,
 
           cost:
             eloDifference +
