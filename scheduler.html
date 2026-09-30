@@ -151,6 +151,25 @@ th {
 
 .match-main {
   font-weight: bold;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+.score-box {
+  display: inline-block;
+  width: 25px;
+  height: 20px;
+  border: 1.5px solid #222;
+  border-radius: 2px;
+  background: #fff;
+  box-sizing: border-box;
+  vertical-align: middle;
+}
+
+.match-vs {
+  margin: 0 2px;
 }
 
 .match-info {
@@ -295,12 +314,12 @@ th {
 
       <label>
         Start time
-        <input id="startTime" type="text" value="1800" readonly>
+        <input id="startTime" type="text" value="6:00 PM" readonly>
       </label>
 
       <label>
         Latest league time
-        <input id="endTime" type="text" value="2200">
+        <input id="endTime" type="text" value="10:00 PM">
       </label>
 
       <label>
@@ -332,11 +351,12 @@ th {
       Availability is a <strong>hard constraint</strong>.
 
       Examples:
-      <strong>&lt;1900</strong>,
-      <strong>&gt;=1930</strong>,
-      <strong>1830-2030</strong>,
+      <strong>&lt;7:00</strong>,
+      <strong>&gt;=7:30</strong>,
+      <strong>6:30-8:30</strong>,
       or
-      <strong>&gt;=1800 &lt;2000</strong>.
+      <strong>&gt;=6:00 &lt;8:00</strong>.
+      Times without AM/PM are interpreted as evening times.
 
       Leave blank for unrestricted availability.
 
@@ -366,6 +386,7 @@ th {
 
 
   <h2>Players and Availability</h2>
+  <button id="sortPlayersButton" type="button">Sort by ELO</button>
   <table id="availabilityTable"></table>
 
 
@@ -552,6 +573,10 @@ let latestWeek = 0;
 const excludedPlayers =
   new Set();
 
+/* Player list is alphabetical by default. */
+let playerSortMode =
+  "alpha";
+
 
 
 /* ============================================================
@@ -673,6 +698,17 @@ async function loadEverything() {
       .addEventListener(
         "click",
         downloadSchedulePdf
+      );
+
+
+
+    document
+      .getElementById(
+        "sortPlayersButton"
+      )
+      .addEventListener(
+        "click",
+        togglePlayerSort
       );
 
 
@@ -1191,10 +1227,18 @@ function processEloRatings() {
   }
 
 
+  /*
+    Keep the INTERNAL player order by ELO, as in the previously
+    working scheduler. The availability table has its own display
+    sorting, so it can still appear alphabetically by default
+    without changing the behavior of the matching algorithm.
+  */
   players.sort(
     (a,b) =>
-      b.elo -
-      a.elo
+      b.elo - a.elo ||
+      a.name.localeCompare(
+        b.name
+      )
   );
 
 
@@ -1348,7 +1392,9 @@ function restoreUserSettings() {
       document.getElementById(
         "endTime"
       ).value =
-        savedEndTime;
+        convertStoredTimeExpressionToNormal(
+          savedEndTime
+        );
 
     }
 
@@ -1403,9 +1449,11 @@ function restoreUserSettings() {
         ) {
 
           input.value =
-            savedConstraints[
-              name
-            ];
+            convertStoredTimeExpressionToNormal(
+              savedConstraints[
+                name
+              ]
+            );
 
         }
 
@@ -1469,11 +1517,59 @@ function restoreUserSettings() {
 
 function displayAvailabilityTable() {
 
+  const displayedPlayers =
+    [...players];
+
+
+  if (
+    playerSortMode === "elo"
+  ) {
+
+    displayedPlayers.sort(
+      (a,b) =>
+        b.elo - a.elo ||
+        a.name.localeCompare(
+          b.name
+        )
+    );
+
+  }
+
+  else {
+
+    displayedPlayers.sort(
+      (a,b) =>
+        a.name.localeCompare(
+          b.name
+        )
+    );
+
+  }
+
+
+  const sortButton =
+    document.getElementById(
+      "sortPlayersButton"
+    );
+
+
+  if (
+    sortButton
+  ) {
+
+    sortButton.textContent =
+      playerSortMode === "alpha"
+        ? "Sort by ELO"
+        : "Sort alphabetically";
+
+  }
+
+
   let html = `
 
     <thead>
       <tr>
-        <th>Rank</th>
+        <th>#</th>
         <th>Player</th>
         <th class="number">ELO</th>
         <th>Time constraint</th>
@@ -1486,7 +1582,7 @@ function displayAvailabilityTable() {
 
 
 
-  players.forEach(
+  displayedPlayers.forEach(
     (player,index) => {
 
       html += `
@@ -1515,7 +1611,7 @@ function displayAvailabilityTable() {
               type="text"
               class="constraint-input"
               data-player="${escapeAttribute(player.name)}"
-              placeholder="e.g. <1900"
+              placeholder="e.g. <7:00"
             >
 
           </td>
@@ -1584,6 +1680,29 @@ function displayAvailabilityTable() {
 
       }
     );
+
+}
+
+
+function togglePlayerSort() {
+
+  saveUserSettings();
+
+
+  playerSortMode =
+    playerSortMode === "alpha"
+      ? "elo"
+      : "alpha";
+
+
+  displayAvailabilityTable();
+
+
+  /*
+    Refill the availability values and removed-player state
+    after rebuilding the rows in the new order.
+  */
+  restoreUserSettings();
 
 }
 
@@ -1711,10 +1830,12 @@ async function generateSchedule() {
 
 
     const leagueEnd =
-      parseMilitaryTime(
+      parseNormalLeagueTime(
         document.getElementById(
           "endTime"
-        ).value
+        ).value,
+        leagueStart,
+        24 * 60 - 1
       );
 
 
@@ -1994,6 +2115,24 @@ async function generateSchedule() {
       null;
 
 
+    /*
+      Keep a shortlist of good opponent sets, not just the single
+      lowest-cost one.  A pairing can look excellent by ELO/rematch
+      criteria yet be impossible to place in time once all availability
+      constraints are considered.  The shortlist gives the time-packing
+      stage several strong alternatives to try.
+    */
+
+    const pairingShortlist =
+      [];
+
+    const pairingKeys =
+      new Set();
+
+    const SHORTLIST_SIZE =
+      80;
+
+
 
     for (
       let attempt = 0;
@@ -2032,6 +2171,68 @@ async function generateSchedule() {
           cloneCandidate(
             candidate
           );
+
+      }
+
+
+      const candidateKey =
+        candidate.matches
+          .map(
+            edge =>
+              numericPairKey(
+                edge.i,
+                edge.j
+              )
+          )
+          .sort()
+          .join("|");
+
+
+      if (
+        !pairingKeys.has(
+          candidateKey
+        )
+      ) {
+
+        pairingKeys.add(
+          candidateKey
+        );
+
+        pairingShortlist.push(
+          cloneCandidate(
+            candidate
+          )
+        );
+
+        pairingShortlist.sort(
+          compareMatchSchedules
+        );
+
+        if (
+          pairingShortlist.length >
+          SHORTLIST_SIZE
+        ) {
+
+          const removed =
+            pairingShortlist.pop();
+
+          const removedKey =
+            removed.matches
+              .map(
+                edge =>
+                  numericPairKey(
+                    edge.i,
+                    edge.j
+                  )
+              )
+              .sort()
+              .join("|");
+
+          pairingKeys.delete(
+            removedKey
+          );
+
+        }
 
       }
 
@@ -2090,24 +2291,379 @@ async function generateSchedule() {
     await letBrowserBreathe();
 
 
-    const roundResult =
-      await optimizeCompactRounds(
-        best.matches,
-        scheduledPlayers,
-        leagueStart,
-        leagueEnd
+    let roundResult =
+      null;
+
+    let selectedPairing =
+      null;
+
+
+    /*
+      Try the strongest opponent sets in order until one can actually
+      be placed into the available time slots.  This prevents a single
+      excellent-but-unpackable pairing set from causing the whole
+      scheduler to fail.
+    */
+
+    const candidatesToTry =
+      pairingShortlist.length
+        ? pairingShortlist
+        : [best];
+
+
+    for (
+      let candidateIndex = 0;
+      candidateIndex < candidatesToTry.length;
+      candidateIndex++
+    ) {
+
+      const pairingCandidate =
+        candidatesToTry[
+          candidateIndex
+        ];
+
+
+      showProgress(
+        56 +
+        Math.round(
+          38 *
+          candidateIndex /
+          Math.max(
+            1,
+            candidatesToTry.length
+          )
+        ),
+        "Packing matches into tables..."
       );
+
+
+      const attemptsForThisCandidate =
+        candidateIndex === 0
+          ? ROUND_ATTEMPTS
+          : Math.max(
+              450,
+              Math.floor(
+                ROUND_ATTEMPTS / 3
+              )
+            );
+
+
+      const trialRoundResult =
+        await optimizeCompactRounds(
+          pairingCandidate.matches,
+          scheduledPlayers,
+          leagueStart,
+          leagueEnd,
+          attemptsForThisCandidate
+        );
+
+
+      if (
+        trialRoundResult
+      ) {
+
+        roundResult =
+          trialRoundResult;
+
+        selectedPairing =
+          pairingCandidate;
+
+        break;
+
+      }
+
+
+      await letBrowserBreathe();
+
+    }
+
+
+    /*
+      Strong mode can make the opponent search concentrate so heavily
+      on avoiding repeats that all of its best pairing sets happen to
+      be impossible to place in time.  Because Strong is intended to be
+      a SOFT preference, feasibility should win rather than causing the
+      scheduler to fail.
+
+      If that happens, do a second opponent search using the Moderate
+      repeat penalty as an exploration fallback.  The very large
+      two-recent-weeks penalty is kept, so recent rematches are still
+      strongly avoided.  This fallback is used only after the normal
+      Strong search has exhausted its candidates.
+    */
+
+    let strongModeRelaxed =
+      false;
 
 
     if (
-      !roundResult
+      (
+        !roundResult ||
+        !selectedPairing
+      )
+      &&
+      rematchPenalty >= 250
+    ) {
+
+      showProgress(
+        95,
+        "Strong mode: widening opponent search for feasibility..."
+      );
+
+
+      const fallbackPenalty =
+        125;
+
+
+      const fallbackEdges =
+        edges.map(
+          edge => {
+
+            let fallbackRepeatCost =
+              fallbackPenalty *
+              edge.previous *
+              edge.previous;
+
+
+            if (
+              edge.playedRecently
+            ) {
+
+              fallbackRepeatCost +=
+                RECENT_REMATCH_PENALTY;
+
+            }
+
+
+            return {
+
+              ...edge,
+
+              cost:
+                edge.eloDifference +
+                fallbackRepeatCost
+
+            };
+
+          }
+        );
+
+
+      const fallbackEdgeLookup =
+        new Map();
+
+
+      for (
+        const edge
+        of fallbackEdges
+      ) {
+
+        fallbackEdgeLookup.set(
+          numericPairKey(
+            edge.i,
+            edge.j
+          ),
+          edge
+        );
+
+      }
+
+
+      const fallbackShortlist =
+        [];
+
+      const fallbackKeys =
+        new Set();
+
+      const FALLBACK_SHORTLIST_SIZE =
+        60;
+
+      const FALLBACK_PAIRING_ATTEMPTS =
+        1800;
+
+
+      for (
+        let attempt = 0;
+        attempt < FALLBACK_PAIRING_ATTEMPTS;
+        attempt++
+      ) {
+
+        const candidate =
+          createMatchCandidate(
+            scheduledPlayers,
+            fallbackEdges
+          );
+
+
+        improveMatchCandidate(
+          candidate,
+          scheduledPlayers,
+          fallbackEdgeLookup
+        );
+
+
+        evaluateCandidate(
+          candidate,
+          scheduledPlayers.length
+        );
+
+
+        /*
+          Do not relax the primary fairness goal.  Only keep fallback
+          candidates that are at least as complete as the best Strong
+          candidate on the deficit criteria.
+        */
+        if (
+          candidate.totalDeficit !== best.totalDeficit ||
+          candidate.maxDeficit !== best.maxDeficit ||
+          candidate.squaredDeficit !== best.squaredDeficit ||
+          candidate.completePlayers !== best.completePlayers
+        ) {
+
+          continue;
+
+        }
+
+
+        const candidateKey =
+          candidate.matches
+            .map(
+              edge =>
+                numericPairKey(
+                  edge.i,
+                  edge.j
+                )
+            )
+            .sort()
+            .join("|");
+
+
+        if (
+          fallbackKeys.has(
+            candidateKey
+          )
+        )
+          continue;
+
+
+        fallbackKeys.add(
+          candidateKey
+        );
+
+
+        fallbackShortlist.push(
+          cloneCandidate(
+            candidate
+          )
+        );
+
+
+        fallbackShortlist.sort(
+          compareMatchSchedules
+        );
+
+
+        if (
+          fallbackShortlist.length >
+          FALLBACK_SHORTLIST_SIZE
+        ) {
+
+          const removed =
+            fallbackShortlist.pop();
+
+          const removedKey =
+            removed.matches
+              .map(
+                edge =>
+                  numericPairKey(
+                    edge.i,
+                    edge.j
+                  )
+              )
+              .sort()
+              .join("|");
+
+          fallbackKeys.delete(
+            removedKey
+          );
+
+        }
+
+
+        if (
+          attempt % 40 === 0
+        )
+          await letBrowserBreathe();
+
+      }
+
+
+      for (
+        let candidateIndex = 0;
+        candidateIndex < fallbackShortlist.length;
+        candidateIndex++
+      ) {
+
+        const pairingCandidate =
+          fallbackShortlist[
+            candidateIndex
+          ];
+
+
+        const trialRoundResult =
+          await optimizeCompactRounds(
+            pairingCandidate.matches,
+            scheduledPlayers,
+            leagueStart,
+            leagueEnd,
+            candidateIndex < 8
+              ? 650
+              : 260
+          );
+
+
+        if (
+          trialRoundResult
+        ) {
+
+          roundResult =
+            trialRoundResult;
+
+          selectedPairing =
+            pairingCandidate;
+
+          strongModeRelaxed =
+            true;
+
+          break;
+
+        }
+
+
+        if (
+          candidateIndex % 4 === 0
+        )
+          await letBrowserBreathe();
+
+      }
+
+    }
+
+
+    if (
+      !roundResult ||
+      !selectedPairing
     ) {
 
       throw new Error(
-        "Could not fit these matches into the available time constraints."
+        "Could not fit these matches into the available time constraints, even after widening the Strong-mode search."
       );
 
     }
+
+
+    best =
+      selectedPairing;
 
 
 
@@ -2158,7 +2714,9 @@ async function generateSchedule() {
 
     showProgress(
       100,
-      "Schedule complete."
+      strongModeRelaxed
+        ? "Schedule complete. Strong mode was widened only as needed for feasibility."
+        : "Schedule complete."
     );
 
   }
@@ -2810,6 +3368,60 @@ function isBetterMatchSchedule(
 
 
 
+function compareMatchSchedules(
+  a,
+  b
+) {
+
+  if (
+    a.totalDeficit !==
+    b.totalDeficit
+  )
+    return (
+      a.totalDeficit -
+      b.totalDeficit
+    );
+
+
+  if (
+    a.maxDeficit !==
+    b.maxDeficit
+  )
+    return (
+      a.maxDeficit -
+      b.maxDeficit
+    );
+
+
+  if (
+    a.squaredDeficit !==
+    b.squaredDeficit
+  )
+    return (
+      a.squaredDeficit -
+      b.squaredDeficit
+    );
+
+
+  if (
+    a.completePlayers !==
+    b.completePlayers
+  )
+    return (
+      b.completePlayers -
+      a.completePlayers
+    );
+
+
+  return (
+    a.cost -
+    b.cost
+  );
+
+}
+
+
+
 function cloneCandidate(
   candidate
 ) {
@@ -2852,7 +3464,8 @@ async function optimizeCompactRounds(
   matches,
   players,
   leagueStart,
-  leagueEnd
+  leagueEnd,
+  attemptLimit = ROUND_ATTEMPTS
 ) {
 
   const matchCount =
@@ -2887,7 +3500,7 @@ async function optimizeCompactRounds(
     roundCount++
   ) {
 
-    const capacities =
+    const preferredCapacities =
       createPackedCapacities(
         matchCount,
         roundCount
@@ -2895,7 +3508,7 @@ async function optimizeCompactRounds(
 
 
     if (
-      !capacities
+      !preferredCapacities
     )
       continue;
 
@@ -2928,9 +3541,26 @@ async function optimizeCompactRounds(
 
     for (
       let attempt = 0;
-      attempt < ROUND_ATTEMPTS;
+      attempt < attemptLimit;
       attempt++
     ) {
+
+      /*
+        The old scheduler always forced unused table slots to the end
+        of the night.  That is aesthetically nice, but it can make a
+        perfectly feasible schedule look impossible when several
+        players are available only later.  Keep that packed pattern as
+        the first choice, then also try flexible capacity patterns.
+      */
+
+      const capacities =
+        attempt === 0
+          ? preferredCapacities
+          : createFlexibleCapacities(
+              matchCount,
+              roundCount
+            );
+
 
       const candidate =
         createPackedRoundCandidate(
@@ -3024,6 +3654,83 @@ async function optimizeCompactRounds(
   }
 
 
+  /*
+    The randomized packer above is fast and usually finds a good
+    schedule, but it can occasionally miss a feasible assignment.
+    Before giving up, run an exact backtracking feasibility search.
+    This search allows any round to contain 0-3 matches and therefore
+    does not impose an artificial capacity pattern.
+  */
+
+  const exactDeadline =
+    performance.now() +
+    (
+      attemptLimit >= ROUND_ATTEMPTS
+        ? 3000
+        : 900
+    );
+
+
+  for (
+    let roundCount =
+      theoreticalMinimum;
+
+    roundCount <=
+      maxRounds;
+
+    roundCount++
+  ) {
+
+    if (
+      performance.now() > exactDeadline
+    )
+      break;
+
+
+    const roundTimes =
+      [];
+
+
+    for (
+      let r = 0;
+      r < roundCount;
+      r++
+    ) {
+
+      roundTimes.push(
+        leagueStart +
+        r *
+        MATCH_MINUTES
+      );
+
+    }
+
+
+    const exact =
+      createExactRoundCandidate(
+        matches,
+        players,
+        roundTimes,
+        exactDeadline
+      );
+
+
+    if (
+      exact
+    ) {
+
+      evaluateRoundCandidate(
+        exact,
+        players.length
+      );
+
+      return exact;
+
+    }
+
+  }
+
+
   return null;
 
 }
@@ -3085,6 +3792,101 @@ function createPackedCapacities(
       remaining === 0
     )
       break;
+
+  }
+
+
+  return capacities;
+
+}
+
+
+
+function createFlexibleCapacities(
+  matchCount,
+  roundCount
+) {
+
+  if (
+    matchCount < roundCount ||
+    matchCount >
+    roundCount *
+    NUMBER_OF_TABLES
+  )
+    return null;
+
+
+  const capacities =
+    new Array(
+      roundCount
+    ).fill(1);
+
+
+  let remaining =
+    matchCount -
+    roundCount;
+
+
+  const extraSlots =
+    [];
+
+
+  for (
+    let r = 0;
+    r < roundCount;
+    r++
+  ) {
+
+    for (
+      let k = 1;
+      k < NUMBER_OF_TABLES;
+      k++
+    ) {
+
+      extraSlots.push(
+        r
+      );
+
+    }
+
+  }
+
+
+  for (
+    let i =
+      extraSlots.length - 1;
+    i > 0;
+    i--
+  ) {
+
+    const j =
+      Math.floor(
+        Math.random() *
+        (i + 1)
+      );
+
+
+    const temp =
+      extraSlots[i];
+
+    extraSlots[i] =
+      extraSlots[j];
+
+    extraSlots[j] =
+      temp;
+
+  }
+
+
+  for (
+    let i = 0;
+    i < remaining;
+    i++
+  ) {
+
+    capacities[
+      extraSlots[i]
+    ]++;
 
   }
 
@@ -3338,6 +4140,360 @@ function createPackedRoundCandidate(
     unscheduled,
 
     capacities,
+
+    waitCost:
+      Infinity
+
+  };
+
+}
+
+
+
+/* ============================================================
+   EXACT ROUND ASSIGNMENT FALLBACK
+============================================================ */
+
+function createExactRoundCandidate(
+  matches,
+  players,
+  roundTimes,
+  deadline
+) {
+
+  const matchCount =
+    matches.length;
+
+
+  const allowed =
+    matches.map(
+      edge =>
+        allowedRoundsForEdge(
+          edge,
+          players,
+          roundTimes
+        )
+    );
+
+
+  if (
+    allowed.some(
+      rounds =>
+        rounds.length === 0
+    )
+  )
+    return null;
+
+
+  const rounds =
+    Array.from(
+      {
+        length:
+          roundTimes.length
+      },
+      () => []
+    );
+
+
+  const playerRounds =
+    Array.from(
+      {
+        length:
+          players.length
+      },
+      () => []
+    );
+
+
+  const assigned =
+    new Array(
+      matchCount
+    ).fill(false);
+
+
+  let assignedCount =
+    0;
+
+  let nodes =
+    0;
+
+
+  function feasibleRoundsFor(
+    matchIndex
+  ) {
+
+    const edge =
+      matches[
+        matchIndex
+      ];
+
+
+    const choices =
+      [];
+
+
+    for (
+      const round
+      of allowed[
+        matchIndex
+      ]
+    ) {
+
+      if (
+        rounds[round].length >=
+        NUMBER_OF_TABLES
+      )
+        continue;
+
+
+      if (
+        playerRounds[
+          edge.i
+        ].includes(
+          round
+        )
+      )
+        continue;
+
+
+      if (
+        playerRounds[
+          edge.j
+        ].includes(
+          round
+        )
+      )
+        continue;
+
+
+      const waitIncrease =
+        incrementalWaitingCost(
+          playerRounds[
+            edge.i
+          ],
+          round
+        )
+        +
+        incrementalWaitingCost(
+          playerRounds[
+            edge.j
+          ],
+          round
+        );
+
+
+      choices.push({
+
+        round,
+
+        /*
+          Prefer already-used rounds for compactness, then lower
+          waiting, then earlier rounds.  These affect search order
+          only; feasibility is never sacrificed.
+        */
+        score:
+          waitIncrease * 100
+          -
+          rounds[round].length * 12
+          +
+          round * 0.02
+
+      });
+
+    }
+
+
+    choices.sort(
+      (a,b) =>
+        a.score -
+        b.score
+    );
+
+
+    return choices;
+
+  }
+
+
+  function search() {
+
+    nodes++;
+
+
+    if (
+      nodes % 1500 === 0 &&
+      performance.now() > deadline
+    )
+      return false;
+
+
+    if (
+      assignedCount ===
+      matchCount
+    )
+      return true;
+
+
+    let selectedIndex =
+      -1;
+
+    let selectedChoices =
+      null;
+
+
+    /*
+      Minimum-remaining-values rule: always schedule the currently
+      most constrained match first.  This makes the exact search much
+      faster than assigning matches in a fixed order.
+    */
+    for (
+      let i = 0;
+      i < matchCount;
+      i++
+    ) {
+
+      if (
+        assigned[i]
+      )
+        continue;
+
+
+      const choices =
+        feasibleRoundsFor(
+          i
+        );
+
+
+      if (
+        choices.length === 0
+      )
+        return false;
+
+
+      if (
+        selectedChoices === null ||
+        choices.length <
+        selectedChoices.length
+      ) {
+
+        selectedIndex =
+          i;
+
+        selectedChoices =
+          choices;
+
+
+        if (
+          choices.length === 1
+        )
+          break;
+
+      }
+
+    }
+
+
+    const edge =
+      matches[
+        selectedIndex
+      ];
+
+
+    for (
+      const choice
+      of selectedChoices
+    ) {
+
+      const round =
+        choice.round;
+
+
+      assigned[
+        selectedIndex
+      ] =
+        true;
+
+      assignedCount++;
+
+
+      rounds[round].push(
+        edge
+      );
+
+      playerRounds[
+        edge.i
+      ].push(
+        round
+      );
+
+      playerRounds[
+        edge.j
+      ].push(
+        round
+      );
+
+
+      if (
+        search()
+      )
+        return true;
+
+
+      playerRounds[
+        edge.j
+      ].pop();
+
+      playerRounds[
+        edge.i
+      ].pop();
+
+      rounds[round].pop();
+
+
+      assignedCount--;
+
+      assigned[
+        selectedIndex
+      ] =
+        false;
+
+
+      if (
+        performance.now() > deadline
+      )
+        return false;
+
+    }
+
+
+    return false;
+
+  }
+
+
+  if (
+    !search()
+  )
+    return null;
+
+
+  return {
+
+    rounds,
+
+    roundTimes,
+
+    playerRounds,
+
+    unscheduled:
+      [],
+
+    capacities:
+      new Array(
+        roundTimes.length
+      ).fill(
+        NUMBER_OF_TABLES
+      ),
 
     waitCost:
       Infinity
@@ -3743,16 +4899,33 @@ function downloadSchedulePdf() {
                     Put the match on ONE compact line.
                     The downloadable PDF shows only the ELO difference.
                     Example:
-                    Bashi vs Chris O (Delta = 80)
+                    Bashi [    ] vs Chris O [    ] (Delta = 80)
                   */
 
+                  const player1Name =
+                    main.querySelector(
+                      ".player1-name"
+                    )?.textContent.trim() || "";
+
+                  const player2Name =
+                    main.querySelector(
+                      ".player2-name"
+                    )?.textContent.trim() || "";
+
+                  /*
+                    Printable score boxes. Square brackets are used
+                    instead of a Unicode box so they render reliably
+                    with jsPDF's built-in Helvetica font.
+                  */
                   const matchText =
-                    main.textContent
-                      .replace(
-                        /\s+/g,
-                        " "
-                      )
-                      .trim();
+                    player1Name && player2Name
+                      ? player1Name + " [    ]  vs  " + player2Name + " [    ]"
+                      : main.textContent
+                          .replace(
+                            /\s+/g,
+                            " "
+                          )
+                          .trim();
 
 
                   let deltaText =
@@ -4526,14 +5699,17 @@ function displaySchedule(
 
       <br>
 
-      Player waiting score:
+      Average waiting time between matches:
       <strong>
-        ${roundResult.waitCost}
+        ${complete > 0
+          ? (
+              roundResult.waitCost *
+              MATCH_MINUTES /
+              complete
+            ).toFixed(1)
+          : "0.0"}
+        minutes
       </strong>
-
-      <span class="small">
-        (lower is better)
-      </span>
 
     </div>
   `;
@@ -4645,15 +5821,23 @@ function displaySchedule(
 
           <div class="match-main">
 
-            ${escapeHtml(
+            <span class="player-name player1-name">${escapeHtml(
               match.player1.name
-            )}
+            )}</span>
 
-            vs
+            <span class="score-box" title="Score for ${escapeHtml(
+              match.player1.name
+            )}"></span>
 
-            ${escapeHtml(
+            <span class="match-vs">vs</span>
+
+            <span class="player-name player2-name">${escapeHtml(
               match.player2.name
-            )}
+            )}</span>
+
+            <span class="score-box" title="Score for ${escapeHtml(
+              match.player2.name
+            )}"></span>
 
           </div>
 
@@ -5131,9 +6315,8 @@ function parseAvailability(
   }
 
 
-
   const cleaned =
-    text
+    String(text)
       .replace(
         /\s+/g,
         " "
@@ -5141,10 +6324,14 @@ function parseAvailability(
       .trim();
 
 
-
+  /*
+    Range, for example 6:30-8:30 or 6:30 PM-8:30 PM.
+    Legacy military-time ranges are still accepted so old
+    browser-saved settings continue to work.
+  */
   const range =
     cleaned.match(
-      /^(\d{3,4})\s*-\s*(\d{3,4})$/
+      /^(.+?)\s*-\s*(.+?)$/
     );
 
 
@@ -5153,14 +6340,18 @@ function parseAvailability(
   ) {
 
     const low =
-      parseMilitaryTime(
-        range[1]
+      parseNormalLeagueTime(
+        range[1],
+        leagueStart,
+        leagueEnd
       );
 
 
     const high =
-      parseMilitaryTime(
-        range[2]
+      parseNormalLeagueTime(
+        range[2],
+        leagueStart,
+        leagueEnd
       );
 
 
@@ -5172,34 +6363,22 @@ function parseAvailability(
       return null;
 
 
-    const min =
-      Math.max(
-        leagueStart,
-        low
-      );
-
-
-    const max =
-      Math.min(
-        leagueEnd,
-        high
-      );
-
-
-    if (
-      min > max
-    )
-      return null;
-
-
     return {
 
-      min,
+      min:
+        Math.max(
+          leagueStart,
+          low
+        ),
 
       minInclusive:
         true,
 
-      max,
+      max:
+        Math.min(
+          leagueEnd,
+          high
+        ),
 
       maxInclusive:
         true
@@ -5209,16 +6388,18 @@ function parseAvailability(
   }
 
 
-
+  /* Exact time, for example 7:15 or 7:15 PM. */
   if (
-    /^\d{3,4}$/.test(
+    !/^(<=|>=|<|>)/.test(
       cleaned
     )
   ) {
 
     const exact =
-      parseMilitaryTime(
-        cleaned
+      parseNormalLeagueTime(
+        cleaned,
+        leagueStart,
+        leagueEnd
       );
 
 
@@ -5249,24 +6430,32 @@ function parseAvailability(
   }
 
 
+  /*
+    One or more comparison clauses, for example:
+    <7:00
+    >=7:30
+    >=6:00 <8:00
+  */
+  const clauseRegex =
+    /(<=|>=|<|>)\s*((?:\d{1,2}:\d{2}|\d{3,4})(?:\s*[AaPp][Mm])?)/g;
+
 
   const clauses =
-    cleaned.match(
-      /(<=|>=|<|>)\s*\d{3,4}/g
-    );
+    [...cleaned.matchAll(
+      clauseRegex
+    )];
 
 
   if (
-    !clauses
+    clauses.length === 0
   )
     return null;
-
 
 
   const residue =
     cleaned
       .replace(
-        /(<=|>=|<|>)\s*\d{3,4}/g,
+        clauseRegex,
         ""
       )
       .trim();
@@ -5276,7 +6465,6 @@ function parseAvailability(
     residue
   )
     return null;
-
 
 
   let min =
@@ -5292,31 +6480,20 @@ function parseAvailability(
     true;
 
 
-
   for (
-    const clause
+    const match
     of clauses
   ) {
-
-    const match =
-      clause.match(
-        /^(<=|>=|<|>)\s*(\d{3,4})$/
-      );
-
-
-    if (
-      !match
-    )
-      return null;
-
 
     const operator =
       match[1];
 
 
     const time =
-      parseMilitaryTime(
-        match[2]
+      parseNormalLeagueTime(
+        match[2],
+        leagueStart,
+        leagueEnd
       );
 
 
@@ -5324,7 +6501,6 @@ function parseAvailability(
       time === null
     )
       return null;
-
 
 
     if (
@@ -5350,7 +6526,11 @@ function parseAvailability(
     ) {
 
       if (
-        time > min
+        time > min ||
+        (
+          time === min &&
+          !minInclusive
+        )
       ) {
 
         min =
@@ -5386,7 +6566,11 @@ function parseAvailability(
     ) {
 
       if (
-        time < max
+        time < max ||
+        (
+          time === max &&
+          !maxInclusive
+        )
       ) {
 
         max =
@@ -5400,7 +6584,6 @@ function parseAvailability(
     }
 
   }
-
 
 
   if (
@@ -5417,7 +6600,6 @@ function parseAvailability(
     )
   )
     return null;
-
 
 
   return {
@@ -5596,6 +6778,235 @@ function numericPairKey(
     b +
     "|||" +
     a
+  );
+
+}
+
+
+
+function parseNormalLeagueTime(
+  value,
+  leagueStart = 0,
+  leagueEnd = 24 * 60 - 1
+) {
+
+  const original =
+    String(value)
+      .trim();
+
+
+  if (
+    !original
+  )
+    return null;
+
+
+  /*
+    Keep accepting legacy military-time values such as 1915
+    and 2200. This makes existing saved browser settings safe.
+  */
+  if (
+    /^\d{3,4}$/.test(
+      original
+    )
+  ) {
+
+    return parseMilitaryTime(
+      original
+    );
+
+  }
+
+
+  const match =
+    original.match(
+      /^(\d{1,2}):(\d{2})(?:\s*([AaPp][Mm]))?$/
+    );
+
+
+  if (
+    !match
+  )
+    return null;
+
+
+  let hour =
+    Number(
+      match[1]
+    );
+
+
+  const minute =
+    Number(
+      match[2]
+    );
+
+
+  const suffix =
+    match[3]
+      ? match[3].toUpperCase()
+      : null;
+
+
+  if (
+    minute < 0 ||
+    minute > 59
+  )
+    return null;
+
+
+  if (
+    suffix
+  ) {
+
+    if (
+      hour < 1 ||
+      hour > 12
+    )
+      return null;
+
+
+    if (
+      suffix === "AM"
+    ) {
+
+      if (
+        hour === 12
+      )
+        hour = 0;
+
+    }
+
+    else {
+
+      if (
+        hour !== 12
+      )
+        hour += 12;
+
+    }
+
+
+    return (
+      hour * 60 +
+      minute
+    );
+
+  }
+
+
+  /*
+    No AM/PM was supplied. For this evening league, interpret
+    the typed 12-hour clock value using the league window.
+    For example, 7:15 becomes 7:15 PM rather than 7:15 AM.
+  */
+  if (
+    hour < 1 ||
+    hour > 12
+  )
+    return null;
+
+
+  const candidates =
+    [];
+
+
+  let amHour =
+    hour === 12
+      ? 0
+      : hour;
+
+
+  let pmHour =
+    hour === 12
+      ? 12
+      : hour + 12;
+
+
+  candidates.push(
+    amHour * 60 + minute,
+    pmHour * 60 + minute
+  );
+
+
+  const inWindow =
+    candidates.filter(
+      time =>
+        time >= leagueStart &&
+        time <= leagueEnd
+    );
+
+
+  if (
+    inWindow.length === 1
+  )
+    return inWindow[0];
+
+
+  if (
+    inWindow.length > 1
+  )
+    return inWindow[0];
+
+
+  /*
+    If neither falls inside the supplied window, favor the PM
+    interpretation because Tilt's league night is in the evening.
+  */
+  return candidates[1];
+
+}
+
+
+function convertStoredTimeExpressionToNormal(
+  value
+) {
+
+  const text =
+    String(
+      value ?? ""
+    )
+      .trim();
+
+
+  if (
+    !text
+  )
+    return "";
+
+
+  /* Already a normal clock expression. */
+  if (
+    text.includes(":")
+  )
+    return text;
+
+
+  return text.replace(
+    /\b(\d{3,4})\b/g,
+    match => {
+
+      const minutes =
+        parseMilitaryTime(
+          match
+        );
+
+
+      if (
+        minutes === null
+      )
+        return match;
+
+
+      return formatRegularTime(
+        minutes
+      )
+        .replace(
+          /\s+[AP]M$/,
+          ""
+        );
+
+    }
   );
 
 }
