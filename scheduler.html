@@ -393,7 +393,7 @@ th,td { border-color:var(--border); }
 
 <body>
 
-<header class="page-header"><div><p class="eyebrow">TILT TABLE TENNIS · FALL 2026</p><h1>Tilt scheduler</h1></div><span class="private-badge">Local file</span></header>
+<header class="page-header"><div><p class="eyebrow">TILT TABLE TENNIS · FALL 2026</p><h1>Tilt Fall 2026 Scheduler</h1></div><span class="private-badge">Local file</span></header>
 
 <div class="subtitle">
   Two matches per player with ELO matching,
@@ -434,7 +434,7 @@ th,td { border-color:var(--border); }
         </select>
       </label>
 
-      <label>Recent weeks to avoid<select id="recentWeeks"><option value="1">Last week</option><option value="2" selected>Last two weeks</option></select></label>
+      <label>Recent weeks to avoid<select id="recentWeeks"><option value="1">Last week</option><option value="2">Last two weeks</option><option value="3" selected>Last three weeks</option></select></label>
       <button id="generateButton">
         Generate Schedule
       </button>
@@ -448,7 +448,7 @@ th,td { border-color:var(--border); }
     <p class="small">
       The schedule always begins at <strong>6:00 PM</strong>.
       Each active player receives <strong>2 different opponents</strong>
-      whenever possible. Each match lasts <strong>15 minutes</strong>.
+      whenever possible. Each match lasts <strong>15 minutes</strong>. Each table runs continuously until its last match; unused slots are kept at the end.
 
       Availability is a <strong>hard constraint</strong>. Ranges and upper bounds apply to the full match; a single time means a match starts then. Each round starts on a 15-minute grid.
 
@@ -469,7 +469,7 @@ th,td { border-color:var(--border); }
 
       <br><br>
 
-      With repeat avoidance enabled, matchups from either of the <strong>two most recent weeks</strong> are avoided first. Strong also avoids a fourth meeting. Repeat preferences relax only if needed to find a schedule; any repeats are listed below.
+      With repeat avoidance enabled, pairings from the <strong>last three completed weeks</strong> are strongly discouraged by default. You can choose a shorter window above. Strong also avoids a fourth meeting. Repeat preferences relax only if needed to find a schedule; any repeats are listed below.
     </p>
 
     <div id="progressArea">
@@ -1005,7 +1005,7 @@ function(t){t.__bidiEngine__=t.prototype.__bidiEngine__=function(t){var r,n,i,a,
     const finish = a.startOnly ? time : time + duration;
     return finish < a.max || (finish === a.max && a.maxInclusive);
   }
-  function makeEdges(players, history, lastPlayed, latestWeek, penalty, recentWeeks = 2) {
+  function makeEdges(players, history, lastPlayed, latestWeek, penalty, recentWeeks = 3) {
     const edges = [];
     for (let i = 0; i < players.length; i++) for (let j = i + 1; j < players.length; j++) {
       const names = [players[i].name, players[j].name].sort().join('|||');
@@ -1028,6 +1028,7 @@ function(t){t.__bidiEngine__=t.prototype.__bidiEngine__=function(t){var r,n,i,a,
       if (time !== start + r * duration) errors.push('Non-contiguous round times');
       if (!round.length) errors.push('An empty round creates a gap');
       if (round.length > tables) errors.push('Too many simultaneous matches');
+      if (r > 0 && round.length > result.rounds[r - 1].length) errors.push('An idle table is used again later');
       if (time + duration > end) errors.push('Match ends after closing time');
       for (const edge of round) {
         const key = pairKey(edge.i, edge.j);
@@ -1052,13 +1053,29 @@ function(t){t.__bidiEngine__=t.prototype.__bidiEngine__=function(t){var r,n,i,a,
     const waitCost = playerRounds.reduce((sum, rs) => sum +
       (rs.length === 2 ? Math.max(0, Math.abs(rs[1] - rs[0]) - 1) : 0), 0);
     return {rounds: rounds.map(r => [...r]), roundTimes: rounds.map((_, r) => start + r * duration),
-      playerRounds, waitCost, unscheduled: [], capacities: rounds.map(() => 3), ...metadata};
+      playerRounds, waitCost, unscheduled: [], capacities: rounds.map(r => r.length), ...metadata};
+  }
+  // Table counts can only decrease: occupied tables are a continuous prefix
+  // from kickoff until each table's last match. Prefer the fullest first rounds.
+  function packedProfiles(matchCount, roundCount, tables) {
+    const profiles = [];
+    function build(remaining, roundsLeft, maximum, prefix) {
+      if (!roundsLeft) {if (!remaining) profiles.push(prefix); return;}
+      for (let count = Math.min(maximum, remaining - roundsLeft + 1); count >= 1; count--) {
+        const rest = remaining - count;
+        if (rest < roundsLeft - 1 || rest > count * (roundsLeft - 1)) continue;
+        build(rest, roundsLeft - 1, count, [...prefix, count]);
+      }
+    }
+    build(matchCount, roundCount, tables, []);
+    return profiles;
   }
   // Opponents and times are one constraint problem. Repeat and ELO costs order
   // choices; they never rule out a feasible schedule in the final search pass.
   async function solve(players, edges, start, end, options = {}) {
     const duration = options.duration || 15, tables = options.tables || 3;
     const maxRounds = Math.floor((end - start) / duration), n = players.length;
+    const parallelLimit = Math.min(tables, Math.floor(n / 2));
     const totalBudget = options.budgetMs || 10000, deadline = now() + totalBudget;
     const onProgress = options.onProgress || (() => {});
     const available = players.map(p => Array.from({length: maxRounds}, (_, r) => r)
@@ -1082,11 +1099,15 @@ function(t){t.__bidiEngine__=t.prototype.__bidiEngine__=function(t){var r,n,i,a,
       if (adjacency.some(a => a.length < 2) || available.some(a => a.length < 2)) continue;
       const phaseDeadline = phaseIndex === phases.length - 1 ? deadline :
         Math.min(deadline, now() + totalBudget / phases.length);
-      let minimum = Math.max(n === 3 ? 3 : 2, Math.ceil(n / tables), ...available.map(a => a[1] + 1));
+      let minimum = Math.max(n === 3 ? 3 : 2, Math.ceil(n / parallelLimit), ...available.map(a => a[1] + 1));
       for (let roundCount = minimum; roundCount <= Math.min(maxRounds, n); roundCount++) {
         if (now() >= phaseDeadline) break;
+        const profiles = packedProfiles(n, roundCount, parallelLimit);
+        for (let profileIndex = 0; profileIndex < profiles.length; profileIndex++) {
+        if (now() >= phaseDeadline) break;
+        const capacities = profiles[profileIndex];
         const attemptDeadline = Math.min(phaseDeadline, now() + Math.max(150,
-          (phaseDeadline - now()) / Math.min(5, maxRounds - roundCount + 1)));
+          (phaseDeadline - now()) / Math.min(5, (maxRounds - roundCount + 1) * profiles.length - profileIndex)));
         onProgress({phase: phase.label, phaseIndex, roundCount}); await pause();
         const allowed = candidates.map(e => e.allowed.filter(r => r < roundCount));
         const rounds = Array.from({length: roundCount}, () => []);
@@ -1099,7 +1120,7 @@ function(t){t.__bidiEngine__=t.prototype.__bidiEngine__=function(t){var r,n,i,a,
             const e = candidates[k], other = e.i === p ? e.j : e.i;
             if (used.has(k) || degree[other] >= 2) continue;
             for (const r of allowed[k]) {
-              if (rounds[r].length >= tables || occupied[p].has(r) || occupied[other].has(r)) continue;
+              if (rounds[r].length >= capacities[r] || occupied[p].has(r) || occupied[other].has(r)) continue;
               const previousP = [...occupied[p]][0], previousO = [...occupied[other]][0];
               const waiting = (previousP == null ? 0 : Math.max(0, Math.abs(r - previousP) - 1)) +
                 (previousO == null ? 0 : Math.max(0, Math.abs(r - previousO) - 1));
@@ -1111,7 +1132,7 @@ function(t){t.__bidiEngine__=t.prototype.__bidiEngine__=function(t){var r,n,i,a,
         function search() {
           nodes++;
           if (nodes % 128 === 0 && now() > attemptDeadline) { timedOut = true; return false; }
-          if (count === n) return rounds.every(r => r.length > 0);
+          if (count === n) return rounds.every((r, index) => r.length === capacities[index]);
           if (rounds.filter(r => !r.length).length > n - count) return false;
           let selected = -1, choices = null, priority = Infinity;
           for (let p = 0; p < n; p++) {
@@ -1121,11 +1142,15 @@ function(t){t.__bidiEngine__=t.prototype.__bidiEngine__=function(t){var r,n,i,a,
             const score = c.length / need;
             if (score < priority) { selected = p; choices = c; priority = score; }
           }
-          // An empty round must still have a possible match, otherwise the
-          // requested no-gap schedule cannot be completed from this branch.
-          for (let r = 0; r < roundCount; r++) if (!rounds[r].length && !candidates.some((e, k) =>
-            !used.has(k) && degree[e.i] < 2 && degree[e.j] < 2 && allowed[k].includes(r) &&
-            !occupied[e.i].has(r) && !occupied[e.j].has(r))) return false;
+          // Every remaining table slot must have enough available players and
+          // candidate matches. This prunes impossible capacity profiles early.
+          for (let r = 0; r < roundCount; r++) {
+            const slots = capacities[r] - rounds[r].length;
+            if (!slots) continue;
+            const possible = candidates.filter((e, k) => !used.has(k) && degree[e.i] < 2 && degree[e.j] < 2 &&
+              allowed[k].includes(r) && !occupied[e.i].has(r) && !occupied[e.j].has(r));
+            if (possible.length < slots || new Set(possible.flatMap(e => [e.i, e.j])).size < slots * 2) return false;
+          }
           choices.sort((a, b) => a.score - b.score);
           for (const {k, r} of choices) {
             const e = candidates[k];
@@ -1146,6 +1171,7 @@ function(t){t.__bidiEngine__=t.prototype.__bidiEngine__=function(t){var r,n,i,a,
           if (!checked.ok) throw new Error('Schedule validation failed: ' + checked.errors.join('; '));
           return result;
         }
+        }
       }
     }
     // Return an honest partial schedule when availability/capacity prevents a
@@ -1155,7 +1181,8 @@ function(t){t.__bidiEngine__=t.prototype.__bidiEngine__=function(t){var r,n,i,a,
       const degree = Array(n).fill(0), used = new Set(), rounds = [];
       for (let r = 0; r < Math.min(maxRounds, n); r++) {
         const round = [], occupied = new Set();
-        while (round.length < tables) {
+        const capacity = r ? rounds[r - 1].length : parallelLimit;
+        while (round.length < capacity) {
           const candidates = usable.filter(e => e.allowed.includes(r) && degree[e.i] < 2 && degree[e.j] < 2 &&
             !occupied.has(e.i) && !occupied.has(e.j) && !used.has(pairKey(e.i, e.j)));
           candidates.sort((a, b) => {
@@ -1220,6 +1247,7 @@ function(t){t.__bidiEngine__=t.prototype.__bidiEngine__=function(t){var r,n,i,a,
     function reorder() {
       let changed = false, current = waiting();
       for(let a=0;a<rounds.length;a++)for(let b=a+1;b<rounds.length;b++) {
+        if(rounds[a].length !== rounds[b].length) continue;
         if(!rounds[a].every(e=>fits(times[b],players[e.i].availability,duration)&&fits(times[b],players[e.j].availability,duration)) ||
           !rounds[b].every(e=>fits(times[a],players[e.i].availability,duration)&&fits(times[a],players[e.j].availability,duration))) continue;
         [rounds[a],rounds[b]]=[rounds[b],rounds[a]];
@@ -1383,26 +1411,47 @@ function(t){t.__bidiEngine__=t.prototype.__bidiEngine__=function(t){var r,n,i,a,
 })(typeof globalThis !== 'undefined' ? globalThis : this, function () {
   'use strict';
   function build(jsPDF, autoTable, title, rows) {
-    // Retry with progressively smaller text only when a future roster would
-    // otherwise spill onto a second page. Typical nights use 7.5pt text.
-    for (const fontSize of [7.5, 7, 6.5, 6, 5.5, 5]) {
+    const body = rows.map(row => row.map((text, column) => column ? String(text)
+      .replace(/\s*\((Delta\s*=\s*[^)]+)\)\s*$/, '\n$1') : text));
+    const margin = 24, startY = 44, pageWidth = 792, pageHeight = 612;
+    const timeWidth = 64, matchWidth = (pageWidth - margin * 2 - timeWidth) / 3;
+    const bottom = pageHeight - margin;
+    function render(fontSize, rowHeights) {
       const doc = new jsPDF({orientation: 'landscape', unit: 'pt', format: 'letter'});
-      doc.setFont('helvetica', 'bold'); doc.setFontSize(13);
-      doc.text(title.replace(/[—–]/g, '-'), 22, 24);
-      const options = {head: [['Time', 'Table 1', 'Table 2', 'Table 3']], body: rows,
-        startY: 34, theme: 'grid', margin: {left: 16, right: 16, top: 16, bottom: 16},
-        styles: {font: 'helvetica', fontSize, cellPadding: fontSize >= 7 ? 2.2 : 1.6,
+      doc.setFont('helvetica', 'bold'); doc.setFontSize(17);
+      doc.text(title.replace(/[—–]/g, '-'), margin, 29);
+      const options = {head: [['Time', 'Table 1', 'Table 2', 'Table 3']], body,
+        startY, theme: 'grid', margin: {left: margin, right: margin, top: margin, bottom: margin},
+        styles: {font: 'helvetica', fontSize, cellPadding: fontSize >= 10 ? 2.25 : 1.6,
           valign: 'middle', overflow: 'linebreak', lineWidth: .45,
           lineColor: [30, 50, 40], textColor: [0, 0, 0]},
-        headStyles: {fontStyle: 'bold', fontSize: 8, halign: 'center', fillColor: [235, 241, 236],
-          textColor: [0, 0, 0], cellPadding: 3},
-        columnStyles: {0: {cellWidth: 56, fontStyle: 'bold', halign: 'center'},
-          1: {cellWidth: 234.66}, 2: {cellWidth: 234.66}, 3: {cellWidth: 234.68}},
+        headStyles: {fontStyle: 'bold', fontSize: Math.min(12, fontSize), halign: 'center',
+          fillColor: [235, 241, 236], textColor: [0, 0, 0], cellPadding: 3},
+        columnStyles: {0: {cellWidth: timeWidth, fontStyle: 'bold', halign: 'center'},
+          1: {cellWidth: matchWidth}, 2: {cellWidth: matchWidth}, 3: {cellWidth: matchWidth}},
+        didParseCell: cell => {
+          if (cell.section === 'body' && rowHeights) cell.cell.styles.minCellHeight = rowHeights[cell.row.index];
+        },
         showHead: 'firstPage', rowPageBreak: 'avoid'};
       if (typeof autoTable === 'function') autoTable(doc, options);
       else if (typeof doc.autoTable === 'function') doc.autoTable(options);
       else throw new Error('PDF table library unavailable. Refresh the page.');
-      if (doc.internal.getNumberOfPages() === 1) return doc;
+      return doc;
+    }
+    // Choose the largest readable text that fits. Delta gets its own line,
+    // rather than squeezing both players and the rating difference onto one.
+    for (let fontSize = 14; fontSize >= 5; fontSize -= .5) {
+      const measured = render(fontSize);
+      if (measured.internal.getNumberOfPages() !== 1) continue;
+      const table = measured.lastAutoTable;
+      if (!rows.length) return measured;
+      const extra = Math.max(0, bottom - table.finalY - .5) / rows.length;
+      // Spread spare vertical space evenly so short schedules use the sheet,
+      // while retaining any extra height required by long player names.
+      const heights = table.body.map(row => row.height + extra);
+      const expanded = render(fontSize, heights);
+      if (expanded.internal.getNumberOfPages() === 1) return expanded;
+      return measured;
     }
     throw new Error('This schedule is too large for a readable one-page PDF. Reduce the roster or use shorter display names.');
   }
@@ -1507,12 +1556,12 @@ const MATCH_MINUTES = 15;
 const NUMBER_OF_TABLES = 3;
 
 /*
-  Strongly avoid pairing two players if they met in either
-  of the two most recent completed weeks. This is a soft
+  Strongly avoid pairing two players if they met in any
+  of the three most recent completed weeks. This is a soft
   penalty rather than a hard prohibition, so the scheduler
   can still produce a feasible schedule if necessary.
 */
-const AVOID_RECENT_WEEKS = 2;
+const AVOID_RECENT_WEEKS = 3;
 const RECENT_REMATCH_PENALTY = 100000;
 
 /* ============================================================
@@ -1856,7 +1905,7 @@ function loadGoogleRangeJSONP(
 ============================================================ */
 
 function saveUserSettings() {
-  try {localStorage.setItem("tilt_fall2026_recentWeeks", document.getElementById("recentWeeks").value);} catch (_) {}
+  try {localStorage.setItem("tilt_fall2026_recentWeeks_v2", document.getElementById("recentWeeks").value);} catch (_) {}
 
   const constraints =
     {};
@@ -1924,7 +1973,7 @@ function saveUserSettings() {
 ============================================================ */
 
 function restoreUserSettings() {
-  try {const saved = localStorage.getItem("tilt_fall2026_recentWeeks"); if (saved === "1" || saved === "2") document.getElementById("recentWeeks").value = saved;} catch (_) {}
+  try {const saved = localStorage.getItem("tilt_fall2026_recentWeeks_v2"); if (["1", "2", "3"].includes(saved)) document.getElementById("recentWeeks").value = saved; else document.getElementById("recentWeeks").value = "3";} catch (_) {}
 
   let savedConstraints =
     {};
@@ -2359,7 +2408,7 @@ async function generateSchedule() {
     showProgress(5, 'Finding opponents and times together…');
     const result = await LeagueEngine.solve(scheduledPlayers, edges, start, end, {penalty,
       onProgress: step => showProgress(Math.min(92, 15 + step.phaseIndex * 25 + step.roundCount), step.phase + '…')});
-    if (!result) throw new Error('No matches fit the active players’ availability in consecutive rounds from 6:00 PM. Adjust availability or the finish time.');
+    if (!result) throw new Error('No schedule without idle table gaps fits the active players’ availability from 6:00 PM. Adjust availability or the finish time.');
     const checked = LeagueEngine.validate(result, scheduledPlayers, start, end);
     if (!checked.ok) throw new Error(checked.errors.join('; '));
     const pairings = result.rounds.flat().map(edge => ({edge,
@@ -2373,9 +2422,10 @@ async function generateSchedule() {
     const notes = document.createElement('div');
     notes.className = result.complete && !recentCount ? 'small' : 'warning';
     notes.textContent = 'Repeat avoidance: ' + (penalty >= 250 ? 'Strong' : penalty ? 'Normal' : 'None') +
+      ' · Window: last ' + recentWeeks + ' week' + (recentWeeks === 1 ? '' : 's') +
       ' · Recent rematches: ' + recentCount + ' · Season repeats: ' + repeatMatches.length +
       (result.relaxed && result.complete ? '. Repeat preferences were widened to find a feasible schedule.' : '') +
-      (!result.complete ? '. Some players have fewer than two matches. Review the list below and adjust availability or finish time.' : '') +
+      (!result.complete ? '. Some players have fewer than two matches under the no-idle-slot rule. Review the list below and adjust availability or finish time.' : '') +
       (result.searchLimited ? ' The full-schedule search reached its time limit.' : '') +
       (repeatMatches.length ? ' Repeated pairs: ' + repeatMatches.map(p => p.player1.name + ' / ' + p.player2.name + ' (' + p.previous + ' prior)').join(', ') + '.' : '');
     document.getElementById('summary').appendChild(notes);
@@ -2549,37 +2599,9 @@ function permutations(
 function tableSlotChoices(
   numberOfMatches
 ) {
-
-  const tables =
-    [1,2,3];
-
-  if (
-    numberOfMatches === 1
-  ) {
-
-    return tables.map(
-      table =>
-        [table]
-    );
-
-  }
-
-  if (
-    numberOfMatches === 2
-  ) {
-
-    return [
-      [1,2],
-      [1,3],
-      [2,3]
-    ];
-
-  }
-
-  return [
-    [1,2,3]
-  ];
-
+  // Continuous table occupancy takes precedence over soft table preferences.
+  // Keep the occupied tables a prefix so an idle table is never restarted.
+  return [Array.from({length: numberOfMatches}, (_, i) => i + 1)];
 }
 
 function assignMatchesToTables(
