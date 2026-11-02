@@ -1,466 +1,548 @@
-// Import Three.js and other modules using CDN links
 import * as THREE from 'three';
 import { TrackballControls } from 'TrackballControls';
 import GUI from 'GUI';
 
-// Three.js Scene Setup //////////////////////////////////////////////////////////////////////////
-const scene = new THREE.Scene();
-const renderer = new THREE.WebGLRenderer();
-renderer.setSize(window.innerWidth, window.innerHeight);
-document.getElementById('scene-container').appendChild(renderer.domElement);
+const container = document.getElementById('scene-container');
+if (!container) throw new Error('Missing #scene-container');
 
-// Camera/////////////////////////////////////////////////////////////////////////////////////////
-const camera = new THREE.PerspectiveCamera(100, window.innerWidth / window.innerHeight, 0.6, 1200);
-camera.position.x = 35; // Set camera position
-camera.position.y = -35; // Set camera position
-camera.position.z = 55; // Set camera position
-camera.up.set(0, 0, 1); // Set the up direction of the camera
+const DT = 0.005;
+const CAPACITY = 50000;
 
-//Material/////////////////////////////////////////////////////////////////////////////////////////
-const material = new THREE.LineBasicMaterial({color: 0xFF0000});
-const material2 = new THREE.LineBasicMaterial({color: 0xFFFF00});
-const materiallog = new THREE.LineBasicMaterial({color: 0x00FF00});   //0xADD8E6
-const sphereGeometry = new THREE.SphereGeometry(0.5, 32, 32); // Define geometry
-const sphereMaterial = new THREE.MeshBasicMaterial({color: 0xffff00 }); // Define material
-
-//GUI/////////////////////////////////////////////////////////////////////////////////////////
-const gui = new GUI();
 const params = {
-    rho: 28,
-    sigma: 10,
-    beta: 8/3,
-    tail: 50000,
-};
-const rhoController = gui.add(params, 'rho', 0.1, 200.0).name('rho (press r or e)');
-const sigmaController = gui.add(params, 'sigma', 0.1, 100.0).name('sigma (press s or a)');
-const betaController = gui.add(params, 'beta', 0.1, 100.0).name('beta (press b or v)');
-gui.add(params, 'tail', 51, 10000).name('Red tail length');
-
-const actions2 = {
-  changeColor: function() {
-    // Change the color of the sphere when the button is clicked
-    material.color.set(Math.random() * 0xffffff);
-  }
+  rho: 28,
+  sigma: 10,
+  beta: 8 / 3,
+  tail: 10000,
+  speed: 1,
+  paused: false,
+  twin: false,
+  staticMode: false,
+  color: '#ff675f'
 };
 
-// Add the action button to the GUI
-gui.add(actions2, 'changeColor').name('Change to random color');
+// Scene and camera
+const scene = new THREE.Scene();
+scene.background = new THREE.Color('#080e1b');
 
-//Trackball Controls for Camera /////////////////////////////////////////////////////////////////////
+const renderer = new THREE.WebGLRenderer({ antialias: true });
+renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+renderer.domElement.style.display = 'block';
+container.appendChild(renderer.domElement);
+
+const camera = new THREE.PerspectiveCamera(55, 1, 0.1, 3000);
+camera.up.set(0, 0, 1);
+camera.position.set(65, -85, 65);
+
 const controls = new TrackballControls(camera, renderer.domElement);
-controls.rotateSpeed = 4;
+controls.target.set(0, 0, 25);
+controls.rotateSpeed = 3;
 controls.dynamicDampingFactor = 0.15;
+controls.keys = [];
 
-//scene.add( axesHelper ); // X axis = red, Y axis = green, Z axis = blue
-const axesHelper = new THREE.AxesHelper(5);
-const points = [];
-const points2 = [];
-const pointss = [];
-const points2s = [];
-let history = [];
-let logdiffs = [];
-let times = [];
-let axespoints;
+const grid = new THREE.GridHelper(80, 40, 0x465774, 0x233047);
+grid.rotation.x = Math.PI / 2;
+scene.add(grid, new THREE.AxesHelper(15));
 
-  //let geometry; /////////////////////////////////////////////////////////////////////
-  var geometry = new THREE.BufferGeometry().setFromPoints( points );
-  var geometry2 = new THREE.BufferGeometry().setFromPoints( points2 );
-  var geometrys = new THREE.BufferGeometry().setFromPoints( pointss );
-  var geometry2s = new THREE.BufferGeometry().setFromPoints( points2s );
-  var geometrylog = new THREE.BufferGeometry().setFromPoints( logdiffs );
-  var curve = new THREE.Line( geometry, material );
-  var curve2 = new THREE.Line( geometry2, material2 );
-  var curves = new THREE.Line( geometrys, material );
-  var curve2s = new THREE.Line( geometry2s, material2 );
-  var curvelog = new THREE.Line( geometrylog, materiallog );
-  //var curveSteady = new THREE.Line( geometry, material );
-  let curveSteady;
+const primaryMaterial = new THREE.LineBasicMaterial({
+  color: params.color
+});
+const twinMaterial = new THREE.LineBasicMaterial({
+  color: '#52d9ef'
+});
+const headMaterial = new THREE.LineBasicMaterial({
+  color: '#ffe898'
+});
 
-// Axes /////////////////////////////////////////////////////////////////////
+// Mirrored ring buffer: recent points occupy one contiguous draw range.
+class Trail {
+  constructor(capacity, material) {
+    this.capacity = capacity;
+    this.array = new Float32Array(capacity * 6);
 
-    for ( let i = -30; i < 32; i+=2 ){
-      axespoints = [];
-      axespoints.push( new THREE.Vector3( -30,i,0) );
-      axespoints.push( new THREE.Vector3( 30,i,0) );
-      const geometry3 = new THREE.BufferGeometry().setFromPoints( axespoints );
-      const material3 = new THREE.LineBasicMaterial({color: 0xFFFFFF});
-      const line3 = new THREE.Line( geometry3, material3 );
-      scene.add(line3);
-      axespoints = [];
-      axespoints.push( new THREE.Vector3( i,-30,0) );
-      axespoints.push( new THREE.Vector3( i,30,0) );
-      const geometry4 = new THREE.BufferGeometry().setFromPoints( axespoints );
-      const material4 = new THREE.LineBasicMaterial({color: 0xFFFFFF});
-      const line4 = new THREE.Line( geometry4, material4 );
-      scene.add( line4 );
-    }
-    axespoints = [];
-    axespoints.push( new THREE.Vector3( 0,0,0) );
-    axespoints.push( new THREE.Vector3( 0,0,40) );
-    const geometry5 = new THREE.BufferGeometry().setFromPoints( axespoints );
-    const material5 = new THREE.LineBasicMaterial({color: 0xFFFFFF});
-    const line5 = new THREE.Line( geometry5, material5 );
-    scene.add( line5 );
+    this.attribute = new THREE.BufferAttribute(this.array, 3);
+    this.attribute.setUsage(THREE.DynamicDrawUsage);
 
+    this.geometry = new THREE.BufferGeometry();
+    this.geometry.setAttribute('position', this.attribute);
 
-//Parameters /////////////////////////////////////////////////////////////////////
-let lastFrameTime = Date.now();
-const fps = 20; // Target frame rate
-const interval = 1000 / fps;
+    this.line = new THREE.Line(this.geometry, material);
+    this.line.frustumCulled = false;
+    scene.add(this.line);
+    this.clear();
+  }
 
-let sigma = params.sigma;
-let rho = params.rho;
-let beta = params.beta;
+  clear() {
+    this.next = 0;
+    this.count = 0;
+    this.geometry.setDrawRange(0, 0);
+  }
 
-let x = 5;
-let y = 5;
-let z = 10;
+  push(point) {
+    const a = 3 * this.next;
+    const b = a + 3 * this.capacity;
 
-let xs = 5.00000001;
-let ys = 5.00000001;
-let zs = 10.00000001;
+    this.array.set(point, a);
+    this.array.set(point, b);
 
+    this.next = (this.next + 1) % this.capacity;
+    this.count = Math.min(this.count + 1, this.capacity);
+    this.attribute.needsUpdate = true;
+  }
+
+  draw(limit) {
+    const count = Math.min(this.count, Math.floor(limit));
+    this.geometry.setDrawRange(
+      this.next + this.capacity - count,
+      count
+    );
+  }
+}
+
+const trail = new Trail(CAPACITY, primaryMaterial);
+const twinTrail = new Trail(CAPACITY, twinMaterial);
+const head = new Trail(50, headMaterial);
+const twinHead = new Trail(50, headMaterial);
+const trails = [trail, twinTrail, head, twinHead];
+
+const sphereGeometry = new THREE.SphereGeometry(0.45, 16, 12);
+const sphereMaterial = new THREE.MeshBasicMaterial({
+  color: '#ffe898'
+});
+const sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
+const twinSphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
+scene.add(sphere, twinSphere);
+
+// Double precision for integration; Float32 is used only for rendering.
+const state = new Float64Array(3);
+const twinState = new Float64Array(3);
+
+let initial = [5, 5, 10];
 let t = 0;
-let dt = 0.005;
+let accumulator = 0;
+let staticDirty = true;
+let failure = '';
 
-let dx, dy, dz;
-let x1, y1, z1;
-let dx1, dy1, dz1;
+const k1 = new Float64Array(3);
+const k2 = new Float64Array(3);
+const k3 = new Float64Array(3);
+const k4 = new Float64Array(3);
+const work = new Float64Array(3);
 
-let dxs, dys, dzs;
-let x1s, y1s, z1s;
-let dx1s, dy1s, dz1s;
-
-
-let ro, sig, bet;
-
-let staticMode  = false; 
-let rotationEnabled = false;  // Initial state is false (rotation off)
-
-let previousCurve, previousCurve2, previousSphere, previousSpheret, previousCurves, previousCurve2s ;
-let previousCurveSteady, previousCurvelog;
-
-window.addEventListener('keydown', (event) => {
-  // Check if the pressed key is "ArrowUp"
-  if (event.key === 'r') {
-    params.rho += 0.01;
-    rhoController.updateDisplay();
-  }
-});
-window.addEventListener('keydown', (event) => {
-  // Check if the pressed key is "ArrowUp"
-  if (event.key === 'e') {
-    params.rho -= 0.01;
-    rhoController.updateDisplay();
-  }
-});
-window.addEventListener('keydown', (event) => {
-  // Check if the pressed key is "ArrowUp"
-  if (event.key === 'b') {
-    params.beta += 0.01;
-    betaController.updateDisplay();
-  }
-});
-window.addEventListener('keydown', (event) => {
-  // Check if the pressed key is "ArrowUp"
-  if (event.key === 'v') {
-    params.beta -= 0.01;
-    betaController.updateDisplay();
-  }
-});
-window.addEventListener('keydown', (event) => {
-  // Check if the pressed key is "ArrowUp"
-  if (event.key === 's') {
-    params.sigma += 0.01;
-    sigmaController.updateDisplay();
-  }
-});
-window.addEventListener('keydown', (event) => {
-  // Check if the pressed key is "ArrowUp"
-  if (event.key === 'a') {
-    params.sigma -= 0.01;
-    sigmaController.updateDisplay();
-  }
-});
-
-// Animation loop /////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////
-
-const rendering = function() {
-    
-  requestAnimationFrame(rendering);
-
-const geometry = new THREE.BufferGeometry().setFromPoints( points );
-    
-if(staticMode){
-  controls.update();
-  scene.remove(curve);
-  scene.remove(curves);
-    if(Math.abs(ro-params.rho)>0.01 || Math.abs(sig-params.sigma)>0.01 || Math.abs(bet-params.beta)>0.01){
-    points.splice(0,points.length);
-    for(var i=1;i<15000;i++){
-    dx1 = params.sigma * (y - x);
-    dy1 = x * (params.rho - z) - y;
-    dz1 = x * y - params.beta * z;
-
-    x1 = x + dx1 * dt;
-    y1 = y + dy1 * dt;
-    z1 = z + dz1 * dt;
-
-    dx = params.sigma * (y1 - x1);
-    dy = x1 * (params.rho - z1) - y1;
-    dz = x1 * y1 - params.beta * z1;
-
-    x +=0.5*(dx1 + dx)*dt;
-    y +=0.5*(dy1 + dy)*dt;
-    z +=0.5*(dz1 + dz)*dt;
-        
-        if(i>500){
-            points.push( new THREE.Vector3( x,y,z) );
-        }
-    }
-    }
-  const geometry = new THREE.BufferGeometry().setFromPoints( points );
-  curveSteady = new THREE.Line( geometry, material );
-  scene.add(curveSteady);
-  renderer.render(scene, camera);
-  previousCurveSteady = curveSteady;
-  scene.remove(curveSteady);
-  curveSteady.geometry.dispose();
-  curveSteady.material.dispose();
-}
-else{
-scene.remove(curveSteady);
-if (previousCurveSteady) {  
-   previousCurveSteady.geometry.dispose();
-   previousCurveSteady.material.dispose();
-   scene.remove(previousCurveSteady);
-}
-  if (previousCurvelog) {
-      previousCurvelog.geometry.dispose();
-      previousCurvelog.material.dispose();
-      scene.remove(previousCurvelog);
-  }
-  if (previousCurve) {
-      previousCurve.geometry.dispose();
-      previousCurve.material.dispose();
-      scene.remove(previousCurve);
-  }
-  if (previousCurve2) {
-      previousCurve2.geometry.dispose();
-      previousCurve2.material.dispose();
-      scene.remove(previousCurve2);
-  }
-  if (previousSphere) {
-    previousSphere.geometry.dispose();
-    previousSphere.material.dispose();
-    scene.remove(previousSphere);
-  }
-  if (previousSpheret) {
-    previousSpheret.geometry.dispose();
-    previousSpheret.material.dispose();
-    scene.remove(previousSpheret);
-  }
-  if (previousCurves) {
-    previousCurves.geometry.dispose();
-    previousCurves.material.dispose();
-    scene.remove(previousCurves);
-  }
-  if (previousCurve2s) {
-      previousCurve2s.geometry.dispose();
-      previousCurve2s.material.dispose();
-      scene.remove(previousCurve2s);
-  }
-
-
-    dx1 = params.sigma * (y - x);
-    dy1 = x * (params.rho - z) - y;
-    dz1 = x * y - params.beta * z;
-
-    x1 = x + dx1 * dt;
-    y1 = y + dy1 * dt;
-    z1 = z + dz1 * dt;
-
-    dx = params.sigma * (y1 - x1);
-    dy = x1 * (params.rho - z1) - y1;
-    dz = x1 * y1 - params.beta * z1;
-
-    x +=0.5*(dx1 + dx)*dt;
-    y +=0.5*(dy1 + dy)*dt;
-    z +=0.5*(dz1 + dz)*dt;
-
-    dx1s = params.sigma * (ys - xs);
-    dy1s = xs * (params.rho - zs) - ys;
-    dz1s = xs * ys - params.beta * zs;
-
-    x1s = xs + dx1s * dt;
-    y1s = ys + dy1s * dt;
-    z1s = zs + dz1s * dt;
-
-    dxs = params.sigma * (y1s - x1s);
-    dys = x1s * (params.rho - z1s) - y1s;
-    dzs = x1s * y1s - params.beta * z1s;
-
-    xs +=0.5*(dx1s + dxs)*dt;
-    ys +=0.5*(dy1s + dys)*dt;
-    zs +=0.5*(dz1s + dzs)*dt;
-
-    t = t + dt;
-
-    logdiffs.push( new THREE.Vector3( -Math.log10((x-xs)*(x-xs) + (y-ys)*(y-ys)+(z-zs)*(z-zs))/2.0+20,-30+0.5*t,0));
-    if (logdiffs.length > 10000){
-        logdiffs.splice(0,logdiffs.length - 10000);
-    }
-
-    const geometry = new THREE.BufferGeometry().setFromPoints( points );
-    const curve = new THREE.Line( geometry, material );
-    scene.add( curve );
-
-    const geometry2 = new THREE.BufferGeometry().setFromPoints( points2 );
-    const curve2 = new THREE.Line( geometry2, material2 );
-    scene.add( curve2 );
-
-    const geometrys = new THREE.BufferGeometry().setFromPoints( pointss );
-    const curves = new THREE.Line( geometrys, material );
-    
-
-    const geometry2s = new THREE.BufferGeometry().setFromPoints( points2s );
-    const curve2s = new THREE.Line( geometry2s, material2 );
-    
-
-    points.push( new THREE.Vector3( x,y,z) );
-    if (points.length > params.tail) {
-                    points.splice(0,points.length-params.tail);
-                }
-
-    points2.push( new THREE.Vector3( x,y,z) );
-    if (points2.length > 50) {
-                    points2.shift();
-    }
-
-        pointss.push( new THREE.Vector3( xs,ys,zs) );
-    if (pointss.length > params.tail) {
-                    pointss.splice(0,pointss.length-params.tail);
-                }
-
-    points2s.push( new THREE.Vector3( xs,ys,zs) );
-    if (points2s.length > 50) {
-                    points2s.shift();
-    }
-
-        const sphere = new THREE.Mesh(sphereGeometry, sphereMaterial); // Build sphere
-        sphere.position.set(x, y, z);
-        scene.add(sphere); // Add sphere to canvas
-
-        const spheret = new THREE.Mesh(sphereGeometry, sphereMaterial); // Build sphere
-        spheret.position.set(xs, ys, zs);
-        
-        const geometrylog = new THREE.BufferGeometry().setFromPoints( logdiffs );
-        const curvelog = new THREE.Line( geometrylog, materiallog );
-
-    //curvelog.visible = false;
-    
-  if (rotationEnabled) {
-      scene.add( curves );
-      scene.add( curve2s );
-      scene.add(spheret); // Add sphere to canvas
-      scene.add( curvelog );
-   }
-    
-        previousCurve = curve;
-        previousCurve2 = curve2;
-        previousSphere = sphere;
-        previousSpheret = spheret;
-        previousCurves = curves;
-        previousCurve2s = curve2s;
-        previousCurvelog = curvelog;
-        
-
-    renderer.render(scene, camera);
-
-scene.remove(sphere);
-scene.remove(spheret);
-scene.remove(curve);
-scene.remove(curves);
-scene.remove(curve2);
-scene.remove(curvelog);
-geometry.dispose();
-material.dispose();
-geometry2.dispose();
-material2.dispose();
-geometrylog.dispose();
-materiallog.dispose();    
-
-scene.remove(curve2s);
-geometrys.dispose();
-geometry2s.dispose();
-
-//sphere.dispose();
-//curve.dispose();
-//curve2.dispose();
-
-
-}// end else loop
-
-
-    // Update the TrackballControls
-    controls.update();
-ro = params.rho;
-sig = params.sigma;
-bet = params.beta;
-
-
+function derivative(p, out) {
+  out[0] = params.sigma * (p[1] - p[0]);
+  out[1] = p[0] * (params.rho - p[2]) - p[1];
+  out[2] = p[0] * p[1] - params.beta * p[2];
 }
 
-rendering();
+function rk4(p, h = DT) {
+  derivative(p, k1);
+
+  for (let j = 0; j < 3; j++) {
+    work[j] = p[j] + h * k1[j] / 2;
+  }
+  derivative(work, k2);
+
+  for (let j = 0; j < 3; j++) {
+    work[j] = p[j] + h * k2[j] / 2;
+  }
+  derivative(work, k3);
+
+  for (let j = 0; j < 3; j++) {
+    work[j] = p[j] + h * k3[j];
+  }
+  derivative(work, k4);
+
+  for (let j = 0; j < 3; j++) {
+    p[j] += h * (
+      k1[j] + 2 * k2[j] + 2 * k3[j] + k4[j]
+    ) / 6;
+  }
+
+  return p.every(
+    value => Number.isFinite(value) && Math.abs(value) < 1e6
+  );
+}
+
+// Twin separation plot, independent of the 3D camera.
+const plot = document.createElement('canvas');
+plot.width = 680;
+plot.height = 340;
+plot.style.cssText = `
+  position: fixed;
+  left: 16px;
+  bottom: 16px;
+  width: min(340px, calc(100vw - 32px));
+  height: auto;
+  pointer-events: none;
+  border: 1px solid #33435c;
+  border-radius: 10px;
+  z-index: 10;
+`;
+plot.setAttribute(
+  'aria-label',
+  'Log10 twin-orbit separation versus simulated time'
+);
+document.body.appendChild(plot);
+
+const ctx = plot.getContext('2d');
+const samples = new Float64Array(2000 * 2);
+let sampleNext = 0;
+let sampleCount = 0;
+let steps = 0;
+
+const status = document.createElement('div');
+status.style.cssText = `
+  position: fixed;
+  top: 16px;
+  left: 16px;
+  color: #dce6f5;
+  font: 13px system-ui;
+  pointer-events: none;
+  z-index: 10;
+  max-width: 45vw;
+`;
+document.body.appendChild(status);
+
+function sample() {
+  const distance = Math.hypot(
+    state[0] - twinState[0],
+    state[1] - twinState[1],
+    state[2] - twinState[2]
+  );
+
+  samples[2 * sampleNext] = t;
+  samples[2 * sampleNext + 1] =
+    Math.log10(Math.max(distance, 1e-16));
+
+  sampleNext = (sampleNext + 1) % 2000;
+  sampleCount = Math.min(sampleCount + 1, 2000);
+}
+
+function drawPlot() {
+  if (!params.twin || params.staticMode || !ctx) return;
+
+  ctx.fillStyle = '#0c1525';
+  ctx.fillRect(0, 0, 680, 340);
+  ctx.font = '23px system-ui';
+  ctx.fillStyle = '#dce6f5';
+  ctx.fillText('Twin separation · log₁₀ ‖δ(t)‖', 24, 35);
+
+  const first = (sampleNext - sampleCount + 2000) % 2000;
+  const start = sampleCount ? samples[2 * first] : 0;
+  const end = Math.max(start + DT, t);
+
+  let low = -9;
+  let high = 2;
+
+  for (let i = 0; i < sampleCount; i++) {
+    const value = samples[2 * ((first + i) % 2000) + 1];
+    low = Math.min(low, Math.floor(value));
+    high = Math.max(high, Math.ceil(value));
+  }
+
+  for (let j = 0; j <= 4; j++) {
+    const y = 65 + j * 52;
+
+    ctx.strokeStyle = '#26354a';
+    ctx.beginPath();
+    ctx.moveTo(76, y);
+    ctx.lineTo(652, y);
+    ctx.stroke();
+
+    ctx.fillStyle = '#a6b6cc';
+    ctx.fillText(
+      (high - (high - low) * j / 4).toFixed(1),
+      12,
+      y + 7
+    );
+  }
+
+  ctx.strokeStyle = '#52d9ef';
+  ctx.lineWidth = 3;
+  ctx.beginPath();
+
+  for (let i = 0; i < sampleCount; i++) {
+    const index = 2 * ((first + i) % 2000);
+    const x = 76 + 576 * (samples[index] - start) / (end - start);
+    const y = 65 + 208 * (high - samples[index + 1]) / (high - low);
+
+    if (i === 0) ctx.moveTo(x, y);
+    else ctx.lineTo(x, y);
+  }
+
+  ctx.stroke();
+  ctx.fillStyle = '#a6b6cc';
+  ctx.fillText(start.toFixed(1), 76, 313);
+  ctx.fillText(end.toFixed(1), 580, 313);
+  ctx.fillText('simulated time', 265, 313);
+}
+
+function reset() {
+  state.set(initial);
+  twinState.set(initial.map(value => value + 1e-8));
+
+  t = 0;
+  accumulator = 0;
+  steps = 0;
+  failure = '';
+  sampleNext = 0;
+  sampleCount = 0;
+
+  trails.forEach(item => item.clear());
+  sample();
+  staticDirty = true;
+}
+
+function record() {
+  trail.push(state);
+  twinTrail.push(twinState);
+  head.push(state);
+  twinHead.push(twinState);
+}
+
+function advance() {
+  if (!rk4(state) || !rk4(twinState)) {
+    params.paused = true;
+    failure = 'Integration stopped: reduce parameters and restart.';
+    return false;
+  }
+
+  t += DT;
+  return true;
+}
+
+function buildStatic() {
+  reset();
+
+  // Discard a 2.5-unit transient, then record 75 time units.
+  for (let i = 0; i < 15500; i++) {
+    if (!advance()) break;
+    if (i >= 500) record();
+  }
+
+  staticDirty = false;
+}
+
+// GUI
+const gui = new GUI();
+const controllers = {};
+
+for (const [key, max, label] of [
+  ['rho', 200, 'ρ (r / e)'],
+  ['sigma', 100, 'σ (s / a)'],
+  ['beta', 100, 'β (b / v)']
+]) {
+  controllers[key] = gui
+    .add(params, key, 0.1, max, 0.01)
+    .name(label)
+    .onChange(reset);
+}
+
+gui.add(params, 'tail', 51, CAPACITY, 1).name('Trail points');
+gui.add(params, 'speed', 0.1, 10, 0.1).name('Simulation speed');
+gui.add(params, 'paused').name('Pause').listen();
+gui.add(params, 'twin').name('Show twin orbit');
+gui.add(params, 'staticMode').name('Static mode').onChange(reset);
+
+gui.addColor(params, 'color')
+  .name('Orbit color')
+  .onChange(value => primaryMaterial.color.set(value));
 
 const actions = {
-  restartOrbit: function() {
-      x = -10+20*Math.random();
-      y = -10+20*Math.random();
-      z = 10 + 20*Math.random();
-      xs = x + 0.00000001;
-      ys = y + 0.00000001;
-      zs = z + 0.00000001;
-      points.splice(0,points.length);
-      points2.splice(0,points2.length);
-      pointss.splice(0,pointss.length);
-      points2s.splice(0,points2s.length);
+  restart() {
+    reset();
+  },
+
+  randomStart() {
+    initial = [
+      -10 + 20 * Math.random(),
+      -10 + 20 * Math.random(),
+      10 + 20 * Math.random()
+    ];
+    reset();
+  },
+
+  randomColor() {
+    params.color = '#' + Math.floor(Math.random() * 0xffffff)
+      .toString(16)
+      .padStart(6, '0');
+
+    primaryMaterial.color.set(params.color);
+    gui.controllers.forEach(controller => controller.updateDisplay());
+  },
+
+  resetCamera() {
+    controls.reset();
   }
 };
 
-gui.add(actions, 'restartOrbit').name('Restart Orbit');
+gui.add(actions, 'restart').name('Restart same orbit');
+gui.add(actions, 'randomStart').name('Random initial condition');
+gui.add(actions, 'randomColor').name('Random color');
+gui.add(actions, 'resetCamera').name('Reset camera');
 
-// Object to manage the binary button (toggle)
-const controlsGUI = {
-  rotationEnabled: rotationEnabled
-};
-// Add a binary button (toggle) to enable/disable rotation
-gui.add(controlsGUI, 'rotationEnabled').name('Show twin orbit').onChange(value => {
-  // Update the rotationEnabled variable when the toggle is clicked
-  rotationEnabled = value;
-  console.log("Rotation Enabled:", rotationEnabled);  // Log for debugging
-});
+// Keyboard shortcuts
+function onKey(event) {
+  if (
+    event.ctrlKey ||
+    event.metaKey ||
+    event.altKey ||
+    event.target.closest?.(
+      'input, textarea, select, [contenteditable="true"]'
+    )
+  ) return;
 
-// Object to manage the binary button (toggle)
-const staticmodeGUI = {
-  staticMode: staticMode
-};
-// Add a binary button (toggle) to enable/disable rotation
-gui.add(staticmodeGUI, 'staticMode').name('Static mode (change parameters)').onChange(value => {
-  // Update the rotationEnabled variable when the toggle is clicked
-   staticMode = value;
-  console.log("Static Mode:", staticMode);  // Log for debugging
-});
+  const binding = {
+    r: ['rho', 1],
+    e: ['rho', -1],
+    s: ['sigma', 1],
+    a: ['sigma', -1],
+    b: ['beta', 1],
+    v: ['beta', -1]
+  }[event.key.toLowerCase()];
 
-// Adjust the scene size when the window is resized
-window.addEventListener('resize', () => {
-  const width = window.innerWidth;
-  const height = window.innerHeight;
+  if (!binding) return;
+
+  const [key, direction] = binding;
+  const max = key === 'rho' ? 200 : 100;
+  const value = +(params[key] + direction * 0.01).toFixed(2);
+
+  controllers[key].setValue(Math.max(0.1, Math.min(max, value)));
+}
+
+window.addEventListener('keydown', onKey);
+
+// Resize
+function resize() {
+  const width = container.clientWidth || window.innerWidth;
+  const height = container.clientHeight || window.innerHeight;
+
   renderer.setSize(width, height);
   camera.aspect = width / height;
   camera.updateProjectionMatrix();
-})
+  controls.handleResize();
+}
 
+window.addEventListener('resize', resize);
+
+const observer = new ResizeObserver(resize);
+observer.observe(container);
+
+// Animation
+let previous = null;
+let frame = 0;
+let disposed = false;
+let lastPlot = 0;
+
+function animate(now) {
+  if (disposed) return;
+
+  const elapsed = previous === null
+    ? 0
+    : Math.min((now - previous) / 1000, 0.1);
+
+  previous = now;
+
+  if (params.staticMode) {
+    if (staticDirty) buildStatic();
+  } else if (!params.paused) {
+    accumulator += elapsed * params.speed;
+
+    while (accumulator >= DT) {
+      if (!advance()) {
+        accumulator = 0;
+        break;
+      }
+
+      record();
+
+      if (++steps % 10 === 0) sample();
+
+      accumulator -= DT;
+    }
+  }
+
+  trail.draw(params.tail);
+  twinTrail.draw(params.tail);
+  head.draw(50);
+  twinHead.draw(50);
+
+  sphere.position.fromArray(state);
+  twinSphere.position.fromArray(twinState);
+
+  twinTrail.line.visible = params.twin;
+  twinHead.line.visible = params.twin && !params.staticMode;
+  head.line.visible = !params.staticMode;
+  sphere.visible = !params.staticMode;
+  twinSphere.visible = params.twin && !params.staticMode;
+
+  plot.style.display = params.twin && !params.staticMode
+    ? 'block'
+    : 'none';
+
+  const mode = params.staticMode
+    ? ' · static'
+    : params.paused
+      ? ' · paused'
+      : '';
+
+  status.textContent =
+    failure || `Lorenz system · t = ${t.toFixed(2)}${mode}`;
+
+  if (now - lastPlot > 100) {
+    drawPlot();
+    lastPlot = now;
+  }
+
+  controls.update();
+  renderer.render(scene, camera);
+  frame = requestAnimationFrame(animate);
+}
+
+function onVisibility() {
+  previous = null;
+  accumulator = 0;
+}
+
+document.addEventListener('visibilitychange', onVisibility);
+
+// Call before removing or reinitializing this visualization.
+export function disposeLorenz() {
+  disposed = true;
+  cancelAnimationFrame(frame);
+  observer.disconnect();
+
+  window.removeEventListener('resize', resize);
+  window.removeEventListener('keydown', onKey);
+  document.removeEventListener('visibilitychange', onVisibility);
+
+  controls.dispose();
+  gui.destroy();
+
+  const geometries = new Set();
+  const materials = new Set();
+
+  scene.traverse(object => {
+    if (object.geometry) geometries.add(object.geometry);
+
+    if (object.material) {
+      const list = Array.isArray(object.material)
+        ? object.material
+        : [object.material];
+
+      list.forEach(material => materials.add(material));
+    }
+  });
+
+  geometries.forEach(geometry => geometry.dispose());
+  materials.forEach(material => material.dispose());
+
+  renderer.dispose();
+  renderer.domElement.remove();
+  plot.remove();
+  status.remove();
+}
+
+reset();
+resize();
+frame = requestAnimationFrame(animate);
